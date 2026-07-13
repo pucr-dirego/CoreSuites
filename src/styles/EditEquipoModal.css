@@ -1,0 +1,331 @@
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 32, 21, 0.35);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 100;
+}
+
+[data-theme="dark"] .edit-modal-overlay {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.edit-modal {
+  width: min(1040px, 100%);
+  max-height: calc(100vh - 48px);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 28px;
+  box-shadow: var(--app-shadow-strong);
+  color: var(--app-text);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: editModalIn 0.22s ease;
+}
+
+@keyframes editModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.edit-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--app-border);
+  background: linear-gradient(
+    180deg,
+    var(--app-surface) 0%,
+    var(--app-surface-soft) 100%
+  );
+}
+
+.edit-modal-eyebrow {
+  margin: 0 0 6px;
+  color: var(--app-primary);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.edit-modal-header h2 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 1.55rem;
+}
+
+.edit-modal-header span {
+  display: block;
+  margin-top: 6px;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
+}
+
+.edit-modal-summary {
+  display: block;
+  margin-top: 6px;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
+}
+
+.edit-modal-id {
+  margin: 14px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  border: 1px solid var(--app-border);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.edit-modal-id strong {
+  color: var(--app-text);
+  font-weight: 900;
+}
+
+.edit-modal-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--app-border);
+  background: var(--app-surface);
+  color: var(--app-text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.edit-modal-close:hover {
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+  border-color: var(--app-danger);
+  transform: translateY(-1px);
+}
+
+.edit-modal-body {
+  overflow-y: auto;
+  padding: 24px 28px 0;
+  background: var(--app-surface);
+}
+
+.edit-form-section {
+  margin-bottom: 26px;
+}
+
+.edit-form-section h3 {
+  margin: 0 0 14px;
+  color: var(--app-text);
+  font-size: 1rem;
+}
+
+.edit-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.edit-form-grid label,
+.edit-form-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--app-text-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.edit-form-grid input,
+.edit-form-grid select,
+.edit-form-textarea textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--app-border-strong);
+  background: var(--app-surface-soft);
+  color: var(--app-text);
+  border-radius: 14px;
+  padding: 12px 14px;
+  outline: none;
+  font-weight: 500;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.edit-form-grid input::placeholder,
+.edit-form-textarea textarea::placeholder {
+  color: var(--app-text-soft);
+}
+
+.edit-form-grid input:focus,
+.edit-form-grid select:focus,
+.edit-form-textarea textarea:focus {
+  border-color: var(--app-primary);
+  box-shadow: 0 0 0 3px var(--app-primary-soft);
+  background: var(--app-surface);
+}
+
+.edit-form-wide {
+  grid-column: span 3;
+}
+
+.edit-form-textarea textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.edit-modal-message {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.edit-modal-message.success {
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  border: 1px solid var(--app-primary);
+}
+
+.edit-modal-message.error {
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+  border: 1px solid var(--app-danger);
+}
+
+.edit-modal-footer {
+  position: sticky;
+  bottom: 0;
+  background: var(--app-surface);
+  border-top: 1px solid var(--app-border);
+  padding: 18px 28px;
+  margin: 20px -28px 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.edit-modal-secondary,
+.edit-modal-primary {
+  border: none;
+  border-radius: 999px;
+  padding: 11px 18px;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.edit-modal-secondary {
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  border: 1px solid var(--app-border);
+}
+
+.edit-modal-secondary:hover {
+  background: var(--app-border);
+  color: var(--app-text);
+  transform: translateY(-1px);
+}
+
+.edit-modal-primary {
+  background: var(--app-primary);
+  color: #ffffff;
+}
+
+.edit-modal-primary:hover {
+  background: var(--app-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--app-shadow);
+}
+
+.edit-modal-primary:disabled,
+.edit-modal-secondary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 860px) {
+  .edit-modal {
+    max-height: calc(100vh - 24px);
+    border-radius: 22px;
+  }
+
+  .edit-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .edit-form-wide {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .edit-modal-overlay {
+    padding: 10px;
+  }
+
+  .edit-modal {
+    max-height: calc(100vh - 20px);
+    border-radius: 18px;
+  }
+
+  .edit-modal-header {
+    padding: 20px;
+  }
+
+  .edit-modal-body {
+    padding: 20px 20px 0;
+  }
+
+  .edit-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-form-wide {
+    grid-column: span 1;
+  }
+
+  .edit-modal-footer {
+    margin: 20px -20px 0;
+    padding: 16px 20px;
+    flex-direction: column-reverse;
+  }
+
+  .edit-modal-secondary,
+  .edit-modal-primary {
+    width: 100%;
+  }
+}

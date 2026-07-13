@@ -1,0 +1,121 @@
+.kpi-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.kpi-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: var(--app-shadow);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.16s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+
+.kpi-card span {
+  display: block;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.kpi-card strong {
+  display: block;
+  color: var(--app-text);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.kpi-card p {
+  margin: 8px 0 0;
+  color: var(--app-text-soft);
+  font-size: 0.8rem;
+}
+
+.kpi-card-detail {
+  margin: 14px 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+/* Variantes por estado */
+.kpi-good strong {
+  color: var(--app-primary);
+}
+
+.kpi-warning {
+  border-color: var(--app-warning);
+}
+
+.kpi-warning strong {
+  color: var(--app-warning);
+}
+
+.kpi-danger {
+  border-color: var(--app-danger);
+}
+
+.kpi-danger strong {
+  color: var(--app-danger);
+}
+
+.kpi-muted strong {
+  color: var(--app-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .kpi-section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .kpi-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kpi-card-clickable {
+  width: 100%;
+  border: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.kpi-card-clickable:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+}
+
+.kpi-card-clickable:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.kpi-card-clickable:focus-visible {
+  outline: 3px solid rgba(47, 125, 82, 0.28);
+  outline-offset: 4px;
+}
+
+.kpi-card-clickable:disabled {
+  cursor: default;
+}

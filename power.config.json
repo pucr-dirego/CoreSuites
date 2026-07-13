@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "appId": null,
+  "appDisplayName": "CoreSuite",
+  "region": "prod",
+  "environmentId": "8a80a778-98ad-e426-86fc-2da50031cf03",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {
+    "default.cds": {
+      "dataSources": {
+        "sucursales": {
+          "entitySetName": "cr22e_sucursaleses",
+          "logicalName": "cr22e_sucursales"
+        },
+        "departamentos": {
+          "entitySetName": "cr22e_departamentoses",
+          "logicalName": "cr22e_departamentos"
+        },
+        "ubicacionessucursal": {
+          "entitySetName": "cr22e_ubicacionessucursals",
+          "logicalName": "cr22e_ubicacionessucursal"
+        },
+        "equiposti": {
+          "entitySetName": "cr22e_equipostis",
+          "logicalName": "cr22e_equiposti"
+        },
+        "proveedores": {
+          "entitySetName": "cr22e_proveedoreses",
+          "logicalName": "cr22e_proveedores"
+        },
+        "serviciosproveedorsucursal": {
+          "entitySetName": "cr22e_serviciosproveedorsucursals",
+          "logicalName": "cr22e_serviciosproveedorsucursal"
+        },
+        "contactosproveedor": {
+          "entitySetName": "cr22e_contactosproveedors",
+          "logicalName": "cr22e_contactosproveedor"
+        },
+        "excepcionescalidaddatos": {
+          "entitySetName": "cr22e_excepcionescalidaddatoses",
+          "logicalName": "cr22e_excepcionescalidaddatos"
+        }
+      },
+      "environmentVariableName": ""
+    }
+  }
+}

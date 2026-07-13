@@ -1,0 +1,189 @@
+.triage-panel {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--app-shadow);
+  min-height: 260px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.panel-header h3 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 1.15rem;
+}
+
+.panel-header span {
+  color: var(--app-primary);
+  font-size: 0.82rem;
+  background: var(--app-primary-soft);
+  border: 1px solid var(--app-border);
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.empty-state {
+  min-height: 160px;
+  border: 1px dashed var(--app-border-strong);
+  border-radius: 16px;
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-weight: 600;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.triage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.triage-item {
+  border: 1px solid var(--app-border);
+  background: var(--app-surface-soft);
+  border-radius: 16px;
+  padding: 16px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.16s ease;
+}
+
+.triage-item:hover {
+  transform: translateY(-1px);
+  border-color: var(--app-border-strong);
+}
+
+.triage-item strong {
+  display: block;
+  color: var(--app-text);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.triage-item p {
+  margin: 0;
+  color: var(--app-text-muted);
+  font-size: 0.9rem;
+}
+
+.triage-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.triage-tags span {
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Estado visual específico para etiquetas del Triage */
+
+.triage-panel .panel-header span {
+  color: #92400e;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.24);
+}
+
+.triage-panel .triage-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.triage-panel .triage-tags .triage-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.38rem 0.72rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+.triage-panel .triage-tags .triage-tag-danger {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.24);
+}
+
+.triage-panel .triage-tags .triage-tag-warning {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.26);
+}
+
+.triage-panel .triage-tags .triage-tag-neutral {
+  color: #475569;
+  background: rgba(100, 116, 139, 0.1);
+  border-color: rgba(100, 116, 139, 0.18);
+}
+
+/* Ajustes modo oscuro para etiquetas del Triage */
+
+[data-theme="dark"] .triage-panel .panel-header span,
+.dark .triage-panel .panel-header span,
+.theme-dark .triage-panel .panel-header span {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.34);
+}
+
+[data-theme="dark"] .triage-panel .triage-tags .triage-tag-danger,
+.dark .triage-panel .triage-tags .triage-tag-danger,
+.theme-dark .triage-panel .triage-tags .triage-tag-danger {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(248, 113, 113, 0.36);
+}
+
+[data-theme="dark"] .triage-panel .triage-tags .triage-tag-warning,
+.dark .triage-panel .triage-tags .triage-tag-warning,
+.theme-dark .triage-panel .triage-tags .triage-tag-warning {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(251, 191, 36, 0.36);
+}
+
+[data-theme="dark"] .triage-panel .triage-tags .triage-tag-neutral,
+.dark .triage-panel .triage-tags .triage-tag-neutral,
+.theme-dark .triage-panel .triage-tags .triage-tag-neutral {
+  color: #dbe4ef;
+  background: rgba(148, 163, 184, 0.16);
+  border-color: rgba(203, 213, 225, 0.22);
+}

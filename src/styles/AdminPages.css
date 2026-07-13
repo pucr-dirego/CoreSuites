@@ -1,0 +1,451 @@
+.admin-page {
+  width: min(100% - 48px, 1062px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 34px 0 44px;
+  background: transparent;
+  color: var(--app-text);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+/* Hero */
+
+.admin-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.admin-eyebrow {
+  margin: 0 0 8px;
+  color: var(--app-primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.admin-hero h1 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  letter-spacing: -0.04em;
+}
+
+.admin-hero p {
+  max-width: 760px;
+  margin: 8px 0 0;
+  color: var(--app-text-muted);
+  line-height: 1.55;
+}
+
+/* Cards base */
+
+.admin-policy-card,
+.admin-kpi-card,
+.admin-panel-card {
+  border: 1px solid var(--app-border);
+  border-radius: 20px;
+  background: var(--app-surface);
+  color: var(--app-text);
+  box-shadow: var(--app-shadow);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Policy card */
+
+.admin-policy-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 24px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--app-primary-soft),
+      color-mix(in srgb, var(--app-surface) 96%, transparent)
+    ),
+    var(--app-surface);
+}
+
+.admin-policy-card span {
+  display: inline-flex;
+  margin-bottom: 8px;
+  color: var(--app-primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-policy-card h2 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 1.18rem;
+}
+
+.admin-policy-card p {
+  max-width: 860px;
+  margin: 8px 0 0;
+  color: var(--app-text-muted);
+  line-height: 1.65;
+}
+
+.admin-policy-badge {
+  min-width: 170px;
+  border-radius: 20px;
+  padding: 18px;
+  background: var(--app-surface-soft);
+  border: 1px solid var(--app-border);
+  text-align: right;
+}
+
+.admin-policy-badge strong {
+  display: block;
+  color: var(--app-primary);
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.admin-policy-badge small {
+  display: block;
+  margin-top: 6px;
+  color: var(--app-text-soft);
+  font-size: 0.84rem;
+}
+
+/* KPIs */
+
+.admin-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.admin-kpi-card {
+  padding: 16px 18px;
+}
+
+.admin-kpi-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--app-text-muted);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.admin-kpi-card strong {
+  display: block;
+  color: var(--app-text);
+  font-size: 1.82rem;
+  line-height: 1;
+}
+
+.admin-kpi-card p {
+  margin: 8px 0 0;
+  color: var(--app-text-soft);
+  font-size: 0.82rem;
+}
+
+/* Panel */
+
+.admin-panel-card {
+  padding: 22px;
+}
+
+.admin-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.admin-card-header h2 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 1.05rem;
+}
+
+.admin-card-header p {
+  max-width: 760px;
+  margin: 5px 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.admin-card-header-actions {
+  align-items: center;
+}
+
+/* Botón actualizar */
+
+.admin-refresh-button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 18px;
+  background: var(--app-primary);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.admin-refresh-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--app-primary-hover);
+  box-shadow: var(--app-shadow);
+}
+
+.admin-refresh-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Toolbar */
+
+.admin-toolbar {
+  margin-bottom: 18px;
+}
+
+.admin-toolbar label {
+  display: grid;
+  gap: 8px;
+  color: var(--app-text-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.admin-toolbar input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--app-border-strong);
+  border-radius: 16px;
+  padding: 13px 15px;
+  background: var(--app-surface-soft);
+  color: var(--app-text);
+  font-family: inherit;
+  font-size: 0.92rem;
+  outline: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-toolbar input::placeholder {
+  color: var(--app-text-soft);
+}
+
+.admin-toolbar input:focus {
+  border-color: var(--app-primary);
+  box-shadow: 0 0 0 4px var(--app-primary-soft);
+  background: var(--app-surface);
+}
+
+/* Tabla */
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  padding: 12px 14px;
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--app-border);
+}
+
+.admin-table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--app-border);
+  color: var(--app-text);
+  font-size: 0.9rem;
+}
+
+.admin-table tbody tr {
+  transition: background 0.16s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: color-mix(in srgb, var(--app-surface-soft) 58%, transparent);
+}
+
+/* Estado inactivo */
+
+.admin-status-inactive {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  border: 1px solid var(--app-border-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+/* Empty states */
+
+.admin-empty-state {
+  display: flex;
+  min-height: 280px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--app-border-strong);
+  border-radius: 18px;
+  padding: 32px;
+  background: var(--app-surface-soft);
+  text-align: center;
+  color: var(--app-text-muted);
+}
+
+.admin-empty-icon {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  font-size: 1.6rem;
+}
+
+.admin-empty-state h3 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 1.1rem;
+}
+
+.admin-empty-state p {
+  max-width: 620px;
+  margin: 8px 0 0;
+  color: var(--app-text-muted);
+  line-height: 1.6;
+}
+
+.admin-empty-state-error {
+  border-color: var(--app-danger);
+  background: var(--app-danger-soft);
+}
+
+.admin-empty-state-error h3 {
+  color: var(--app-danger);
+}
+
+/* Mensajes */
+
+.admin-message {
+  margin-bottom: 16px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.admin-message-success {
+  border: 1px solid var(--app-primary);
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+}
+
+.admin-message-error {
+  border: 1px solid var(--app-danger);
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+}
+
+/* Botón restaurar */
+
+.admin-restore-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 13px;
+  background: var(--app-primary);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.admin-restore-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--app-primary-hover);
+  box-shadow: var(--app-shadow);
+}
+
+.admin-restore-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .admin-page {
+    width: min(100% - 36px, 1062px);
+    padding: 28px 0 36px;
+  }
+
+  .admin-policy-card {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-policy-badge {
+    text-align: left;
+  }
+
+  .admin-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-card-header-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-refresh-button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,95 @@
+.coresuppliers-home-button {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 80;
+
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--app-border);
+  background: color-mix(in srgb, var(--app-surface) 88%, transparent);
+  color: var(--app-text-muted);
+
+  box-shadow: var(--app-shadow);
+  backdrop-filter: blur(14px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    color 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.coresuppliers-home-button:hover {
+  transform: translateY(-2px);
+  color: var(--app-primary);
+  background: var(--app-primary-soft);
+  border-color: var(--app-border-strong);
+}
+
+.coresuppliers-home-button svg {
+  width: 21px;
+  height: 21px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 720px) {
+  .coresuppliers-home-button {
+    left: 14px;
+    bottom: 14px;
+    width: 44px;
+    height: 44px;
+  }
+}
+.core-suppliers-module {
+  min-height: 100vh;
+}
+
+.core-suppliers-placeholder {
+  min-height: 100vh;
+  padding: 112px 32px 48px;
+}
+
+.core-suppliers-placeholder-card {
+  border: 1px solid rgba(26, 57, 40, 0.12);
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 20px 45px rgba(18, 45, 28, 0.08);
+}
+
+.core-suppliers-placeholder-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #2f7d52;
+  font-weight: 800;
+}
+
+
+.core-suppliers-placeholder-card h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: -0.05em;
+}
+
+.core-suppliers-placeholder-card p {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-secondary, #637064);
+  line-height: 1.6;
+}

@@ -1,0 +1,207 @@
+.feedback-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: feedbackFadeIn 0.18s ease-out;
+}
+
+[data-theme="dark"] .feedback-backdrop {
+  background: rgba(0, 0, 0, 0.58);
+}
+
+.feedback-modal {
+  width: min(420px, 100%);
+  background: var(--app-surface);
+  color: var(--app-text);
+  border-radius: 24px;
+  padding: 32px 28px 26px;
+  text-align: center;
+  box-shadow: var(--app-shadow-strong);
+  animation: feedbackScaleIn 0.2s ease-out;
+  border: 1px solid var(--app-border);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feedback-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.feedback-success .feedback-icon {
+  color: var(--app-primary);
+  background: var(--app-primary-soft);
+  border: 1px solid var(--app-primary);
+}
+
+.feedback-error .feedback-icon {
+  color: var(--app-danger);
+  background: var(--app-danger-soft);
+  border: 1px solid var(--app-danger);
+}
+
+.feedback-warning .feedback-icon {
+  color: var(--app-warning);
+  background: var(--app-warning-soft);
+  border: 1px solid var(--app-warning);
+}
+
+.feedback-info .feedback-icon {
+  color: #0284c7;
+  background: rgba(14, 165, 233, 0.14);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+}
+
+[data-theme="dark"] .feedback-info .feedback-icon {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.feedback-modal h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  color: var(--app-text);
+}
+
+.feedback-modal p {
+  margin: 0;
+  color: var(--app-text-muted);
+  line-height: 1.55;
+  font-size: 0.98rem;
+}
+
+.feedback-button {
+  margin-top: 26px;
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 13px 18px;
+  background: var(--app-primary);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.feedback-button:hover:not(:disabled) {
+  background: var(--app-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--app-shadow);
+}
+
+.feedback-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.feedback-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.feedback-actions .feedback-button {
+  margin-top: 0;
+}
+
+.feedback-button-secondary {
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  border: 1px solid var(--app-border);
+}
+
+.feedback-button-secondary:hover:not(:disabled) {
+  background: var(--app-border);
+  color: var(--app-text);
+  box-shadow: var(--app-shadow);
+}
+
+.feedback-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.feedback-warning .feedback-button:not(.feedback-button-secondary) {
+  background: var(--app-warning);
+  color: #ffffff;
+}
+
+.feedback-warning .feedback-button:not(.feedback-button-secondary):hover:not(:disabled) {
+  background: #92400e;
+  box-shadow: var(--app-shadow);
+}
+
+[data-theme="dark"] .feedback-warning .feedback-button:not(.feedback-button-secondary) {
+  color: #1f2937;
+}
+
+[data-theme="dark"] .feedback-warning .feedback-button:not(.feedback-button-secondary):hover:not(:disabled) {
+  background: #f59e0b;
+}
+
+.feedback-error .feedback-button:not(.feedback-button-secondary) {
+  background: var(--app-danger);
+  color: #ffffff;
+}
+
+.feedback-error .feedback-button:not(.feedback-button-secondary):hover:not(:disabled) {
+  background: #b91c1c;
+  box-shadow: var(--app-shadow);
+}
+
+@keyframes feedbackFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes feedbackScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-button-secondary {
+    order: 2;
+  }
+}

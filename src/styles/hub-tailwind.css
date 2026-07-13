@@ -1,0 +1,509 @@
+@tailwind components;
+@tailwind utilities;
+
+
+/* ================================
+   Core Hub Premium Motion Layer
+   Solo afecta al Hub
+================================ */
+
+.hub-enter {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  animation: hubEnter 760ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--hub-delay, 0ms);
+}
+
+.hub-context-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.45rem 0.72rem;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.hub-context-pill:last-child {
+  border-color: rgba(53, 212, 111, 0.18);
+  background: rgba(53, 212, 111, 0.075);
+  color: rgba(156, 232, 181, 0.86);
+}
+
+.hub-aurora-layer {
+  position: absolute;
+  z-index: -9;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(72px);
+  opacity: 0.26;
+  transform: translate3d(0, 0, 0);
+  mix-blend-mode: screen;
+}
+
+.hub-aurora-layer--one {
+  width: 34rem;
+  height: 34rem;
+  left: 6%;
+  top: 16%;
+  background: radial-gradient(circle, rgba(53, 212, 111, 0.32), transparent 62%);
+  animation: hubAuroraDriftOne 16s ease-in-out infinite alternate;
+}
+
+.hub-aurora-layer--two {
+  width: 40rem;
+  height: 40rem;
+  right: 3%;
+  top: 4%;
+  background: radial-gradient(circle, rgba(156, 232, 181, 0.22), transparent 64%);
+  animation: hubAuroraDriftTwo 20s ease-in-out infinite alternate;
+}
+
+.hub-aurora-layer--three {
+  width: 36rem;
+  height: 36rem;
+  left: 38%;
+  bottom: -24%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.2), transparent 68%);
+  animation: hubAuroraPulse 12s ease-in-out infinite;
+}
+
+.hub-energy-line {
+  position: absolute;
+  z-index: -8;
+  pointer-events: none;
+  height: 1px;
+  width: 42rem;
+  opacity: 0.36;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(156, 232, 181, 0.12),
+      rgba(53, 212, 111, 0.5),
+      rgba(156, 232, 181, 0.12),
+      transparent
+    );
+  box-shadow: 0 0 24px rgba(53, 212, 111, 0.22);
+}
+
+.hub-energy-line--one {
+  top: 28%;
+  left: -15%;
+  transform: rotate(-12deg);
+  animation: hubEnergyMoveOne 9s ease-in-out infinite;
+}
+
+.hub-energy-line--two {
+  right: -16%;
+  bottom: 24%;
+  transform: rotate(-13deg);
+  animation: hubEnergyMoveTwo 11s ease-in-out infinite;
+}
+
+.hub-noise-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -7;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.9) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.65) 0 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.5) 0 1px, transparent 1px);
+  background-size: 90px 90px, 130px 130px, 170px 170px;
+  animation: hubNoiseFloat 18s linear infinite;
+}
+
+/* Ecosistema Core */
+
+.hub-ecosystem-pattern {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  z-index: -8;
+  width: min(68rem, 86vw);
+  height: 18rem;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.22;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(156, 232, 181, 0.22) 50%, transparent 100%),
+    radial-gradient(circle at 50% 50%, rgba(53, 212, 111, 0.16), transparent 42%);
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 72%);
+}
+
+.hub-ecosystem-pattern::before,
+.hub-ecosystem-pattern::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(156, 232, 181, 0.36), transparent);
+  transform-origin: center;
+}
+
+.hub-ecosystem-pattern::before {
+  transform: translate(-50%, -50%) rotate(8deg);
+}
+
+.hub-ecosystem-pattern::after {
+  transform: translate(-50%, -50%) rotate(-8deg);
+}
+
+.hub-ecosystem-node {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(156, 232, 181, 0.9);
+  box-shadow: 0 0 20px rgba(53, 212, 111, 0.45);
+  animation: hubNodePulse 4.8s ease-in-out infinite;
+}
+
+.hub-ecosystem-node--core {
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+}
+
+.hub-ecosystem-node--one {
+  left: 22%;
+  top: 45%;
+  animation-delay: 0.6s;
+}
+
+.hub-ecosystem-node--two {
+  right: 22%;
+  top: 45%;
+  animation-delay: 1.2s;
+}
+
+.hub-ecosystem-node--three {
+  left: 50%;
+  bottom: 19%;
+  animation-delay: 1.8s;
+}
+
+/* Cards */
+
+.hub-module-grid:hover .hub-module-card {
+  opacity: 0.72;
+  transform: scale(0.992);
+}
+
+.hub-module-grid:hover .hub-module-card:hover {
+  opacity: 1;
+  transform: translateY(-0.25rem) scale(1);
+}
+
+.hub-module-card {
+  isolation: isolate;
+}
+
+.hub-card-hitarea {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.hub-card-hitarea:focus-visible {
+  outline: 3px solid rgba(53, 212, 111, 0.34);
+  outline-offset: -6px;
+  border-radius: inherit;
+}
+
+.hub-module-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.055) 38%,
+      rgba(156, 232, 181, 0.08) 48%,
+      transparent 62%
+    );
+  transform: translateX(-120%) skewX(-16deg);
+  opacity: 0;
+  transition:
+    transform 720ms ease,
+    opacity 280ms ease;
+}
+
+.hub-module-card:hover::before {
+  opacity: 1;
+  transform: translateX(120%) skewX(-16deg);
+}
+
+.hub-card-border-flow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(156, 232, 181, 0.42),
+      transparent 28%,
+      transparent 62%,
+      rgba(53, 212, 111, 0.18)
+    );
+  opacity: 0;
+  transition: opacity 260ms ease;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+}
+
+.hub-module-card:hover .hub-card-border-flow {
+  opacity: 1;
+}
+
+.hub-card-data-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(156, 232, 181, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(156, 232, 181, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+  transform: translateY(0);
+  transition:
+    opacity 260ms ease,
+    transform 360ms ease;
+}
+
+.hub-module-card:hover .hub-card-data-grid {
+  opacity: 0.28;
+  transform: translateY(-8px);
+}
+
+/* Botón neutro premium */
+
+.hub-access-button {
+  position: relative;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(156, 232, 181, 0.18) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+    rgba(8, 20, 15, 0.92) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 14px 28px rgba(0, 0, 0, 0.24),
+    0 0 0 1px rgba(53, 212, 111, 0.04) !important;
+}
+
+.hub-access-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(53, 212, 111, 0.16),
+      transparent
+    );
+  transform: translateX(-100%);
+  opacity: 0;
+  transition:
+    transform 420ms ease,
+    opacity 220ms ease;
+}
+
+.hub-module-card:hover .hub-access-button {
+  color: #ffffff !important;
+  border-color: rgba(156, 232, 181, 0.34) !important;
+  background:
+    linear-gradient(180deg, rgba(53, 212, 111, 0.18), rgba(53, 212, 111, 0.07)),
+    rgba(8, 22, 15, 0.96) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 18px 34px rgba(0, 0, 0, 0.28),
+    0 0 32px rgba(53, 212, 111, 0.12) !important;
+}
+
+.hub-module-card:hover .hub-access-button::before {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+.hub-access-button__arrow {
+  display: inline-flex;
+  transform: translateX(0);
+  transition: transform 200ms ease;
+}
+
+.hub-module-card:hover .hub-access-button__arrow {
+  transform: translateX(4px);
+}
+
+/* Animaciones */
+
+@keyframes hubEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hubAuroraDriftOne {
+  0% {
+    transform: translate3d(-2%, 0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(8%, 6%, 0) scale(1.08);
+  }
+}
+
+@keyframes hubAuroraDriftTwo {
+  0% {
+    transform: translate3d(2%, -2%, 0) scale(1);
+  }
+
+  100% {
+    transform: translate3d(-8%, 5%, 0) scale(1.1);
+  }
+}
+
+@keyframes hubAuroraPulse {
+  0%,
+  100% {
+    opacity: 0.14;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.28;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hubEnergyMoveOne {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: translateX(-8%) rotate(-12deg);
+  }
+
+  50% {
+    opacity: 0.42;
+    transform: translateX(18%) rotate(-12deg);
+  }
+}
+
+@keyframes hubEnergyMoveTwo {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: translateX(10%) rotate(-13deg);
+  }
+
+  50% {
+    opacity: 0.38;
+    transform: translateX(-16%) rotate(-13deg);
+  }
+}
+
+@keyframes hubNoiseFloat {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+
+  100% {
+    background-position: 90px 90px, -130px 130px, 170px -170px;
+  }
+}
+
+@keyframes hubNodePulse {
+  0%,
+  100% {
+    opacity: 0.38;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.55);
+  }
+}
+
+/* Responsive */
+
+@media (max-height: 760px) and (min-width: 768px) {
+  .hub-context-pill {
+    display: none;
+  }
+
+  .hub-module-card {
+    min-height: 370px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .hub-module-grid:hover .hub-module-card,
+  .hub-module-grid:hover .hub-module-card:hover {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hub-ecosystem-pattern {
+    display: none;
+  }
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-enter,
+  .hub-aurora-layer,
+  .hub-energy-line,
+  .hub-noise-layer,
+  .hub-ecosystem-node,
+  .hub-module-card,
+  .hub-module-card::before,
+  .hub-card-data-grid,
+  .hub-access-button,
+  .hub-access-button::before,
+  .hub-access-button__arrow {
+    animation: none !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .hub-enter {
+    opacity: 1;
+    transform: none;
+  }
+}

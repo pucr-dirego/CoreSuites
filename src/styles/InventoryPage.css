@@ -1,0 +1,550 @@
+.inventory-page {
+  min-height: 100vh;
+  background: var(--app-bg);
+  color: var(--app-text);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.inventory-content {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.inventory-title-block {
+  margin-bottom: 28px;
+}
+
+.inventory-eyebrow {
+  margin: 0 0 8px;
+  color: var(--app-primary);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inventory-title-block h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  color: var(--app-text);
+}
+
+.inventory-title-block p {
+  max-width: 760px;
+  margin: 12px 0 0;
+  color: var(--app-text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Toolbar / filtros */
+
+.inventory-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 2fr) repeat(4, minmax(140px, 1fr)) auto;
+  gap: 16px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: var(--app-shadow);
+  margin-bottom: 22px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inventory-search,
+.inventory-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inventory-search label,
+.inventory-filter label {
+  color: var(--app-text-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.inventory-search input,
+.inventory-filter select {
+  width: 100%;
+  border: 1px solid var(--app-border-strong);
+  background: var(--app-surface-soft);
+  color: var(--app-text);
+  border-radius: 14px;
+  padding: 12px 14px;
+  outline: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inventory-search input::placeholder {
+  color: var(--app-text-soft);
+}
+
+.inventory-search input:focus,
+.inventory-filter select:focus {
+  border-color: var(--app-primary);
+  box-shadow: 0 0 0 3px var(--app-primary-soft);
+}
+
+/* Botón limpiar filtros */
+
+/* Toolbar / filtros */
+
+.inventory-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 2fr) repeat(4, minmax(150px, 1fr));
+  gap: 16px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: var(--app-shadow);
+  margin-bottom: 22px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inventory-search,
+.inventory-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.inventory-search label,
+.inventory-filter label {
+  color: var(--app-text-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.inventory-search input,
+.inventory-filter select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--app-border-strong);
+  background: var(--app-surface-soft);
+  color: var(--app-text);
+  border-radius: 14px;
+  padding: 12px 14px;
+  outline: none;
+  font-size: 0.92rem;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inventory-filter select {
+  padding-right: 34px;
+}
+
+.inventory-search input::placeholder {
+  color: var(--app-text-soft);
+}
+
+.inventory-search input:focus,
+.inventory-filter select:focus {
+  border-color: var(--app-primary);
+  box-shadow: 0 0 0 3px var(--app-primary-soft);
+}
+
+/* Botón limpiar filtros */
+
+.inventory-clear-filters {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -4px;
+}
+
+.clear-filters-button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--app-border-strong);
+  border-radius: 12px;
+  background: var(--app-surface);
+  color: var(--app-text-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.clear-filters-button:hover:not(:disabled) {
+  background: var(--app-surface-soft);
+  border-color: var(--app-border-strong);
+  color: var(--app-text);
+  transform: translateY(-1px);
+  box-shadow: var(--app-shadow);
+}
+
+.clear-filters-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.clear-filters-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--app-surface-soft);
+  color: var(--app-text-soft);
+}
+
+/* Card tabla */
+
+.inventory-table-card {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--app-shadow);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inventory-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.inventory-table-header h2 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: 1.25rem;
+}
+
+.inventory-table-header p {
+  margin: 6px 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
+}
+
+.inventory-primary-action {
+  border: none;
+  background: var(--app-primary);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    opacity 0.16s ease;
+}
+
+.inventory-primary-action:hover:not(:disabled) {
+  background: var(--app-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--app-shadow);
+}
+
+.inventory-primary-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Tabla */
+
+.inventory-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 16px;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+.inventory-table th {
+  text-align: left;
+  color: var(--app-text-muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--app-border);
+  background: var(--app-surface-soft);
+}
+
+.inventory-table td {
+  padding: 15px 12px;
+  border-bottom: 1px solid var(--app-border);
+  color: var(--app-text);
+  font-size: 0.92rem;
+}
+
+.inventory-table tbody tr {
+  transition: background 0.16s ease;
+}
+
+.inventory-table tbody tr:hover {
+  background: color-mix(in srgb, var(--app-surface-soft) 58%, transparent);
+}
+
+.inventory-empty-row {
+  text-align: center;
+  color: var(--app-text-muted) !important;
+  font-weight: 700;
+  padding: 36px 16px !important;
+}
+
+.inventory-subtext {
+  display: block;
+  color: var(--app-text-soft);
+  font-size: 0.78rem;
+  margin-top: 3px;
+}
+
+/* Errores y mensajes */
+
+.inventory-error {
+  background: var(--app-danger-soft);
+  border: 1px solid var(--app-danger);
+  color: var(--app-danger);
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin: 18px 0;
+  font-weight: 600;
+}
+
+.inventory-message {
+  margin-bottom: 16px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.inventory-message-success {
+  border: 1px solid var(--app-primary);
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+}
+
+.inventory-message-error {
+  border: 1px solid var(--app-danger);
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+}
+
+/* Estados */
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-good {
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  border: 1px solid var(--app-primary);
+}
+
+.status-warning {
+  background: var(--app-warning-soft);
+  color: var(--app-warning);
+  border: 1px solid var(--app-warning);
+}
+
+.status-danger {
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+  border: 1px solid var(--app-danger);
+}
+
+.status-neutral {
+  background: var(--app-surface-soft);
+  color: var(--app-text-muted);
+  border: 1px solid var(--app-border-strong);
+}
+
+.inventory-active-cell {
+  text-align: center;
+}
+
+.active-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.active-dot.active {
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  border: 1px solid var(--app-primary);
+}
+
+.active-dot.inactive {
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+  border: 1px solid var(--app-danger);
+}
+
+/* Acciones */
+
+.inventory-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-action {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--app-border);
+  background: var(--app-surface);
+  color: var(--app-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.16s ease;
+}
+
+.icon-action:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--app-shadow);
+}
+
+.icon-action.edit:hover:not(:disabled) {
+  background: var(--app-primary-soft);
+  color: var(--app-primary);
+  border-color: var(--app-primary);
+}
+
+.icon-action.danger:hover:not(:disabled) {
+  background: var(--app-danger-soft);
+  color: var(--app-danger);
+  border-color: var(--app-danger);
+}
+
+.icon-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+  box-shadow: none;
+}
+
+.icon-action svg {
+  pointer-events: none;
+}
+
+/* Nota límite */
+
+.inventory-limit-note {
+  margin-top: 18px;
+  background: var(--app-surface-soft);
+  border: 1px dashed var(--app-border-strong);
+  color: var(--app-text-muted);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.inventory-limit-note strong {
+  color: var(--app-text);
+}
+
+/* Responsive */
+
+@media (max-width: 1180px) {
+  .inventory-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .inventory-search {
+    grid-column: span 2;
+  }
+
+  .inventory-clear-filters {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 620px) {
+  .inventory-content {
+    width: min(100% - 20px, 1180px);
+    padding-top: 20px;
+  }
+
+  .inventory-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-search {
+    grid-column: span 1;
+  }
+
+  .inventory-clear-filters {
+    justify-content: stretch;
+  }
+
+  .clear-filters-button {
+    width: 100%;
+  }
+
+  .inventory-table-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .inventory-primary-action {
+    width: 100%;
+  }
+}

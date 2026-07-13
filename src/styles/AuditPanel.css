@@ -1,0 +1,130 @@
+.audit-panel {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--app-shadow);
+  min-height: 260px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.audit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.audit-item {
+  border: 1px solid var(--app-border);
+  background: var(--app-surface-soft);
+  border-radius: 16px;
+  padding: 16px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.16s ease;
+}
+
+.audit-item:hover {
+  transform: translateY(-1px);
+  border-color: var(--app-border-strong);
+}
+
+.audit-item-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.audit-item strong {
+  display: block;
+  color: var(--app-text);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.audit-item p {
+  margin: 0;
+  color: var(--app-text-muted);
+  font-size: 0.9rem;
+}
+
+.audit-date {
+  display: block;
+  margin-top: 10px;
+  color: var(--app-text-soft);
+  font-size: 0.78rem;
+}
+
+.audit-movement-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 0.34rem 0.68rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+.audit-movement-alta {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.22);
+}
+
+.audit-movement-actualizacion {
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.22);
+}
+
+.audit-movement-baja {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.24);
+}
+
+/* Modo oscuro */
+
+[data-theme="dark"] .audit-movement-alta,
+.dark .audit-movement-alta,
+.theme-dark .audit-movement-alta {
+  color: #a7f3d0;
+  background: rgba(16, 185, 129, 0.16);
+  border-color: rgba(110, 231, 183, 0.3);
+}
+
+[data-theme="dark"] .audit-movement-actualizacion,
+.dark .audit-movement-actualizacion,
+.theme-dark .audit-movement-actualizacion {
+  color: #bfdbfe;
+  background: rgba(59, 130, 246, 0.16);
+  border-color: rgba(147, 197, 253, 0.3);
+}
+
+[data-theme="dark"] .audit-movement-baja,
+.dark .audit-movement-baja,
+.theme-dark .audit-movement-baja {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(248, 113, 113, 0.36);
+}
+
+@media (max-width: 620px) {
+  .audit-item-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .audit-movement-badge {
+    white-space: normal;
+  }
+}

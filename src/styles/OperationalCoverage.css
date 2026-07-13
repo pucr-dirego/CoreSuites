@@ -1,0 +1,551 @@
+.operational-coverage {
+  width: 100%;
+  max-width: 1180px;
+  margin: 28px auto 0;
+  border: 1px solid var(--app-border, rgba(148, 163, 184, 0.24));
+  border-radius: 32px;
+  background: var(--app-surface, #ffffff);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+  padding: 26px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.coverage-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.coverage-eyebrow {
+  margin: 0 0 8px;
+  color: var(--app-primary, #16a34a);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.coverage-header h2 {
+  margin: 0;
+  color: var(--app-text, #0f172a);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.coverage-header p {
+  max-width: 680px;
+  margin: 10px 0 0;
+  color: var(--app-muted, #64748b);
+  line-height: 1.65;
+}
+
+.coverage-global-summary {
+  min-width: 190px;
+  border-radius: 24px;
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--app-primary, #16a34a);
+  padding: 18px;
+  text-align: right;
+}
+
+.coverage-global-summary strong {
+  display: block;
+  font-size: 2.3rem;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.coverage-global-summary span {
+  display: block;
+  margin-top: 6px;
+  color: var(--app-muted, #64748b);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.coverage-map-panel {
+  position: relative;
+  min-height: 380px;
+  border: 1px solid var(--app-border, rgba(148, 163, 184, 0.16));
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 29% 38%, rgba(14, 165, 233, 0.14), transparent 26%),
+    radial-gradient(circle at 45% 60%, rgba(34, 197, 94, 0.14), transparent 28%),
+    radial-gradient(circle at 54% 74%, rgba(132, 204, 22, 0.12), transparent 20%),
+    linear-gradient(135deg, rgba(248, 250, 252, 0.98), rgba(235, 246, 250, 0.9));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.coverage-map-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  opacity: 0.7;
+  mask-image: radial-gradient(circle at 44% 48%, black 0%, transparent 78%);
+}
+
+.coverage-map-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.26), transparent 34%),
+    radial-gradient(circle at 78% 40%, rgba(255, 255, 255, 0.38), transparent 30%);
+  pointer-events: none;
+}
+
+.coverage-map-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.coverage-continent {
+  position: absolute;
+  background: rgba(186, 224, 235, 0.88);
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  filter: drop-shadow(0 18px 28px rgba(15, 23, 42, 0.1));
+}
+
+.coverage-north-america {
+  left: 4%;
+  top: -16%;
+  width: 390px;
+  height: 220px;
+  background: rgba(14, 165, 233, 0.58);
+  border-radius: 48% 52% 47% 53% / 44% 38% 62% 56%;
+  transform: rotate(9deg);
+  clip-path: polygon(
+    7% 40%,
+    18% 19%,
+    39% 6%,
+    61% 9%,
+    82% 22%,
+    96% 55%,
+    80% 68%,
+    55% 66%,
+    46% 83%,
+    28% 75%,
+    12% 63%
+  );
+}
+
+.coverage-central-america {
+  left: 26%;
+  top: 35%;
+  width: 225px;
+  height: 82px;
+  background: rgba(34, 197, 94, 0.36);
+  border-radius: 999px;
+  transform: rotate(17deg);
+  clip-path: polygon(
+    0 35%,
+    22% 25%,
+    44% 44%,
+    63% 39%,
+    82% 58%,
+    100% 55%,
+    88% 80%,
+    64% 75%,
+    45% 60%,
+    22% 67%,
+    5% 55%
+  );
+}
+
+.coverage-south-america {
+  left: 38%;
+  top: 45%;
+  width: 185px;
+  height: 245px;
+  background: rgba(186, 224, 235, 0.9);
+  border-radius: 48% 52% 44% 56% / 30% 35% 65% 70%;
+  transform: rotate(-18deg);
+  clip-path: polygon(
+    44% 0,
+    70% 12%,
+    86% 34%,
+    73% 55%,
+    66% 75%,
+    48% 100%,
+    32% 78%,
+    24% 56%,
+    11% 36%,
+    22% 14%
+  );
+}
+
+.coverage-caribbean {
+  left: 39%;
+  top: 32%;
+  width: 145px;
+  height: 42px;
+  background: rgba(186, 224, 235, 0.72);
+  border-radius: 999px;
+  transform: rotate(8deg);
+  clip-path: polygon(
+    0 48%,
+    16% 28%,
+    33% 44%,
+    51% 25%,
+    68% 50%,
+    87% 34%,
+    100% 55%,
+    76% 72%,
+    55% 60%,
+    32% 76%,
+    12% 62%
+  );
+}
+
+.coverage-pin {
+  position: absolute;
+  z-index: 5;
+  width: 22px;
+  height: 22px;
+  border: 5px solid #ffffff;
+  border-radius: 999px;
+  background: var(--app-primary, #16a34a);
+  box-shadow:
+    0 0 0 10px rgba(34, 197, 94, 0.16),
+    0 18px 34px rgba(15, 23, 42, 0.22);
+}
+
+.coverage-pin::after {
+  content: "";
+  position: absolute;
+  inset: -19px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  opacity: 0.24;
+}
+
+.coverage-pin-mexico {
+  left: 34%;
+  top: 44%;
+  color: var(--app-primary, #16a34a);
+  background: var(--app-primary, #16a34a);
+}
+
+.coverage-pin-colombia {
+  left: 49%;
+  top: 69%;
+  color: #84cc16;
+  background: #84cc16;
+}
+
+.coverage-route {
+  position: absolute;
+  z-index: 4;
+  height: 2px;
+  transform-origin: left center;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(22, 163, 74, 0.58),
+    transparent
+  );
+  opacity: 0.8;
+}
+
+
+.coverage-route-mexico-colombia {
+  left: 36%;
+  top: 49%;
+  width: 220px;
+  transform: rotate(47deg);
+}
+
+.coverage-card-zone {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+}
+
+.coverage-floating-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 205px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 22px 44px rgba(15, 23, 42, 0.16);
+  padding: 13px;
+}
+
+
+.coverage-card-mexico {
+  left: 18%;
+  top: 34%;
+}
+
+.coverage-card-colombia {
+  left: 48%;
+  top: 62%;
+}
+
+.coverage-card-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 15px;
+  background: var(--app-primary, #16a34a);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 24px rgba(22, 163, 74, 0.25);
+}
+
+
+.coverage-card-icon-mexico {
+  background: var(--app-primary, #16a34a);
+  box-shadow: 0 12px 24px rgba(22, 163, 74, 0.25);
+}
+
+.coverage-card-icon-colombia {
+  background: #84cc16;
+  box-shadow: 0 12px 24px rgba(132, 204, 22, 0.25);
+}
+
+.coverage-floating-card span {
+  display: block;
+  color: var(--app-muted, #64748b);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.coverage-floating-card strong {
+  display: block;
+  margin-top: 2px;
+  color: var(--app-text, #0f172a);
+  font-size: 1rem;
+}
+
+.coverage-floating-card p {
+  margin: 3px 0 0;
+  color: var(--app-muted, #64748b);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.coverage-country-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.coverage-country-card {
+  border: 1px solid var(--app-border, rgba(148, 163, 184, 0.24));
+  border-radius: 22px;
+  background: var(--app-soft, #f8fafc);
+  padding: 16px;
+}
+
+.coverage-country-card span {
+  display: block;
+  color: var(--app-primary, #16a34a);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.coverage-country-card strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--app-text, #0f172a);
+  font-size: 1.2rem;
+  letter-spacing: -0.04em;
+}
+
+.coverage-country-card p {
+  margin: 8px 0 0;
+  color: var(--app-muted, #64748b);
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+/* Modo oscuro */
+
+:root[data-theme="dark"] .coverage-map-panel,
+body.dark .coverage-map-panel,
+body.dark-mode .coverage-map-panel,
+.app.dark .coverage-map-panel {
+  background:
+    radial-gradient(circle at 24% 28%, rgba(14, 165, 233, 0.14), transparent 26%),
+    radial-gradient(circle at 46% 62%, rgba(34, 197, 94, 0.16), transparent 28%),
+    radial-gradient(circle at 54% 74%, rgba(132, 204, 22, 0.12), transparent 20%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(17, 36, 48, 0.92));
+}
+
+:root[data-theme="dark"] .coverage-map-panel::before,
+body.dark .coverage-map-panel::before,
+body.dark-mode .coverage-map-panel::before,
+.app.dark .coverage-map-panel::before {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  opacity: 0.9;
+}
+
+:root[data-theme="dark"] .coverage-map-panel::after,
+body.dark .coverage-map-panel::after,
+body.dark-mode .coverage-map-panel::after,
+.app.dark .coverage-map-panel::after {
+  background:
+    linear-gradient(90deg, rgba(15, 23, 42, 0.18), transparent 34%),
+    radial-gradient(circle at 78% 40%, rgba(255, 255, 255, 0.04), transparent 30%);
+}
+
+:root[data-theme="dark"] .coverage-continent,
+body.dark .coverage-continent,
+body.dark-mode .coverage-continent,
+.app.dark .coverage-continent {
+  border-color: rgba(148, 163, 184, 0.22);
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.24));
+}
+
+:root[data-theme="dark"] .coverage-north-america,
+body.dark .coverage-north-america,
+body.dark-mode .coverage-north-america,
+.app.dark .coverage-north-america {
+  background: rgba(14, 165, 233, 0.34);
+}
+
+:root[data-theme="dark"] .coverage-central-america,
+body.dark .coverage-central-america,
+body.dark-mode .coverage-central-america,
+.app.dark .coverage-central-america {
+  background: rgba(34, 197, 94, 0.26);
+}
+
+:root[data-theme="dark"] .coverage-south-america,
+body.dark .coverage-south-america,
+body.dark-mode .coverage-south-america,
+.app.dark .coverage-south-america {
+  background: rgba(51, 65, 85, 0.86);
+}
+
+:root[data-theme="dark"] .coverage-caribbean,
+body.dark .coverage-caribbean,
+body.dark-mode .coverage-caribbean,
+.app.dark .coverage-caribbean {
+  background: rgba(71, 85, 105, 0.7);
+}
+
+:root[data-theme="dark"] .coverage-floating-card,
+body.dark .coverage-floating-card,
+body.dark-mode .coverage-floating-card,
+.app.dark .coverage-floating-card {
+  border-color: rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.82);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.32);
+}
+
+:root[data-theme="dark"] .coverage-country-card,
+body.dark .coverage-country-card,
+body.dark-mode .coverage-country-card,
+.app.dark .coverage-country-card {
+  background: rgba(15, 23, 42, 0.42);
+}
+
+/* Responsive */
+
+@media (max-width: 980px) {
+  .operational-coverage {
+    padding: 22px;
+  }
+
+  .coverage-header {
+    flex-direction: column;
+  }
+
+  .coverage-global-summary {
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .coverage-map-panel {
+    min-height: 430px;
+  }
+
+  .coverage-north-america {
+    left: -4%;
+    top: -10%;
+  }
+
+  .coverage-central-america {
+    left: 28%;
+    top: 37%;
+  }
+
+  .coverage-south-america {
+    left: 42%;
+    top: 48%;
+  }
+
+
+  .coverage-card-mexico {
+    left: 24%;
+    top: 42%;
+  }
+
+  .coverage-card-colombia {
+    left: 36%;
+    top: 66%;
+  }
+
+  .coverage-country-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .operational-coverage {
+    margin-top: 22px;
+    border-radius: 24px;
+    padding: 18px;
+  }
+
+  .coverage-map-panel {
+    min-height: 470px;
+    border-radius: 22px;
+  }
+
+  .coverage-map-layer {
+    opacity: 0.45;
+  }
+
+  .coverage-floating-card {
+    left: 18px;
+    right: 18px;
+    min-width: 0;
+  }
+
+
+
+  .coverage-card-mexico {
+    top: 190px;
+  }
+
+  .coverage-card-colombia {
+    top: 306px;
+  }
+}
