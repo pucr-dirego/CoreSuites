@@ -906,7 +906,8 @@ function buildDiagnostic(report: {
 }
 
 export function evaluateDataQuality(
-  equipos: QualityEquipo[]
+  equipos: QualityEquipo[],
+  ignoredAlertKeys: ReadonlySet<string> = new Set<string>()
 ): DataQualityReport {
   const duplicateAlerts = [
     ...getDuplicateAlerts(equipos, {
@@ -960,11 +961,11 @@ export function evaluateDataQuality(
   const missingValueAlerts = getMissingValueAlerts(equipos);
   const suspiciousValueAlerts = getSuspiciousValueAlerts(equipos);
 
-  const alertas = sortAlertsByPriority([
-    ...duplicateAlerts,
-    ...missingValueAlerts,
-    ...suspiciousValueAlerts,
-  ]);
+const alertas = sortAlertsByPriority([
+  ...duplicateAlerts,
+  ...missingValueAlerts,
+  ...suspiciousValueAlerts,
+]).filter((alerta) => !ignoredAlertKeys.has(alerta.alertKey));
 
   const scores = equipos.map((equipo) =>
     calculateEquipmentScore(equipo, alertas)
