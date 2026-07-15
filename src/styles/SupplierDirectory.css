@@ -34,9 +34,9 @@
 
 .supplier-directory-summary {
   display: grid;
-  grid-template-columns: repeat(2, minmax(140px, 1fr));
-  gap: 12px;
-  min-width: 320px;
+  grid-template-columns: minmax(140px, 160px);
+  justify-content: end;
+  min-width: 160px;
 }
 
 .supplier-directory-summary div,
@@ -75,21 +75,28 @@
 }
 
 .supplier-directory-toolbar {
-  padding: 18px;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns:
+    minmax(260px, 2fr)
+    repeat(4, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 22px;
 }
 
-.supplier-directory-search {
-  margin-bottom: 16px;
+.supplier-directory-search,
+.supplier-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
 }
 
 .supplier-directory-search label,
 .supplier-filter-field label,
 .supplier-modal-form label {
-  display: grid;
-  gap: 7px;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: #526052;
 }
 
@@ -107,20 +114,14 @@
   color: #17211b;
   outline: none;
   font: inherit;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 0.92rem;
 }
 
-.supplier-directory-filters {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr auto;
-  gap: 12px;
-  align-items: end;
-}
 
 .supplier-directory-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(380px, 0.85fr);
-  gap: 20px;
-  align-items: start;
+  display: block;
 }
 
 .supplier-directory-table-card {
@@ -238,6 +239,15 @@
   font-size: 0.85rem;
 }
 
+.supplier-directory-clear-filters {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -4px;
+}
+
+
 .supplier-clear-filters-button,
 .supplier-section-button,
 .supplier-row-action,
@@ -268,6 +278,105 @@
   color: #256642;
 }
 
+/* Acciones compactas de la tabla de proveedores */
+
+.supplier-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.supplier-icon-action {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(26, 57, 40, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  color: #637064;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.16s ease;
+}
+
+.supplier-icon-action:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(18, 45, 28, 0.12);
+}
+
+.supplier-icon-action.edit:hover:not(:disabled) {
+  background: rgba(47, 125, 82, 0.12);
+  color: #256642;
+  border-color: rgba(47, 125, 82, 0.45);
+}
+
+.supplier-icon-action.danger:hover:not(:disabled) {
+  background: rgba(190, 48, 48, 0.1);
+  color: #9d2b2b;
+  border-color: rgba(190, 48, 48, 0.4);
+}
+
+.supplier-icon-action.restore:hover:not(:disabled) {
+  background: rgba(47, 125, 82, 0.12);
+  color: #256642;
+  border-color: rgba(47, 125, 82, 0.45);
+}
+
+.supplier-icon-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+}
+
+.supplier-icon-action svg {
+  pointer-events: none;
+}
+
+
+.supplier-name-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.supplier-inline-alert-button {
+  min-width: 25px;
+  height: 25px;
+  padding: 0 7px;
+  border: 1px solid rgba(190, 48, 48, 0.24);
+  border-radius: 999px;
+  background: rgba(190, 48, 48, 0.1);
+  color: #9d2b2b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.supplier-inline-alert-button:hover {
+  background: rgba(190, 48, 48, 0.16);
+  border-color: rgba(190, 48, 48, 0.42);
+  transform: translateY(-1px);
+}
+
+
 .supplier-section-button,
 .supplier-primary-button {
   background: #2f7d52;
@@ -280,12 +389,36 @@
 }
 
 .supplier-detail-panel {
-  position: sticky;
-  top: 96px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
+  position: static;
+  max-height: none;
+  overflow: visible;
   padding: 20px;
 }
+
+.supplier-detail-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(11, 18, 14, 0.56);
+  backdrop-filter: blur(8px);
+}
+
+.supplier-detail-modal-shell {
+  width: min(1180px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  border-radius: 28px;
+}
+
+.supplier-detail-modal-shell .supplier-detail-panel {
+  width: 100%;
+  margin: 0;
+  background: #ffffff;
+}
+
 
 .supplier-detail-placeholder {
   min-height: 440px;
@@ -314,6 +447,31 @@
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(26, 57, 40, 0.1);
   margin-bottom: 16px;
+}
+
+.supplier-detail-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.supplier-detail-close-button {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(26, 57, 40, 0.08);
+  color: #203629;
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.supplier-detail-close-button:hover {
+  background: rgba(26, 57, 40, 0.14);
 }
 
 .supplier-detail-section {
@@ -573,6 +731,19 @@
     grid-template-columns: 1fr;
   }
 
+
+  .supplier-directory-toolbar {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.supplier-directory-search {
+  grid-column: span 2;
+}
+
+.supplier-directory-clear-filters {
+  justify-content: flex-end;
+}
+
   .supplier-detail-panel {
     position: static;
     max-height: none;
@@ -592,9 +763,21 @@
     min-width: 0;
   }
 
-  .supplier-directory-filters {
-    grid-template-columns: 1fr;
-  }
+  .supplier-directory-toolbar {
+  grid-template-columns: 1fr;
+}
+
+.supplier-directory-search {
+  grid-column: span 1;
+}
+
+.supplier-directory-clear-filters {
+  justify-content: stretch;
+}
+
+.supplier-clear-filters-button {
+  width: 100%;
+}
 
   .supplier-info-grid,
   .supplier-modal-form {

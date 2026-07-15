@@ -20,6 +20,7 @@ interface SupplierDetailPanelProps {
   supplier: SupplierDetail | null;
   isLoading: boolean;
   isSaving: boolean;
+  onClose?: () => void;
   onUpdateGeneralInfo: (payload: SupplierGeneralUpdatePayload) => Promise<void> | void;
   onSaveContact: (payload: SupplierContactPayload) => Promise<void> | void;
   onSaveAssignment: (payload: SupplierAssignmentPayload) => Promise<void> | void;
@@ -41,6 +42,7 @@ export function SupplierDetailPanel({
   supplier,
   isLoading,
   isSaving,
+  onClose,
   onUpdateGeneralInfo,
   onSaveContact,
   onSaveAssignment,
@@ -84,23 +86,49 @@ export function SupplierDetailPanel({
 
   return (
     <aside className="supplier-detail-panel">
-      <div className="supplier-detail-header">
-        <div>
-          <span className={`supplier-status-pill supplier-status-${supplier.status}`}>
-            {getStatusText(supplier.status)}
-          </span>
-          <h3>{supplier.name}</h3>
-          <p>{supplier.businessName || supplier.category || "Proveedor registrado"}</p>
-        </div>
+  <div className="supplier-detail-header">
+    <div>
+      <span
+        className={`supplier-status-pill supplier-status-${supplier.status}`}
+      >
+        {getStatusText(supplier.status)}
+      </span>
 
+      <h3>{supplier.name}</h3>
+
+      <p>
+        {supplier.businessName ||
+          supplier.category ||
+          "Proveedor registrado"}
+      </p>
+    </div>
+
+    <div className="supplier-detail-header-actions">
         <button
           type="button"
-          className={supplier.status === "activo" ? "supplier-danger-button" : "supplier-primary-button"}
+          className={
+            supplier.status === "activo"
+              ? "supplier-danger-button"
+              : "supplier-primary-button"
+          }
           onClick={() => setShowStatusConfirm(true)}
         >
           {supplier.status === "activo" ? "Desactivar" : "Reactivar"}
         </button>
+
+        {onClose && (
+          <button
+            type="button"
+            className="supplier-detail-close-button"
+            onClick={onClose}
+            aria-label="Cerrar detalle del proveedor"
+            title="Cerrar"
+          >
+            ×
+          </button>
+        )}
       </div>
+    </div>
 
       <SupplierAlertsPanel alerts={supplier.alerts} />
 

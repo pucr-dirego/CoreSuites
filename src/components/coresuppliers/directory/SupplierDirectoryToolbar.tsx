@@ -18,10 +18,11 @@ export function SupplierDirectoryToolbar({
     <section className="supplier-directory-toolbar">
       <div className="supplier-directory-search">
         <label htmlFor="supplier-search">Buscar proveedor</label>
+
         <input
           id="supplier-search"
           type="search"
-          placeholder="Nombre, razón social, RFC, contacto, servicio o sucursal..."
+          placeholder="Nombre, razón social, RFC, contacto..."
           value={filters.search}
           onChange={(event) =>
             onChangeFilters((current) => ({
@@ -32,83 +33,95 @@ export function SupplierDirectoryToolbar({
         />
       </div>
 
-      <div className="supplier-directory-filters">
-        <div className="supplier-filter-field">
-          <label htmlFor="supplier-status-filter">Estado</label>
-          <select
-            id="supplier-status-filter"
-            value={filters.status}
-            onChange={(event) =>
-              onChangeFilters((current) => ({
-                ...current,
-                status: event.target.value as SupplierDirectoryFilters["status"],
-              }))
-            }
-          >
-            <option value="todos">Todos</option>
-            <option value="activo">Activos</option>
-            <option value="inactivo">Inactivos</option>
-            <option value="observacion">En observación</option>
-            <option value="pendiente">Pendientes</option>
-          </select>
-        </div>
+      <div className="supplier-filter-field">
+        <label htmlFor="supplier-status-filter">Estado</label>
 
-        <div className="supplier-filter-field">
-          <label htmlFor="supplier-service-filter">Servicio</label>
-          <input
-            id="supplier-service-filter"
-            type="text"
-            placeholder="Internet, CCTV, impresión..."
-            value={filters.serviceId === "todos" ? "" : filters.serviceId}
-            onChange={(event) =>
-              onChangeFilters((current) => ({
-                ...current,
-                serviceId: event.target.value.trim() || "todos",
-              }))
-            }
-          />
-        </div>
+        <select
+          id="supplier-status-filter"
+          value={filters.status}
+          onChange={(event) =>
+            onChangeFilters((current) => ({
+              ...current,
+              status: event.target
+                .value as SupplierDirectoryFilters["status"],
+            }))
+          }
+        >
+          <option value="todos">Todos</option>
+          <option value="activo">Activos</option>
+          <option value="inactivo">Inactivos</option>
+          <option value="observacion">En observación</option>
+          <option value="pendiente">Pendientes</option>
+        </select>
+      </div>
 
-        <div className="supplier-filter-field">
-          <label htmlFor="supplier-branch-filter">Sucursal</label>
-          <input
-            id="supplier-branch-filter"
-            type="text"
-            placeholder="Tampico, Saltillo, CEDIS..."
-            value={filters.branchId === "todos" ? "" : filters.branchId}
-            onChange={(event) =>
-              onChangeFilters((current) => ({
-                ...current,
-                branchId: event.target.value.trim() || "todos",
-              }))
-            }
-          />
-        </div>
+      <div className="supplier-filter-field">
+        <label htmlFor="supplier-service-filter">Servicio</label>
 
-        <div className="supplier-filter-field">
-          <label htmlFor="supplier-alert-filter">Alertas</label>
-          <select
-            id="supplier-alert-filter"
-            value={filters.alertType}
-            onChange={(event) =>
-              onChangeFilters((current) => ({
-                ...current,
-                alertType: event.target.value as SupplierDirectoryFilters["alertType"],
-              }))
-            }
-          >
-            <option value="todos">Todas</option>
-            <option value="sin_contacto">Sin contacto</option>
-            <option value="sin_servicios">Sin servicios</option>
-            <option value="datos_incompletos">Datos incompletos</option>
-          </select>
-        </div>
+        <input
+          id="supplier-service-filter"
+          type="text"
+          placeholder="Internet, CCTV..."
+          value={filters.serviceId === "todos" ? "" : filters.serviceId}
+          onChange={(event) =>
+            onChangeFilters((current) => ({
+              ...current,
+              serviceId: event.target.value || "todos",
+            }))
+          }
+        />
+      </div>
 
+      <div className="supplier-filter-field">
+        <label htmlFor="supplier-branch-filter">Sucursal</label>
+
+        <input
+          id="supplier-branch-filter"
+          type="text"
+          placeholder="Tampico, Saltillo..."
+          value={filters.branchId === "todos" ? "" : filters.branchId}
+          onChange={(event) =>
+            onChangeFilters((current) => ({
+              ...current,
+              branchId: event.target.value || "todos",
+            }))
+          }
+        />
+      </div>
+
+      <div className="supplier-filter-field">
+        <label htmlFor="supplier-alert-filter">Alertas</label>
+
+        <select
+          id="supplier-alert-filter"
+          value={filters.alertType}
+          onChange={(event) =>
+            onChangeFilters((current) => ({
+              ...current,
+              alertType: event.target
+                .value as SupplierDirectoryFilters["alertType"],
+            }))
+          }
+        >
+          <option value="todos">Todas</option>
+          <option value="sin_contacto">Sin contacto</option>
+          <option value="sin_servicios">Sin servicios</option>
+          <option value="datos_incompletos">Datos incompletos</option>
+        </select>
+      </div>
+
+      <div className="supplier-directory-clear-filters">
         <button
           type="button"
           className="supplier-clear-filters-button"
           onClick={onClearFilters}
           disabled={!hasActiveFilters}
+          aria-label="Limpiar filtros del directorio de proveedores"
+          title={
+            hasActiveFilters
+              ? "Limpiar filtros activos"
+              : "No hay filtros activos"
+          }
         >
           Limpiar filtros
         </button>

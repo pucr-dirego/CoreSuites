@@ -1,8 +1,8 @@
 .admin-page {
-  width: min(100% - 48px, 1062px);
+  width: min(1180px, calc(100% - 32px));
   min-height: 100vh;
   margin: 0 auto;
-  padding: 34px 0 44px;
+  padding: 32px 0 44px;
   background: transparent;
   color: var(--app-text);
   transition:
@@ -420,9 +420,9 @@
 
 /* Responsive */
 
-@media (max-width: 900px) {
+@media (max-width: 620px) {
   .admin-page {
-    width: min(100% - 36px, 1062px);
+    width: min(100% - 20px, 1180px);
     padding: 28px 0 36px;
   }
 

@@ -1,7 +1,14 @@
-import type { SupplierDetail } from "../../../interfaces/supplierDirectory";
+import type { SupplierStatus } from "../../../interfaces/supplierDirectory";
+
+interface SupplierStatusTarget {
+  id: string;
+  name: string;
+  status: SupplierStatus;
+}
+
 
 interface SupplierStatusConfirmModalProps {
-  supplier: SupplierDetail;
+  supplier: SupplierStatusTarget;
   isSaving: boolean;
   onClose: () => void;
   onConfirm: () => Promise<void> | void;

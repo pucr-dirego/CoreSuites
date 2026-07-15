@@ -69,6 +69,14 @@ export function useSupplierDirectory() {
     }
   }, []);
 
+  const closeSupplierDetail = useCallback(() => {
+    setSelectedSupplierId(null);
+    setSelectedSupplierDetail(null);
+    setIsLoadingDetail(false);
+  }, []);
+
+
+
   const refreshSelectedSupplier = useCallback(async () => {
     if (!selectedSupplierId) return;
 
@@ -176,6 +184,7 @@ export function useSupplierDirectory() {
     errorMessage,
 
     loadSupplierDetail,
+    closeSupplierDetail,
     updateGeneralInfo,
     saveContact,
     saveAssignment,

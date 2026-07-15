@@ -963,70 +963,214 @@
 
 /* Mejoras de contraste para modo oscuro */
 
-:root[data-theme="dark"] .data-quality-feedback-success,
-body.dark .data-quality-feedback-success,
-body.dark-mode .data-quality-feedback-success,
-.app.dark .data-quality-feedback-success {
-  color: #bbf7d0;
+/* ===========================
+   Ajustes específicos modo oscuro
+   =========================== */
+
+/* Tarjetas del resumen de incidencias */
+
+:root[data-theme="dark"] .data-quality-summary-list div,
+.dark .data-quality-summary-list div,
+.theme-dark .data-quality-summary-list div,
+body.dark .data-quality-summary-list div,
+body.dark-mode .data-quality-summary-list div,
+.app.dark .data-quality-summary-list div {
+  background: #2b2b31;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-:root[data-theme="dark"] .data-quality-feedback-error,
-body.dark .data-quality-feedback-error,
-body.dark-mode .data-quality-feedback-error,
-.app.dark .data-quality-feedback-error {
-  color: #fecaca;
+:root[data-theme="dark"] .data-quality-summary-list span,
+.dark .data-quality-summary-list span,
+.theme-dark .data-quality-summary-list span,
+body.dark .data-quality-summary-list span,
+body.dark-mode .data-quality-summary-list span,
+.app.dark .data-quality-summary-list span {
+  color: #d7d7dc;
 }
 
-:root[data-theme="dark"] .data-quality-gauge-value span,
-body.dark .data-quality-gauge-value span,
-body.dark-mode .data-quality-gauge-value span,
-.app.dark .data-quality-gauge-value span {
-  color: #bbf7d0;
+:root[data-theme="dark"] .data-quality-summary-list strong,
+.dark .data-quality-summary-list strong,
+.theme-dark .data-quality-summary-list strong,
+body.dark .data-quality-summary-list strong,
+body.dark-mode .data-quality-summary-list strong,
+.app.dark .data-quality-summary-list strong {
+  color: #ffffff;
 }
 
-:root[data-theme="dark"] .data-quality-severity-critical,
-body.dark .data-quality-severity-critical,
-body.dark-mode .data-quality-severity-critical,
-.app.dark .data-quality-severity-critical {
-  color: #fecaca;
+/* Tarjetas numéricas del modal de sucursal */
+
+:root[data-theme="dark"] .data-quality-modal-grid article,
+.dark .data-quality-modal-grid article,
+.theme-dark .data-quality-modal-grid article,
+body.dark .data-quality-modal-grid article,
+body.dark-mode .data-quality-modal-grid article,
+.app.dark .data-quality-modal-grid article {
+  background: #2b2b31;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-:root[data-theme="dark"] .data-quality-severity-high,
-body.dark .data-quality-severity-high,
-body.dark-mode .data-quality-severity-high,
-.app.dark .data-quality-severity-high {
-  color: #fed7aa;
+:root[data-theme="dark"] .data-quality-modal-grid span,
+.dark .data-quality-modal-grid span,
+.theme-dark .data-quality-modal-grid span,
+body.dark .data-quality-modal-grid span,
+body.dark-mode .data-quality-modal-grid span,
+.app.dark .data-quality-modal-grid span {
+  color: #d7d7dc;
 }
 
-:root[data-theme="dark"] .data-quality-severity-medium,
-body.dark .data-quality-severity-medium,
-body.dark-mode .data-quality-severity-medium,
-.app.dark .data-quality-severity-medium {
-  color: #fef08a;
+:root[data-theme="dark"] .data-quality-modal-grid strong,
+.dark .data-quality-modal-grid strong,
+.theme-dark .data-quality-modal-grid strong,
+body.dark .data-quality-modal-grid strong,
+body.dark-mode .data-quality-modal-grid strong,
+.app.dark .data-quality-modal-grid strong {
+  color: #ffffff;
 }
 
-:root[data-theme="dark"] .data-quality-severity-low,
-body.dark .data-quality-severity-low,
-body.dark-mode .data-quality-severity-low,
-.app.dark .data-quality-severity-low {
-  color: #bfdbfe;
+/* Resumen superior del modal Ignorar alerta */
+
+:root[data-theme="dark"] .data-quality-ignore-summary,
+.dark .data-quality-ignore-summary,
+.theme-dark .data-quality-ignore-summary,
+body.dark .data-quality-ignore-summary,
+body.dark-mode .data-quality-ignore-summary,
+.app.dark .data-quality-ignore-summary {
+  background: #2b2b31;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-:root[data-theme="dark"] .data-quality-history-status-active,
-body.dark .data-quality-history-status-active,
-body.dark-mode .data-quality-history-status-active,
-.app.dark .data-quality-history-status-active {
-  color: #fde68a;
+:root[data-theme="dark"] .data-quality-ignore-summary strong,
+.dark .data-quality-ignore-summary strong,
+.theme-dark .data-quality-ignore-summary strong,
+body.dark .data-quality-ignore-summary strong,
+body.dark-mode .data-quality-ignore-summary strong,
+.app.dark .data-quality-ignore-summary strong {
+  color: #ffffff;
 }
 
-:root[data-theme="dark"] .data-quality-history-status-reactivated,
-body.dark .data-quality-history-status-reactivated,
-body.dark-mode .data-quality-history-status-reactivated,
-.app.dark .data-quality-history-status-reactivated {
-  color: #e2e8f0;
+:root[data-theme="dark"] .data-quality-ignore-summary span,
+.dark .data-quality-ignore-summary span,
+.theme-dark .data-quality-ignore-summary span,
+body.dark .data-quality-ignore-summary span,
+body.dark-mode .data-quality-ignore-summary span,
+.app.dark .data-quality-ignore-summary span {
+  color: #c6c6cc;
+}
+
+:root[data-theme="dark"] .data-quality-ignore-summary p,
+.dark .data-quality-ignore-summary p,
+.theme-dark .data-quality-ignore-summary p,
+body.dark .data-quality-ignore-summary p,
+body.dark-mode .data-quality-ignore-summary p,
+.app.dark .data-quality-ignore-summary p {
+  color: #b8b8c0;
+}
+
+/* Alertas dentro del detalle de sucursal */
+
+:root[data-theme="dark"] .data-quality-modal-alert,
+.dark .data-quality-modal-alert,
+.theme-dark .data-quality-modal-alert,
+body.dark .data-quality-modal-alert,
+body.dark-mode .data-quality-modal-alert,
+.app.dark .data-quality-modal-alert {
+  background: #25252a;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .data-quality-modal-alert p,
+:root[data-theme="dark"] .data-quality-modal-alert span,
+.dark .data-quality-modal-alert p,
+.dark .data-quality-modal-alert span,
+.theme-dark .data-quality-modal-alert p,
+.theme-dark .data-quality-modal-alert span,
+body.dark .data-quality-modal-alert p,
+body.dark .data-quality-modal-alert span,
+body.dark-mode .data-quality-modal-alert p,
+body.dark-mode .data-quality-modal-alert span,
+.app.dark .data-quality-modal-alert p,
+.app.dark .data-quality-modal-alert span {
+  color: #c6c6cc;
+}
+
+/* Contadores */
+
+:root[data-theme="dark"] .data-quality-ignored-counter,
+:root[data-theme="dark"] .data-quality-section-count,
+.dark .data-quality-ignored-counter,
+.dark .data-quality-section-count,
+.theme-dark .data-quality-ignored-counter,
+.theme-dark .data-quality-section-count,
+body.dark .data-quality-ignored-counter,
+body.dark .data-quality-section-count,
+body.dark-mode .data-quality-ignored-counter,
+body.dark-mode .data-quality-section-count,
+.app.dark .data-quality-ignored-counter,
+.app.dark .data-quality-section-count {
+  background: #34343a;
+  color: #e2e2e7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Botón cerrar de los modales */
+
+:root[data-theme="dark"] .data-quality-modal-header button,
+.dark .data-quality-modal-header button,
+.theme-dark .data-quality-modal-header button,
+body.dark .data-quality-modal-header button,
+body.dark-mode .data-quality-modal-header button,
+.app.dark .data-quality-modal-header button {
+  background: #34343a;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+:root[data-theme="dark"] .data-quality-modal-header button:hover,
+.dark .data-quality-modal-header button:hover,
+.theme-dark .data-quality-modal-header button:hover,
+body.dark .data-quality-modal-header button:hover,
+body.dark-mode .data-quality-modal-header button:hover,
+.app.dark .data-quality-modal-header button:hover {
+  background: #414148;
+}
+
+/* Campo para escribir el motivo */
+
+:root[data-theme="dark"] .data-quality-reason-field textarea,
+.dark .data-quality-reason-field textarea,
+.theme-dark .data-quality-reason-field textarea,
+body.dark .data-quality-reason-field textarea,
+body.dark-mode .data-quality-reason-field textarea,
+.app.dark .data-quality-reason-field textarea {
+  background: #242429;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .data-quality-reason-field textarea::placeholder,
+.dark .data-quality-reason-field textarea::placeholder,
+.theme-dark .data-quality-reason-field textarea::placeholder,
+body.dark .data-quality-reason-field textarea::placeholder,
+body.dark-mode .data-quality-reason-field textarea::placeholder,
+.app.dark .data-quality-reason-field textarea::placeholder {
+  color: #92929b;
+}
+
+:root[data-theme="dark"] .data-quality-reason-field small,
+.dark .data-quality-reason-field small,
+.theme-dark .data-quality-reason-field small,
+body.dark .data-quality-reason-field small,
+body.dark-mode .data-quality-reason-field small,
+.app.dark .data-quality-reason-field small {
+  color: #a5a5ad;
 }
 
 @media (max-width: 980px) {
+
+
+  
+
+
   .data-quality-page {
     padding: 24px 18px 32px;
   }

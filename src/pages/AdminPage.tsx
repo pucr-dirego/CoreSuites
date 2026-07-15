@@ -176,10 +176,6 @@ function AdminPage() {
           </p>
         </div>
 
-        <div className="admin-policy-badge">
-          <strong>0</strong>
-          <small>eliminaciones físicas</small>
-        </div>
       </section>
 
       <section className="admin-kpi-grid">

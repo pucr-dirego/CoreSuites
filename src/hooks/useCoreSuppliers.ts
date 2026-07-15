@@ -60,6 +60,26 @@ function limpiarTexto(valor?: string) {
   return texto || undefined;
 }
 
+function obtenerTimestampActualizacion(
+  servicio: ServicioProveedorVista
+): number {
+  const valor: unknown = servicio.fechaUltimaActualizacion;
+
+  if (valor === undefined || valor === null || valor === "") {
+    return 0;
+  }
+
+  let timestamp = 0;
+
+  if (valor instanceof Date) {
+    timestamp = valor.getTime();
+  } else if (typeof valor === "string" || typeof valor === "number") {
+    timestamp = new Date(valor).getTime();
+  }
+
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
 function estaActivo(activo?: boolean, statecode?: number) {
   return activo !== false && statecode !== 1;
 }
@@ -265,7 +285,17 @@ export function useCoreSuppliers() {
           )
         )
         .filter((servicio) => servicio.activo)
-        .sort((a, b) => a.sucursal.localeCompare(b.sucursal));
+        .sort((a, b) => {
+          const diferenciaFecha =
+            obtenerTimestampActualizacion(b) -
+            obtenerTimestampActualizacion(a);
+
+          if (diferenciaFecha !== 0) {
+            return diferenciaFecha;
+          }
+
+          return a.sucursal.localeCompare(b.sucursal);
+        });
 
       setProveedores(proveedoresActivos);
       setContactos(contactosMapeados);

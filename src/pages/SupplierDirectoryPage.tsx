@@ -19,21 +19,18 @@ export function SupplierDirectoryPage() {
           </p>
         </div>
 
-        <div className="supplier-directory-summary">
-          <div>
-            <span>{directory.suppliers.length}</span>
-            <small>
-              {directory.hasActiveFilters ? "Coincidencias encontradas" : "Últimos proveedores"}
-            </small>
-          </div>
+      <div className="supplier-directory-summary">
+        <div>
+          <span>
+            {directory.suppliers.reduce(
+              (total, supplier) => total + supplier.alertsCount,
+              0
+            )}
+          </span>
 
-          <div>
-            <span>
-              {directory.suppliers.reduce((total, supplier) => total + supplier.alertsCount, 0)}
-            </span>
-            <small>Alertas visibles</small>
-          </div>
+          <small>Alertas visibles</small>
         </div>
+      </div>
       </section>
 
       {directory.errorMessage && (
@@ -48,23 +45,42 @@ export function SupplierDirectoryPage() {
       />
 
       <section className="supplier-directory-layout">
-        <SupplierDirectoryTable
-          suppliers={directory.suppliers}
-          isLoading={directory.isLoadingList}
-          selectedSupplierId={directory.selectedSupplierId}
-          onSelectSupplier={directory.loadSupplierDetail}
-        />
+    <SupplierDirectoryTable
+      suppliers={directory.suppliers}
+      isLoading={directory.isLoadingList}
+      isSaving={directory.isSaving}
+      selectedSupplierId={directory.selectedSupplierId}
+      onSelectSupplier={directory.loadSupplierDetail}
+      onSetSupplierStatus={directory.setSupplierStatus}
+    />
+    </section>
 
-        <SupplierDetailPanel
-          supplier={directory.selectedSupplierDetail}
-          isLoading={directory.isLoadingDetail}
-          isSaving={directory.isSaving}
-          onUpdateGeneralInfo={directory.updateGeneralInfo}
-          onSaveContact={directory.saveContact}
-          onSaveAssignment={directory.saveAssignment}
-          onSetSupplierStatus={directory.setSupplierStatus}
-        />
-      </section>
+        {directory.selectedSupplierId && (
+          <div
+            className="supplier-detail-modal-backdrop"
+            onMouseDown={directory.closeSupplierDetail}
+            role="presentation"
+          >
+            <div
+              className="supplier-detail-modal-shell"
+              onMouseDown={(event) => event.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Detalle del proveedor"
+            >
+              <SupplierDetailPanel
+                supplier={directory.selectedSupplierDetail}
+                isLoading={directory.isLoadingDetail}
+                isSaving={directory.isSaving}
+                onClose={directory.closeSupplierDetail}
+                onUpdateGeneralInfo={directory.updateGeneralInfo}
+                onSaveContact={directory.saveContact}
+                onSaveAssignment={directory.saveAssignment}
+                onSetSupplierStatus={directory.setSupplierStatus}
+              />
+            </div>
+          </div>
+        )}
     </main>
   );
 }
