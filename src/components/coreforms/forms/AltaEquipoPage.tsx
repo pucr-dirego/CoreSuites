@@ -755,17 +755,25 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
             </p>
 
             <div className="coreforms-modal-actions">
-              <button
-                type="button"
-                className="coreforms-primary-button"
-                onClick={() => {
-                  setMensaje(null);
-                  setErrors({});
-                  setMostrarModalExito(false);
-                }}
-              >
-                Capturar otro equipo
-              </button>
+            <button
+              type="button"
+              className="coreforms-primary-button"
+              onClick={() => {
+                setMensaje(null);
+                setErrors({});
+                setMostrarModalExito(false);
+
+                requestAnimationFrame(() => {
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                  });
+                });
+              }}
+            >
+              Capturar otro equipo
+            </button>
             </div>
           </div>
         </div>

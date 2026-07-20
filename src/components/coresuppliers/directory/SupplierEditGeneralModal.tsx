@@ -3,7 +3,6 @@ import type { FormEvent } from "react";
 import type {
   SupplierDetail,
   SupplierGeneralUpdatePayload,
-  SupplierStatus,
 } from "../../../interfaces/supplierDirectory";
 
 interface SupplierEditGeneralModalProps {
@@ -27,8 +26,7 @@ export function SupplierEditGeneralModal({
     phone: supplier.phone || "",
     email: supplier.email || "",
     website: supplier.website || "",
-    status: supplier.status,
-    category: supplier.category || "",
+    status: supplier.status === "inactivo" ? "inactivo" : "activo",
     notes: supplier.notes || "",
   });
 
@@ -44,6 +42,7 @@ export function SupplierEditGeneralModal({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     await onSave(form);
     onClose();
   };
@@ -54,10 +53,19 @@ export function SupplierEditGeneralModal({
         <div className="supplier-modal-header">
           <div>
             <h3>Editar datos del proveedor</h3>
-            <p>Actualiza la información general registrada en el directorio.</p>
+
+            <p>
+              Actualiza la información general registrada en el directorio.
+            </p>
           </div>
 
-          <button type="button" className="supplier-modal-close" onClick={onClose}>
+          <button
+            type="button"
+            className="supplier-modal-close"
+            onClick={onClose}
+            aria-label="Cerrar edición del proveedor"
+            title="Cerrar"
+          >
             ×
           </button>
         </div>
@@ -67,7 +75,9 @@ export function SupplierEditGeneralModal({
             Nombre comercial
             <input
               value={form.name}
-              onChange={(event) => updateField("name", event.target.value)}
+              onChange={(event) =>
+                updateField("name", event.target.value)
+              }
               required
             />
           </label>
@@ -75,46 +85,20 @@ export function SupplierEditGeneralModal({
           <label>
             Razón social
             <input
-              value={form.businessName}
-              onChange={(event) => updateField("businessName", event.target.value)}
+              value={form.businessName || ""}
+              onChange={(event) =>
+                updateField("businessName", event.target.value)
+              }
             />
           </label>
 
           <label>
             RFC
-            <input value={form.rfc} onChange={(event) => updateField("rfc", event.target.value)} />
-          </label>
-
-          <label>
-            Categoría
             <input
-              value={form.category}
-              onChange={(event) => updateField("category", event.target.value)}
-            />
-          </label>
-
-          <label>
-            Teléfono general
-            <input
-              value={form.phone}
-              onChange={(event) => updateField("phone", event.target.value)}
-            />
-          </label>
-
-          <label>
-            Correo general
-            <input
-              type="email"
-              value={form.email}
-              onChange={(event) => updateField("email", event.target.value)}
-            />
-          </label>
-
-          <label>
-            Sitio web
-            <input
-              value={form.website}
-              onChange={(event) => updateField("website", event.target.value)}
+              value={form.rfc || ""}
+              onChange={(event) =>
+                updateField("rfc", event.target.value)
+              }
             />
           </label>
 
@@ -122,30 +106,74 @@ export function SupplierEditGeneralModal({
             Estado
             <select
               value={form.status}
-              onChange={(event) => updateField("status", event.target.value as SupplierStatus)}
+              onChange={(event) =>
+                updateField(
+                  "status",
+                  event.target.value as "activo" | "inactivo"
+                )
+              }
             >
               <option value="activo">Activo</option>
               <option value="inactivo">Inactivo</option>
-              <option value="observacion">En observación</option>
-              <option value="pendiente">Pendiente</option>
             </select>
+          </label>
+
+          <label>
+            Teléfono general
+            <input
+              value={form.phone || ""}
+              onChange={(event) =>
+                updateField("phone", event.target.value)
+              }
+            />
+          </label>
+
+          <label>
+            Correo general
+            <input
+              type="email"
+              value={form.email || ""}
+              onChange={(event) =>
+                updateField("email", event.target.value)
+              }
+            />
+          </label>
+
+          <label className="supplier-modal-full">
+            Sitio web
+            <input
+              value={form.website || ""}
+              onChange={(event) =>
+                updateField("website", event.target.value)
+              }
+            />
           </label>
 
           <label className="supplier-modal-full">
             Observaciones
             <textarea
               rows={4}
-              value={form.notes}
-              onChange={(event) => updateField("notes", event.target.value)}
+              value={form.notes || ""}
+              onChange={(event) =>
+                updateField("notes", event.target.value)
+              }
             />
           </label>
 
           <div className="supplier-modal-actions">
-            <button type="button" onClick={onClose} disabled={isSaving}>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={isSaving}
+            >
               Cancelar
             </button>
 
-            <button type="submit" className="supplier-primary-button" disabled={isSaving}>
+            <button
+              type="submit"
+              className="supplier-primary-button"
+              disabled={isSaving}
+            >
               {isSaving ? "Guardando..." : "Guardar cambios"}
             </button>
           </div>

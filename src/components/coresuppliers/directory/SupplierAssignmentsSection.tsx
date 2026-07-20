@@ -6,15 +6,18 @@ interface SupplierAssignmentsSectionProps {
   onEdit: (assignment: SupplierAssignment) => void;
 }
 
-function getAssignmentStatusLabel(status: SupplierAssignment["status"]) {
-  const labels: Record<SupplierAssignment["status"], string> = {
-    activo: "Activo",
-    inactivo: "Inactivo",
-    revision: "En revisión",
-    implementacion: "En implementación",
-  };
+function getNormalizedStatus(
+  status: SupplierAssignment["status"]
+): "activo" | "inactivo" {
+  return status === "activo" ? "activo" : "inactivo";
+}
 
-  return labels[status];
+function getAssignmentStatusLabel(
+  status: SupplierAssignment["status"]
+) {
+  return getNormalizedStatus(status) === "activo"
+    ? "Activo"
+    : "Inactivo";
 }
 
 export function SupplierAssignmentsSection({
@@ -27,10 +30,17 @@ export function SupplierAssignmentsSection({
       <div className="supplier-section-heading">
         <div>
           <h4>Servicios y asignaciones</h4>
-          <p>Relación proveedor, servicio, sucursal y ubicación interna.</p>
+
+          <p>
+            Relación del proveedor con servicios y sucursales.
+          </p>
         </div>
 
-        <button type="button" className="supplier-section-button" onClick={onAdd}>
+        <button
+          type="button"
+          className="supplier-section-button"
+          onClick={onAdd}
+        >
           Agregar asignación
         </button>
       </div>
@@ -41,36 +51,40 @@ export function SupplierAssignmentsSection({
         </div>
       ) : (
         <div className="supplier-assignment-list">
-          {assignments.map((assignment) => (
-            <article key={assignment.id} className="supplier-assignment-card">
-              <div>
-                <strong>{assignment.serviceName}</strong>
-                <p>
-                  {assignment.branchName}
-                  {assignment.internalLocationName
-                    ? ` / ${assignment.internalLocationName}`
-                    : ""}
-                </p>
-              </div>
+          {assignments.map((assignment) => {
+            const normalizedStatus = getNormalizedStatus(
+              assignment.status
+            );
 
-              <div className="supplier-assignment-meta">
-                <span>{assignment.contactName || "Sin contacto asignado"}</span>
-                <span
-                  className={`supplier-assignment-status supplier-assignment-${assignment.status}`}
-                >
-                  {getAssignmentStatusLabel(assignment.status)}
-                </span>
-              </div>
-
-              <button
-                type="button"
-                className="supplier-small-action"
-                onClick={() => onEdit(assignment)}
+            return (
+              <article
+                key={assignment.id}
+                className="supplier-assignment-card"
               >
-                Editar
-              </button>
-            </article>
-          ))}
+                <div>
+                  <strong>{assignment.serviceName}</strong>
+
+                  <p>{assignment.branchName}</p>
+                </div>
+
+                <div className="supplier-assignment-meta">
+                  <span
+                    className={`supplier-assignment-status supplier-assignment-${normalizedStatus}`}
+                  >
+                    {getAssignmentStatusLabel(assignment.status)}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  className="supplier-small-action"
+                  onClick={() => onEdit(assignment)}
+                >
+                  Editar
+                </button>
+              </article>
+            );
+          })}
         </div>
       )}
     </section>

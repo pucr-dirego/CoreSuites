@@ -28,7 +28,20 @@ export function SupplierContactModal({
     email: contact?.email || "",
     phone: contact?.phone || "",
     contactType: contact?.contactType || "",
-    isMain: contact?.isMain || false,
+
+    /*
+     * Estos dos valores se conservan temporalmente en el payload
+     * para mantener compatibilidad con las interfaces actuales.
+     *
+     * Dataverse no tiene un campo "Contacto principal".
+     * Al migrar el servicio real, isMain dejará de enviarse.
+     */
+    isMain: contact?.isMain ?? !contact,
+
+    /*
+     * Los contactos nuevos se crean activos automáticamente.
+     * Al editar, se conserva el estado actual del contacto.
+     */
     active: contact?.active ?? true,
   });
 
@@ -44,6 +57,7 @@ export function SupplierContactModal({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     await onSave(form);
     onClose();
   };
@@ -54,10 +68,20 @@ export function SupplierContactModal({
         <div className="supplier-modal-header">
           <div>
             <h3>{contact ? "Editar contacto" : "Agregar contacto"}</h3>
-            <p>Administra contactos comerciales, técnicos o de soporte.</p>
+
+            <p>
+              Administra contactos comerciales, técnicos, administrativos o de
+              soporte.
+            </p>
           </div>
 
-          <button type="button" className="supplier-modal-close" onClick={onClose}>
+          <button
+            type="button"
+            className="supplier-modal-close"
+            onClick={onClose}
+            aria-label="Cerrar formulario de contacto"
+            title="Cerrar"
+          >
             ×
           </button>
         </div>
@@ -67,28 +91,37 @@ export function SupplierContactModal({
             Nombre
             <input
               value={form.name}
-              onChange={(event) => updateField("name", event.target.value)}
+              onChange={(event) =>
+                updateField("name", event.target.value)
+              }
               required
             />
           </label>
 
           <label>
             Puesto
-            <input value={form.role} onChange={(event) => updateField("role", event.target.value)} />
+            <input
+              value={form.role || ""}
+              onChange={(event) =>
+                updateField("role", event.target.value)
+              }
+            />
           </label>
 
           <label>
             Tipo de contacto
             <select
-              value={form.contactType}
-              onChange={(event) => updateField("contactType", event.target.value)}
+              value={form.contactType || ""}
+              onChange={(event) =>
+                updateField("contactType", event.target.value)
+              }
             >
               <option value="">Sin clasificar</option>
-              <option value="Comercial">Comercial</option>
-              <option value="Técnico">Técnico</option>
+              <option value="Ventas">Ventas</option>
               <option value="Soporte">Soporte</option>
+              <option value="Tecnico">Técnico</option>
+              <option value="Administrativo">Administrativo</option>
               <option value="Emergencia">Emergencia</option>
-              <option value="Facturación">Facturación</option>
             </select>
           </label>
 
@@ -96,46 +129,42 @@ export function SupplierContactModal({
             Correo
             <input
               type="email"
-              value={form.email}
-              onChange={(event) => updateField("email", event.target.value)}
+              value={form.email || ""}
+              onChange={(event) =>
+                updateField("email", event.target.value)
+              }
             />
           </label>
 
-          <label>
+          <label className="supplier-modal-full">
             Teléfono
             <input
-              value={form.phone}
-              onChange={(event) => updateField("phone", event.target.value)}
+              value={form.phone || ""}
+              onChange={(event) =>
+                updateField("phone", event.target.value)
+              }
             />
           </label>
 
-          <div className="supplier-checkbox-row">
-            <label>
-              <input
-                type="checkbox"
-                checked={form.isMain}
-                onChange={(event) => updateField("isMain", event.target.checked)}
-              />
-              Contacto principal
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                checked={form.active}
-                onChange={(event) => updateField("active", event.target.checked)}
-              />
-              Activo
-            </label>
-          </div>
-
           <div className="supplier-modal-actions">
-            <button type="button" onClick={onClose} disabled={isSaving}>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={isSaving}
+            >
               Cancelar
             </button>
 
-            <button type="submit" className="supplier-primary-button" disabled={isSaving}>
-              {isSaving ? "Guardando..." : "Guardar contacto"}
+            <button
+              type="submit"
+              className="supplier-primary-button"
+              disabled={isSaving}
+            >
+              {isSaving
+                ? "Guardando..."
+                : contact
+                  ? "Guardar cambios"
+                  : "Agregar contacto"}
             </button>
           </div>
         </form>

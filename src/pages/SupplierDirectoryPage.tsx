@@ -12,29 +12,33 @@ export function SupplierDirectoryPage() {
       <section className="supplier-directory-hero">
         <div>
           <p className="supplier-directory-eyebrow">CoreSuppliers</p>
+
           <h1>Directorio de Proveedores</h1>
+
           <p>
-            Consulta, valida y administra proveedores, contactos, servicios y asignaciones
-            operativas desde un solo módulo.
+            Consulta, valida y administra proveedores, contactos, servicios y
+            asignaciones operativas desde un solo módulo.
           </p>
         </div>
 
-      <div className="supplier-directory-summary">
-        <div>
-          <span>
-            {directory.suppliers.reduce(
-              (total, supplier) => total + supplier.alertsCount,
-              0
-            )}
-          </span>
+        <div className="supplier-directory-summary">
+          <div>
+            <span>
+              {directory.suppliers.reduce(
+                (total, supplier) => total + supplier.alertsCount,
+                0
+              )}
+            </span>
 
-          <small>Alertas visibles</small>
+            <small>Alertas visibles</small>
+          </div>
         </div>
-      </div>
       </section>
 
       {directory.errorMessage && (
-        <div className="supplier-directory-error">{directory.errorMessage}</div>
+        <div className="supplier-directory-error">
+          {directory.errorMessage}
+        </div>
       )}
 
       <SupplierDirectoryToolbar
@@ -45,42 +49,41 @@ export function SupplierDirectoryPage() {
       />
 
       <section className="supplier-directory-layout">
-    <SupplierDirectoryTable
-      suppliers={directory.suppliers}
-      isLoading={directory.isLoadingList}
-      isSaving={directory.isSaving}
-      selectedSupplierId={directory.selectedSupplierId}
-      onSelectSupplier={directory.loadSupplierDetail}
-      onSetSupplierStatus={directory.setSupplierStatus}
-    />
-    </section>
+        <SupplierDirectoryTable
+          suppliers={directory.suppliers}
+          isLoading={directory.isLoadingList}
+          isSaving={directory.isSaving}
+          selectedSupplierId={directory.selectedSupplierId}
+          onSelectSupplier={directory.loadSupplierDetail}
+          onSetSupplierStatus={directory.setSupplierStatus}
+        />
+      </section>
 
-        {directory.selectedSupplierId && (
+      {directory.selectedSupplierId && (
+        <div
+          className="supplier-detail-modal-backdrop"
+          onMouseDown={directory.closeSupplierDetail}
+          role="presentation"
+        >
           <div
-            className="supplier-detail-modal-backdrop"
-            onMouseDown={directory.closeSupplierDetail}
-            role="presentation"
+            className="supplier-detail-modal-shell"
+            onMouseDown={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Detalle del proveedor"
           >
-            <div
-              className="supplier-detail-modal-shell"
-              onMouseDown={(event) => event.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Detalle del proveedor"
-            >
-              <SupplierDetailPanel
-                supplier={directory.selectedSupplierDetail}
-                isLoading={directory.isLoadingDetail}
-                isSaving={directory.isSaving}
-                onClose={directory.closeSupplierDetail}
-                onUpdateGeneralInfo={directory.updateGeneralInfo}
-                onSaveContact={directory.saveContact}
-                onSaveAssignment={directory.saveAssignment}
-                onSetSupplierStatus={directory.setSupplierStatus}
-              />
-            </div>
+            <SupplierDetailPanel
+              supplier={directory.selectedSupplierDetail}
+              isLoading={directory.isLoadingDetail}
+              isSaving={directory.isSaving}
+              onClose={directory.closeSupplierDetail}
+              onUpdateGeneralInfo={directory.updateGeneralInfo}
+              onSaveContact={directory.saveContact}
+              onSaveAssignment={directory.saveAssignment}
+            />
           </div>
-        )}
+        </div>
+      )}
     </main>
   );
 }

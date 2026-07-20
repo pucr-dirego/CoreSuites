@@ -724,6 +724,407 @@
   text-transform: uppercase;
 }
 
+
+/* Agregar al archivo CSS que contiene los estilos de CoreForms */
+
+.coreforms-support-source {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--app-border, rgba(26, 57, 40, 0.14));
+  border-radius: 16px;
+  background: var(--app-surface-soft, rgba(47, 125, 82, 0.05));
+}
+
+.coreforms-support-source-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--app-text, #17211b);
+  font-weight: 750;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.coreforms-support-source-option input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: 0 0 auto;
+  accent-color: var(--app-primary, #2f7d52);
+}
+
+.coreforms-support-source p {
+  margin: 0;
+  color: var(--app-text-muted, #637064);
+  line-height: 1.5;
+}
+
+.coreforms-support-source-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding-top: 2px;
+  color: var(--app-text-muted, #637064);
+  font-size: 0.9rem;
+}
+
+.coreforms-support-source-preview strong {
+  color: var(--app-text, #17211b);
+}
+
+
+.coreforms-multiselect-trigger {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--app-border-strong, rgba(26, 57, 40, 0.18));
+  border-radius: 14px;
+  background: var(--app-surface, #ffffff);
+  color: var(--app-text, #17211b);
+  cursor: pointer;
+  text-align: left;
+}
+
+.coreforms-multiselect-trigger strong {
+  color: var(--app-primary, #2f7d52);
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.coreforms-multiselect-trigger:hover:not(:disabled) {
+  border-color: var(--app-primary, #2f7d52);
+  box-shadow: 0 0 0 3px var(--app-primary-soft, rgba(47, 125, 82, 0.12));
+}
+
+.coreforms-multiselect-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.coreforms-multiselect-trigger.is-invalid {
+  border-color: var(--app-danger, #b73535);
+}
+
+.coreforms-selection-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.coreforms-selection-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--app-primary, #2f7d52);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: var(--app-primary-soft, rgba(47, 125, 82, 0.1));
+  color: var(--app-primary, #2f7d52);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.coreforms-selection-chip span {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.coreforms-multiselect-backdrop {
+  z-index: 120;
+}
+
+.coreforms-multiselect-modal {
+  width: min(780px, calc(100vw - 32px));
+  max-height: min(760px, calc(100vh - 32px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.coreforms-multiselect-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--app-border, rgba(26, 57, 40, 0.12));
+}
+
+.coreforms-multiselect-header h2 {
+  margin: 0;
+}
+
+.coreforms-multiselect-header p {
+  margin: 8px 0 0;
+  color: var(--app-text-muted, #637064);
+  line-height: 1.5;
+}
+
+.coreforms-multiselect-close {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 12px;
+  background: var(--app-surface-soft, rgba(26, 57, 40, 0.08));
+  color: var(--app-text, #17211b);
+  cursor: pointer;
+  font-size: 1.35rem;
+}
+
+.coreforms-multiselect-toolbar {
+  display: grid;
+  gap: 12px;
+  padding: 18px 0 12px;
+}
+
+.coreforms-multiselect-toolbar input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--app-border-strong, rgba(26, 57, 40, 0.18));
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: var(--app-surface, #ffffff);
+  color: var(--app-text, #17211b);
+  outline: none;
+}
+
+.coreforms-multiselect-toolbar input:focus {
+  border-color: var(--app-primary, #2f7d52);
+  box-shadow: 0 0 0 3px var(--app-primary-soft, rgba(47, 125, 82, 0.12));
+}
+
+.coreforms-multiselect-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.coreforms-multiselect-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 10px 0;
+  color: var(--app-text-muted, #637064);
+}
+
+.coreforms-multiselect-summary strong {
+  color: var(--app-primary, #2f7d52);
+  font-size: 1.2rem;
+}
+
+.coreforms-multiselect-list {
+  min-height: 180px;
+  overflow-y: auto;
+  display: grid;
+  gap: 10px;
+  padding: 4px 4px 4px 0;
+}
+
+.coreforms-multiselect-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--app-border, rgba(26, 57, 40, 0.12));
+  border-radius: 14px;
+  background: var(--app-surface, #ffffff);
+  cursor: pointer;
+}
+
+.coreforms-multiselect-option.is-selected {
+  border-color: var(--app-primary, #2f7d52);
+  background: var(--app-primary-soft, rgba(47, 125, 82, 0.09));
+}
+
+.coreforms-multiselect-option input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+  accent-color: var(--app-primary, #2f7d52);
+}
+
+.coreforms-multiselect-option-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.coreforms-multiselect-option-copy small {
+  color: var(--app-text-muted, #637064);
+  line-height: 1.4;
+}
+
+.coreforms-multiselect-empty {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  color: var(--app-text-muted, #637064);
+  text-align: center;
+}
+
+.coreforms-support-choice {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.coreforms-support-choice-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--app-border, rgba(26, 57, 40, 0.12));
+  border-radius: 16px;
+  background: var(--app-surface, #ffffff);
+  cursor: pointer;
+}
+
+.coreforms-support-choice-card.is-selected {
+  border-color: var(--app-primary, #2f7d52);
+  background: var(--app-primary-soft, rgba(47, 125, 82, 0.09));
+}
+
+.coreforms-support-choice-card input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: 0 0 auto;
+  accent-color: var(--app-primary, #2f7d52);
+}
+
+.coreforms-support-choice-card > span {
+  display: grid;
+  gap: 6px;
+}
+
+.coreforms-support-choice-card small {
+  color: var(--app-text-muted, #637064);
+  line-height: 1.45;
+}
+
+.coreforms-support-preview {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px dashed var(--app-border-strong, rgba(26, 57, 40, 0.2));
+  border-radius: 16px;
+  background: var(--app-surface-soft, rgba(26, 57, 40, 0.04));
+}
+
+.coreforms-support-preview > span {
+  font-weight: 800;
+  color: var(--app-text, #17211b);
+}
+
+.coreforms-support-preview > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+
+.coreforms-support-preview p {
+  margin: 0;
+  color: var(--app-text-muted, #637064);
+}
+
+.coreforms-support-preview small {
+  color: var(--app-text-muted, #637064);
+  line-height: 1.45;
+}
+
+.coreforms-registration-summary {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--app-border, rgba(26, 57, 40, 0.12));
+  border-radius: 22px;
+  background: var(--app-surface, #ffffff);
+  box-shadow: var(--app-shadow, 0 16px 34px rgba(18, 45, 28, 0.08));
+}
+
+.coreforms-registration-summary h2 {
+  margin: 4px 0 0;
+}
+
+.coreforms-registration-summary > div > p:last-child {
+  margin-bottom: 0;
+  color: var(--app-text-muted, #637064);
+}
+
+.coreforms-registration-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.coreforms-registration-summary-grid article {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--app-surface-soft, rgba(26, 57, 40, 0.05));
+}
+
+.coreforms-registration-summary-grid span {
+  color: var(--app-text-muted, #637064);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.coreforms-registration-summary-grid strong {
+  font-size: 1.15rem;
+}
+
+.coreforms-registration-summary-detail {
+  display: grid;
+  gap: 8px;
+  color: var(--app-text-muted, #637064);
+}
+
+.coreforms-registration-summary-detail p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .coreforms-support-choice {
+    grid-template-columns: 1fr;
+  }
+
+  .coreforms-registration-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .coreforms-multiselect-trigger {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .coreforms-multiselect-trigger strong {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 520px) {
+  .coreforms-registration-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .coreforms-multiselect-toolbar-actions {
+    display: grid;
+  }
+
+  .coreforms-multiselect-toolbar-actions button {
+    width: 100%;
+  }
+}
+
 @keyframes coreforms-critical-shake {
   0% {
     transform: translateX(0);

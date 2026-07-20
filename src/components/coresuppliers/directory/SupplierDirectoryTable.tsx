@@ -97,7 +97,7 @@ export function SupplierDirectoryTable({
 
           <tbody>
             {suppliers.map((supplier) => {
-              const isActive = supplier.status === "activo";
+              const isActive = supplier.status !== "inactivo";
 
               return (
                 <tr

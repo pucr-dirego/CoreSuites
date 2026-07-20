@@ -20,7 +20,7 @@ export function SupplierStatusConfirmModal({
   onClose,
   onConfirm,
 }: SupplierStatusConfirmModalProps) {
-  const willDeactivate = supplier.status === "activo";
+  const willDeactivate = supplier.status === "inactivo";
 
   const handleConfirm = async () => {
     await onConfirm();

@@ -14,7 +14,9 @@ import type {
 
 import type {
   AltaProveedorForm,
+  EstadoServicio,
   SucursalOption,
+  TipoServicio,
 } from "../interfaces/altaProveedor";
 
 function unwrapData<T>(response: unknown): T[] {
@@ -52,6 +54,7 @@ function mapTipoContacto(
     case "Soporte":
       return 100000002;
     case "Técnico":
+    case "Tecnico":
       return 100000003;
     case "Administrativo":
       return 100000004;
@@ -63,7 +66,7 @@ function mapTipoContacto(
 }
 
 function mapTipoServicio(
-  value: string
+  value: TipoServicio
 ): Cr22e_serviciosproveedorsucursalscr22e_tiposervicio {
   switch (value) {
     case "Internet":
@@ -72,24 +75,13 @@ function mapTipoServicio(
       return 100000001;
     case "Computadoras":
       return 100000002;
-    default:
-      return 100000000;
   }
 }
 
 function mapEstadoServicio(
-  value: string
+  value: EstadoServicio
 ): Cr22e_serviciosproveedorsucursalscr22e_estadoservicio {
-  switch (value) {
-    case "Activo":
-      return 100000001;
-    case "Inactivo":
-      return 100000002;
-    case "Suspendido":
-      return 100000003;
-    default:
-      return 100000001;
-  }
+  return value === "Activo" ? 100000001 : 100000002;
 }
 
 function obtenerProveedorId(response: unknown) {
@@ -144,6 +136,14 @@ export async function crearProveedorCompleto(form: AltaProveedorForm) {
   const nombreProveedor = clean(form.nombreProveedor);
   const nombreContacto = clean(form.nombreContacto);
 
+  if (form.sucursalIds.length === 0) {
+    throw new Error("Selecciona al menos una sucursal.");
+  }
+
+  if (form.tiposServicio.length === 0) {
+    throw new Error("Selecciona al menos un tipo de servicio.");
+  }
+
   const proveedorRecord = {
     cr22e_name: nombreProveedor,
     cr22e_activo: true,
@@ -166,24 +166,48 @@ export async function crearProveedorCompleto(form: AltaProveedorForm) {
     "cr22e_Proveedor@odata.bind": `/cr22e_proveedoreses(${proveedorId})`,
   };
 
-  const servicioRecord = {
-    cr22e_name: `${nombreProveedor} - ${form.tipoServicio}`,
-    cr22e_tiposervicio: mapTipoServicio(form.tipoServicio),
-    cr22e_estadoservicio: mapEstadoServicio(form.estadoServicio),
-    cr22e_telefonosoporte: clean(form.telefonoSoporte),
-    cr22e_correosoporte: clean(form.correoSoporte),
-    cr22e_horarioatencion: clean(form.horarioAtencion),
-    cr22e_activo: true,
-
-    "cr22e_Proveedor@odata.bind": `/cr22e_proveedoreses(${proveedorId})`,
-    "cr22e_Sucursal@odata.bind": `/cr22e_sucursaleses(${form.sucursalId})`,
-  };
-
   await Cr22e_contactosproveedorsService.create(contactoRecord as never);
 
-  await Cr22e_serviciosproveedorsucursalsService.create(
-    servicioRecord as never
+  const telefonoSoporte = clean(
+    form.usarContactoComoSoporte
+      ? form.telefonoContacto
+      : form.telefonoSoporte
   );
 
-  return proveedorCreado;
+  const correoSoporte = clean(
+    form.usarContactoComoSoporte
+      ? form.correoContacto
+      : form.correoSoporte
+  );
+
+  let totalAsignacionesCreadas = 0;
+
+  for (const sucursalId of form.sucursalIds) {
+    for (const tipoServicio of form.tiposServicio) {
+      const servicioRecord = {
+        cr22e_name: `${nombreProveedor} - ${tipoServicio}`,
+        cr22e_tiposervicio: mapTipoServicio(tipoServicio),
+        cr22e_estadoservicio: mapEstadoServicio(form.estadoServicio),
+        cr22e_telefonosoporte: telefonoSoporte,
+        cr22e_correosoporte: correoSoporte,
+        cr22e_horarioatencion: clean(form.horarioAtencion),
+        cr22e_fechaultimaactualizacion: new Date().toISOString(),
+        cr22e_activo: true,
+
+        "cr22e_Proveedor@odata.bind": `/cr22e_proveedoreses(${proveedorId})`,
+        "cr22e_Sucursal@odata.bind": `/cr22e_sucursaleses(${sucursalId})`,
+      };
+
+      await Cr22e_serviciosproveedorsucursalsService.create(
+        servicioRecord as never
+      );
+
+      totalAsignacionesCreadas += 1;
+    }
+  }
+
+  return {
+    proveedorId,
+    totalAsignacionesCreadas,
+  };
 }

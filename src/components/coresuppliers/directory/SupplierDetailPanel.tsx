@@ -14,17 +14,21 @@ import { SupplierContactModal } from "./SupplierContactModal";
 import { SupplierContactsSection } from "./SupplierContactsSection";
 import { SupplierEditGeneralModal } from "./SupplierEditGeneralModal";
 import { SupplierGeneralInfoSection } from "./SupplierGeneralInfoSection";
-import { SupplierStatusConfirmModal } from "./SupplierStatusConfirmModal";
 
 interface SupplierDetailPanelProps {
   supplier: SupplierDetail | null;
   isLoading: boolean;
   isSaving: boolean;
   onClose?: () => void;
-  onUpdateGeneralInfo: (payload: SupplierGeneralUpdatePayload) => Promise<void> | void;
-  onSaveContact: (payload: SupplierContactPayload) => Promise<void> | void;
-  onSaveAssignment: (payload: SupplierAssignmentPayload) => Promise<void> | void;
-  onSetSupplierStatus: (supplierId: string, status: "activo" | "inactivo") => Promise<void> | void;
+  onUpdateGeneralInfo: (
+    payload: SupplierGeneralUpdatePayload
+  ) => Promise<void> | void;
+  onSaveContact: (
+    payload: SupplierContactPayload
+  ) => Promise<void> | void;
+  onSaveAssignment: (
+    payload: SupplierAssignmentPayload
+  ) => Promise<void> | void;
 }
 
 function getStatusText(status: SupplierDetail["status"]) {
@@ -46,13 +50,13 @@ export function SupplierDetailPanel({
   onUpdateGeneralInfo,
   onSaveContact,
   onSaveAssignment,
-  onSetSupplierStatus,
 }: SupplierDetailPanelProps) {
   const [isEditingGeneral, setIsEditingGeneral] = useState(false);
-  const [showStatusConfirm, setShowStatusConfirm] = useState(false);
-  const [contactModalValue, setContactModalValue] = useState<SupplierContact | null | undefined>(
-    undefined
-  );
+
+  const [contactModalValue, setContactModalValue] = useState<
+    SupplierContact | null | undefined
+  >(undefined);
+
   const [assignmentModalValue, setAssignmentModalValue] = useState<
     SupplierAssignment | null | undefined
   >(undefined);
@@ -74,10 +78,12 @@ export function SupplierDetailPanel({
       <aside className="supplier-detail-panel supplier-detail-placeholder">
         <div>
           <span className="supplier-placeholder-icon">◆</span>
+
           <h3>Selecciona un proveedor</h3>
+
           <p>
-            El detalle mostrará datos generales, contactos, servicios, sucursales
-            asignadas y alertas operativas.
+            El detalle mostrará datos generales, contactos, servicios,
+            sucursales asignadas y alertas operativas.
           </p>
         </div>
       </aside>
@@ -86,53 +92,44 @@ export function SupplierDetailPanel({
 
   return (
     <aside className="supplier-detail-panel">
-  <div className="supplier-detail-header">
-    <div>
-      <span
-        className={`supplier-status-pill supplier-status-${supplier.status}`}
-      >
-        {getStatusText(supplier.status)}
-      </span>
+      <div className="supplier-detail-header">
+        <div>
+          <span
+            className={`supplier-status-pill supplier-status-${supplier.status}`}
+          >
+            {getStatusText(supplier.status)}
+          </span>
 
-      <h3>{supplier.name}</h3>
+          <h3>{supplier.name}</h3>
 
-      <p>
-        {supplier.businessName ||
-          supplier.category ||
-          "Proveedor registrado"}
-      </p>
-    </div>
-
-    <div className="supplier-detail-header-actions">
-        <button
-          type="button"
-          className={
-            supplier.status === "activo"
-              ? "supplier-danger-button"
-              : "supplier-primary-button"
-          }
-          onClick={() => setShowStatusConfirm(true)}
-        >
-          {supplier.status === "activo" ? "Desactivar" : "Reactivar"}
-        </button>
+          <p>
+            {supplier.businessName ||
+              supplier.category ||
+              "Proveedor registrado"}
+          </p>
+        </div>
 
         {onClose && (
-          <button
-            type="button"
-            className="supplier-detail-close-button"
-            onClick={onClose}
-            aria-label="Cerrar detalle del proveedor"
-            title="Cerrar"
-          >
-            ×
-          </button>
+          <div className="supplier-detail-header-actions">
+            <button
+              type="button"
+              className="supplier-detail-close-button"
+              onClick={onClose}
+              aria-label="Cerrar detalle del proveedor"
+              title="Cerrar"
+            >
+              ×
+            </button>
+          </div>
         )}
       </div>
-    </div>
 
       <SupplierAlertsPanel alerts={supplier.alerts} />
 
-      <SupplierGeneralInfoSection supplier={supplier} onEdit={() => setIsEditingGeneral(true)} />
+      <SupplierGeneralInfoSection
+        supplier={supplier}
+        onEdit={() => setIsEditingGeneral(true)}
+      />
 
       <SupplierContactsSection
         contacts={supplier.contacts}
@@ -169,21 +166,9 @@ export function SupplierDetailPanel({
         <SupplierAssignmentModal
           supplierId={supplier.id}
           assignment={assignmentModalValue}
-          contacts={supplier.contacts}
           isSaving={isSaving}
           onClose={() => setAssignmentModalValue(undefined)}
           onSave={onSaveAssignment}
-        />
-      )}
-
-      {showStatusConfirm && (
-        <SupplierStatusConfirmModal
-          supplier={supplier}
-          isSaving={isSaving}
-          onClose={() => setShowStatusConfirm(false)}
-          onConfirm={() =>
-            onSetSupplierStatus(supplier.id, supplier.status === "activo" ? "inactivo" : "activo")
-          }
         />
       )}
     </aside>
