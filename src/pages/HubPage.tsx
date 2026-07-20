@@ -18,6 +18,7 @@ type HubModule = {
   status: string;
   description: string;
   buttonText: string;
+  isAvailable: boolean;
   onClick: () => void;
 };
 
@@ -31,20 +32,22 @@ const HubPage: React.FC<HubPageProps> = ({
       variant: "inventory",
       title: "CoreInventory",
       eyebrow: "Inventario tecnológico",
-      status: "Disponible",
+      status: "En construcción",
       description:
-        "Consulta, control y seguimiento del inventario TI registrado por sucursal.",
-      buttonText: "Acceder",
+        "Estamos preparando la próxima experiencia para consulta, control y seguimiento del inventario TI.",
+      buttonText: "Ver avance",
+      isAvailable: false,
       onClick: onEnterInventory,
     },
     {
       variant: "suppliers",
       title: "CoreSuppliers",
       eyebrow: "Red de proveedores",
-      status: "Disponible",
+      status: "En construcción",
       description:
-        "Directorio operativo para proveedores, servicios, contactos y sucursales.",
-      buttonText: "Acceder",
+        "Próximamente: directorio operativo de proveedores, servicios, contactos y sucursales.",
+      buttonText: "Ver avance",
+      isAvailable: false,
       onClick: onEnterSuppliers,
     },
     {
@@ -55,9 +58,14 @@ const HubPage: React.FC<HubPageProps> = ({
       description:
         "Formularios internos para registrar información clave directamente en Core.",
       buttonText: "Acceder",
+      isAvailable: true,
       onClick: onEnterForms,
     },
   ];
+
+  const availableModuleCount = modules.filter(
+    (module) => module.isAvailable
+  ).length;
 
   return (
     <main className="tw-relative tw-isolate tw-min-h-screen tw-overflow-hidden tw-bg-core-bg tw-text-core-text">
@@ -138,7 +146,7 @@ const HubPage: React.FC<HubPageProps> = ({
             </span>
 
             <span className="tw-rounded-full tw-border tw-border-white/10 tw-bg-white/[0.045] tw-px-3 tw-py-1.5 tw-text-[0.72rem] tw-font-bold tw-text-white/65">
-              {modules.length} módulos activos
+              {availableModuleCount} módulo activo
             </span>
           </div>
         </header>

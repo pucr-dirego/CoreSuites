@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import HubPage from "./pages/HubPage";
+import ComingSoonPage from "./pages/ComingSoonPage";
 import CoreInventoryModule from "./CoreInventoryModule";
 import CoreSuppliersModule from "./CoreSuppliersModule";
 import CoreFormsModule from "./CoreFormsModule";
@@ -9,6 +10,8 @@ import "./App.css";
 
 type MainModule = "hub" | "coreinventory" | "coresuppliers" | "coreforms";
 
+type OperationalModule = Exclude<MainModule, "hub">;
+
 type LoaderState = {
   isVisible: boolean;
   title: string;
@@ -16,6 +19,20 @@ type LoaderState = {
 };
 
 const MODULE_ENTRY_DELAY_MS = 1800;
+
+/**
+ * Control temporal de disponibilidad.
+ *
+ * Los módulos permanecen completos dentro del proyecto, pero CoreInventory y
+ * CoreSuppliers no se renderizan mientras estén marcados como false.
+ *
+ * Cuando llegue el momento de publicarlos, bastará con cambiar su valor a true.
+ */
+const MODULE_AVAILABILITY: Record<OperationalModule, boolean> = {
+  coreinventory: false,
+  coresuppliers: false,
+  coreforms: true,
+};
 
 function App() {
   const [activeModule, setActiveModule] = useState<MainModule>("hub");
@@ -35,13 +52,36 @@ function App() {
     };
   }, []);
 
+  const limpiarLoaderPendiente = () => {
+    if (loaderTimeoutRef.current) {
+      window.clearTimeout(loaderTimeoutRef.current);
+      loaderTimeoutRef.current = null;
+    }
+  };
+
   const entrarAModulo = (
-    module: Exclude<MainModule, "hub">,
+    module: OperationalModule,
     title: string,
     message: string
   ) => {
-    if (loaderTimeoutRef.current) {
-      window.clearTimeout(loaderTimeoutRef.current);
+    limpiarLoaderPendiente();
+
+    /**
+     * Si el módulo todavía no está publicado, se conserva el valor del módulo
+     * seleccionado, pero App.tsx sustituye su contenido por ComingSoonPage.
+     *
+     * Esta validación central evita que CoreInventory o CoreSuppliers se
+     * rendericen aunque otra parte del proyecto intente activarlos.
+     */
+    if (!MODULE_AVAILABILITY[module]) {
+      setLoader({
+        isVisible: false,
+        title: "",
+        message: "",
+      });
+
+      setActiveModule(module);
+      return;
     }
 
     setLoader({
@@ -56,13 +96,12 @@ function App() {
         ...currentLoader,
         isVisible: false,
       }));
+      loaderTimeoutRef.current = null;
     }, MODULE_ENTRY_DELAY_MS);
   };
 
   const volverAlHub = () => {
-    if (loaderTimeoutRef.current) {
-      window.clearTimeout(loaderTimeoutRef.current);
-    }
+    limpiarLoaderPendiente();
 
     setLoader({
       isVisible: false,
@@ -81,15 +120,31 @@ function App() {
         message={loader.message}
       />
 
-      {activeModule === "coreinventory" && (
-        <CoreInventoryModule onBackToHub={volverAlHub} />
-      )}
+      {activeModule === "coreinventory" &&
+        (MODULE_AVAILABILITY.coreinventory ? (
+          <CoreInventoryModule onBackToHub={volverAlHub} />
+        ) : (
+          <ComingSoonPage
+            moduleName="CoreInventory"
+            eyebrow="Inventario tecnológico"
+            description="Estamos preparando una experiencia renovada para consultar, controlar y dar seguimiento al inventario tecnológico de cada sucursal."
+            onBackToHub={volverAlHub}
+          />
+        ))}
 
-      {activeModule === "coresuppliers" && (
-        <CoreSuppliersModule onBackToHub={volverAlHub} />
-      )}
+      {activeModule === "coresuppliers" &&
+        (MODULE_AVAILABILITY.coresuppliers ? (
+          <CoreSuppliersModule onBackToHub={volverAlHub} />
+        ) : (
+          <ComingSoonPage
+            moduleName="CoreSuppliers"
+            eyebrow="Red de proveedores"
+            description="Estamos construyendo un espacio central para consultar proveedores, servicios, contactos y cobertura operativa por sucursal."
+            onBackToHub={volverAlHub}
+          />
+        ))}
 
-      {activeModule === "coreforms" && (
+      {activeModule === "coreforms" && MODULE_AVAILABILITY.coreforms && (
         <CoreFormsModule onBackToHub={volverAlHub} />
       )}
 
