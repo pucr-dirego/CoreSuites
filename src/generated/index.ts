@@ -9,17 +9,23 @@ export * as Cr22e_contactosproveedorsModel from './models/Cr22e_contactosproveed
 export * as Cr22e_departamentosesModel from './models/Cr22e_departamentosesModel';
 export * as Cr22e_equipostisModel from './models/Cr22e_equipostisModel';
 export * as Cr22e_excepcionescalidaddatosesModel from './models/Cr22e_excepcionescalidaddatosesModel';
+export * as Cr22e_facturasdecompratisModel from './models/Cr22e_facturasdecompratisModel';
 export * as Cr22e_proveedoresesModel from './models/Cr22e_proveedoresesModel';
+export * as Cr22e_razonsocialsModel from './models/Cr22e_razonsocialsModel';
 export * as Cr22e_serviciosproveedorsucursalsModel from './models/Cr22e_serviciosproveedorsucursalsModel';
 export * as Cr22e_sucursalesesModel from './models/Cr22e_sucursalesesModel';
 export * as Cr22e_ubicacionessucursalsModel from './models/Cr22e_ubicacionessucursalsModel';
+export * as TransactioncurrenciesModel from './models/TransactioncurrenciesModel';
 
 // Services
 export * from './services/Cr22e_contactosproveedorsService';
 export * from './services/Cr22e_departamentosesService';
 export * from './services/Cr22e_equipostisService';
 export * from './services/Cr22e_excepcionescalidaddatosesService';
+export * from './services/Cr22e_facturasdecompratisService';
 export * from './services/Cr22e_proveedoresesService';
+export * from './services/Cr22e_razonsocialsService';
 export * from './services/Cr22e_serviciosproveedorsucursalsService';
 export * from './services/Cr22e_sucursalesesService';
 export * from './services/Cr22e_ubicacionessucursalsService';
+export * from './services/TransactioncurrenciesService';

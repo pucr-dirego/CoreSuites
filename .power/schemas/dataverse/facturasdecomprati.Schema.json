@@ -1,258 +1,99 @@
 {
-  "name": "cr22e_equiposti",
-  "title": "EquiposTI",
+  "name": "cr22e_facturasdecomprati",
+  "title": "Facturas de Compra TI",
   "schema": {
     "type": "array",
     "items": {
       "type": "object",
       "x-ms-dataverse-entity": true,
-      "x-ms-dataverse-entityset": "cr22e_equipostis",
-      "x-ms-dataverse-primary-id": "cr22e_equipostiid",
+      "x-ms-dataverse-entityset": "cr22e_facturasdecompratis",
+      "x-ms-dataverse-primary-id": "cr22e_facturasdecompratiid",
       "x-ms-dataverse-primary-name": "cr22e_name",
       "properties": {
-        "cr22e_activo": {
+        "cr22e_facturapdf": {
           "type": "string",
-          "title": "activo",
-          "x-ms-dataverse-attribute": "cr22e_activo",
-          "x-ms-dataverse-type": "BooleanType",
-          "x-ms-schema-name": "cr22e_activo",
-          "enum": [
-            "No",
-            "Sí"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1
-          ],
-          "Color": [
-            null,
-            null
-          ],
-          "x-ms-optionsetmetadataid": "1f5e250c-266c-f111-ab0d-000d3a5bb8c0",
-          "x-ms-isGlobal": false,
-          "x-ms-optionsetdisplayname": "activo",
-          "x-ms-optionSetType": "Boolean"
-        },
-        "cr22e_activoname": {
-          "type": "string",
-          "title": "cr22e_activoname",
-          "x-ms-dataverse-attribute": "cr22e_activoname",
-          "x-ms-dataverse-type": "VirtualType",
-          "x-ms-schema-name": "cr22e_activoName",
+          "title": "Factura PDF",
+          "x-ms-dataverse-attribute": "cr22e_facturapdf",
+          "x-ms-dataverse-type": "FileType",
+          "x-ms-schema-name": "cr22e_FacturaPDF",
           "x-ms-read-only": true
         },
-        "cr22e_claveanydesk": {
+        "cr22e_facturapdf_name": {
           "type": "string",
-          "title": "clave anydesk",
-          "x-ms-dataverse-attribute": "cr22e_claveanydesk",
+          "title": "cr22e_facturapdf_name",
+          "x-ms-dataverse-attribute": "cr22e_facturapdf_name",
           "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_claveanydesk",
-          "maxLength": 100
-        },
-        "cr22e_condicionfisica": {
-          "type": "string",
-          "title": "Condicion Fisica",
-          "x-ms-dataverse-attribute": "cr22e_condicionfisica",
-          "x-ms-dataverse-type": "PicklistType",
-          "x-ms-schema-name": "cr22e_CondicionFisica",
-          "enum": [
-            "Excelente",
-            "Bueno",
-            "Regular",
-            "Malo",
-            "Disfuncional"
-          ],
-          "x-ms-enum-values": [
-            100000000,
-            100000001,
-            100000002,
-            100000003,
-            100000004
-          ],
-          "Color": [
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "x-ms-optionsetmetadataid": "ff3c3cf9-246c-f111-ab0d-000d3a5bb8c0",
-          "x-ms-isGlobal": true,
-          "x-ms-optionsetdisplayname": "Condicion fisica c",
-          "x-ms-optionSetType": "Picklist"
-        },
-        "cr22e_condicionfisicaname": {
-          "type": "string",
-          "title": "cr22e_condicionfisicaname",
-          "x-ms-dataverse-attribute": "cr22e_condicionfisicaname",
-          "x-ms-dataverse-type": "VirtualType",
-          "x-ms-schema-name": "cr22e_condicionfisicaName",
-          "x-ms-read-only": true
-        },
-        "cr22e_costoindividualdelequipo": {
-          "type": "string",
-          "title": "Costo individual del equipo",
-          "x-ms-dataverse-attribute": "cr22e_costoindividualdelequipo",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_Costoindividualdelequipo"
-        },
-        "cr22e_costoindividualdelequipo_base": {
-          "type": "string",
-          "title": "Costo individual del equipo (base)",
-          "x-ms-dataverse-attribute": "cr22e_costoindividualdelequipo_base",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_costoindividualdelequipo_Base",
-          "x-ms-read-only": true
-        },
-        "cr22e_departamento": {
-          "type": "string",
-          "title": "departamento",
-          "x-ms-dataverse-attribute": "cr22e_departamento",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_departamento"
-        },
-        "cr22e_departamentoname": {
-          "type": "string",
-          "title": "cr22e_departamentoname",
-          "x-ms-dataverse-attribute": "cr22e_departamentoname",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_departamentoName",
+          "x-ms-schema-name": "cr22e_FacturaPDF_Name",
           "x-ms-read-only": true,
-          "maxLength": 850
+          "maxLength": 200
         },
-        "cr22e_departamentos": {
+        "cr22e_facturasdecompratiid": {
           "type": "string",
-          "title": "Departamentos",
-          "x-ms-dataverse-attribute": "cr22e_departamentos",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_Departamentos"
-        },
-        "cr22e_departamentosname": {
-          "type": "string",
-          "title": "cr22e_departamentosname",
-          "x-ms-dataverse-attribute": "cr22e_departamentosname",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_DepartamentosName",
-          "x-ms-read-only": true,
-          "maxLength": 850
-        },
-        "cr22e_direccionip": {
-          "type": "string",
-          "title": "Direccion IP",
-          "x-ms-dataverse-attribute": "cr22e_direccionip",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_DireccionIP",
-          "maxLength": 50
-        },
-        "cr22e_equipostiid": {
-          "type": "string",
-          "title": "EquiposTI",
-          "x-ms-dataverse-attribute": "cr22e_equipostiid",
+          "title": "Facturas de Compra TI",
+          "x-ms-dataverse-attribute": "cr22e_facturasdecompratiid",
           "x-ms-dataverse-type": "UniqueidentifierType",
-          "x-ms-schema-name": "cr22e_EquiposTIId",
+          "x-ms-schema-name": "cr22e_FacturasdeCompraTIId",
           "x-ms-dataverse-primary-id": true,
           "required": true,
           "x-ms-keyType": "primary"
         },
-        "cr22e_estadodeequipo": {
+        "cr22e_facturaxml": {
           "type": "string",
-          "title": "Estado de equipo",
-          "x-ms-dataverse-attribute": "cr22e_estadodeequipo",
-          "x-ms-dataverse-type": "PicklistType",
-          "x-ms-schema-name": "cr22e_Estadodeequipo",
-          "enum": [
-            "Excelente",
-            "Bueno",
-            "Regular",
-            "Malo",
-            "Disfuncional"
-          ],
-          "x-ms-enum-values": [
-            100000000,
-            100000001,
-            100000002,
-            100000003,
-            100000004
-          ],
-          "Color": [
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "x-ms-optionsetmetadataid": "188d996d-246c-f111-ab0d-000d3a5bb8c0",
-          "x-ms-isGlobal": true,
-          "x-ms-optionsetdisplayname": "Estado del equipo c",
-          "x-ms-optionSetType": "Picklist"
-        },
-        "cr22e_estadodeequiponame": {
-          "type": "string",
-          "title": "cr22e_estadodeequiponame",
-          "x-ms-dataverse-attribute": "cr22e_estadodeequiponame",
-          "x-ms-dataverse-type": "VirtualType",
-          "x-ms-schema-name": "cr22e_estadodeequipoName",
+          "title": "Factura XML",
+          "x-ms-dataverse-attribute": "cr22e_facturaxml",
+          "x-ms-dataverse-type": "FileType",
+          "x-ms-schema-name": "cr22e_FacturaXML",
           "x-ms-read-only": true
         },
-        "cr22e_facturadecompra": {
+        "cr22e_facturaxml_name": {
           "type": "string",
-          "title": "Factura de compra",
-          "x-ms-dataverse-attribute": "cr22e_facturadecompra",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_Facturadecompra"
-        },
-        "cr22e_facturadecompraname": {
-          "type": "string",
-          "title": "cr22e_facturadecompraname",
-          "x-ms-dataverse-attribute": "cr22e_facturadecompraname",
+          "title": "cr22e_facturaxml_name",
+          "x-ms-dataverse-attribute": "cr22e_facturaxml_name",
           "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_FacturadecompraName",
+          "x-ms-schema-name": "cr22e_FacturaXML_Name",
           "x-ms-read-only": true,
-          "maxLength": 850
+          "maxLength": 200
         },
-        "cr22e_fechadeadquisicion": {
+        "cr22e_fechadefactura": {
           "type": "string",
-          "title": "Fecha de adquisicion",
-          "x-ms-dataverse-attribute": "cr22e_fechadeadquisicion",
+          "title": "Fecha de factura",
+          "x-ms-dataverse-attribute": "cr22e_fechadefactura",
           "x-ms-dataverse-type": "DateTimeType",
-          "x-ms-schema-name": "cr22e_Fechadeadquisicion"
+          "x-ms-schema-name": "cr22e_Fechadefactura"
         },
-        "cr22e_hostname": {
+        "cr22e_impuestos": {
           "type": "string",
-          "title": "Hostname",
-          "x-ms-dataverse-attribute": "cr22e_hostname",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_Hostname",
-          "required": true,
-          "maxLength": 100
+          "title": "Impuestos",
+          "x-ms-dataverse-attribute": "cr22e_impuestos",
+          "x-ms-dataverse-type": "MoneyType",
+          "x-ms-schema-name": "cr22e_Impuestos"
         },
-        "cr22e_idequipo": {
+        "cr22e_impuestos_base": {
           "type": "string",
-          "title": "IDequipo",
-          "x-ms-dataverse-attribute": "cr22e_idequipo",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_IDequipo",
-          "maxLength": 100
+          "title": "Impuestos (base)",
+          "x-ms-dataverse-attribute": "cr22e_impuestos_base",
+          "x-ms-dataverse-type": "MoneyType",
+          "x-ms-schema-name": "cr22e_impuestos_Base",
+          "x-ms-read-only": true
         },
-        "cr22e_marca": {
+        "cr22e_montototal": {
           "type": "string",
-          "title": "Marca",
-          "x-ms-dataverse-attribute": "cr22e_marca",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_Marca",
-          "maxLength": 100
+          "title": "Monto total",
+          "x-ms-dataverse-attribute": "cr22e_montototal",
+          "x-ms-dataverse-type": "MoneyType",
+          "x-ms-schema-name": "cr22e_Montototal"
         },
-        "cr22e_modelo": {
+        "cr22e_montototal_base": {
           "type": "string",
-          "title": "Modelo",
-          "x-ms-dataverse-attribute": "cr22e_modelo",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_Modelo",
-          "maxLength": 100
+          "title": "Monto total (base)",
+          "x-ms-dataverse-attribute": "cr22e_montototal_base",
+          "x-ms-dataverse-type": "MoneyType",
+          "x-ms-schema-name": "cr22e_montototal_Base",
+          "x-ms-read-only": true
         },
         "cr22e_name": {
           "type": "string",
-          "title": "Name",
+          "title": "Referencias de factura",
           "x-ms-dataverse-attribute": "cr22e_name",
           "x-ms-dataverse-type": "StringType",
           "x-ms-schema-name": "cr22e_Name",
@@ -260,20 +101,12 @@
           "required": true,
           "maxLength": 850
         },
-        "cr22e_numerodepartidadefactura": {
+        "cr22e_numerodefactura": {
           "type": "string",
-          "title": "Numero de partida de factura",
-          "x-ms-dataverse-attribute": "cr22e_numerodepartidadefactura",
+          "title": "Numero de factura",
+          "x-ms-dataverse-attribute": "cr22e_numerodefactura",
           "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_Numerodepartidadefactura",
-          "maxLength": 100
-        },
-        "cr22e_numerodeserie": {
-          "type": "string",
-          "title": "numero de serie",
-          "x-ms-dataverse-attribute": "cr22e_numerodeserie",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_numerodeserie",
+          "x-ms-schema-name": "cr22e_Numerodefactura",
           "maxLength": 100
         },
         "cr22e_observaciones": {
@@ -284,166 +117,75 @@
           "x-ms-schema-name": "cr22e_Observaciones",
           "maxLength": 100
         },
-        "cr22e_responsable": {
+        "cr22e_proveedoremisor": {
           "type": "string",
-          "title": "responsable",
-          "x-ms-dataverse-attribute": "cr22e_responsable",
+          "title": "Proveedor emisor",
+          "x-ms-dataverse-attribute": "cr22e_proveedoremisor",
+          "x-ms-dataverse-type": "LookupType",
+          "x-ms-schema-name": "cr22e_Proveedoremisor"
+        },
+        "cr22e_proveedoremisorname": {
+          "type": "string",
+          "title": "cr22e_proveedoremisorname",
+          "x-ms-dataverse-attribute": "cr22e_proveedoremisorname",
           "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_responsable",
+          "x-ms-schema-name": "cr22e_ProveedoremisorName",
+          "x-ms-read-only": true,
+          "maxLength": 850
+        },
+        "cr22e_razonsocialdelemisor": {
+          "type": "string",
+          "title": "Razon social del emisor",
+          "x-ms-dataverse-attribute": "cr22e_razonsocialdelemisor",
+          "x-ms-dataverse-type": "StringType",
+          "x-ms-schema-name": "cr22e_Razonsocialdelemisor",
           "maxLength": 100
         },
-        "cr22e_sistemaoperativo": {
+        "cr22e_razonsocialreceptora": {
           "type": "string",
-          "title": "sistema operativo",
-          "x-ms-dataverse-attribute": "cr22e_sistemaoperativo",
+          "title": "Razon social receptora",
+          "x-ms-dataverse-attribute": "cr22e_razonsocialreceptora",
+          "x-ms-dataverse-type": "LookupType",
+          "x-ms-schema-name": "cr22e_Razonsocialreceptora"
+        },
+        "cr22e_razonsocialreceptoraname": {
+          "type": "string",
+          "title": "cr22e_razonsocialreceptoraname",
+          "x-ms-dataverse-attribute": "cr22e_razonsocialreceptoraname",
           "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_sistemaoperativo",
+          "x-ms-schema-name": "cr22e_RazonsocialreceptoraName",
+          "x-ms-read-only": true,
+          "maxLength": 850
+        },
+        "cr22e_rfcdelemisor": {
+          "type": "string",
+          "title": "RFC del emisor",
+          "x-ms-dataverse-attribute": "cr22e_rfcdelemisor",
+          "x-ms-dataverse-type": "StringType",
+          "x-ms-schema-name": "cr22e_RFCdelemisor",
           "maxLength": 100
         },
-        "cr22e_sucursal": {
+        "cr22e_subtotal": {
           "type": "string",
-          "title": "sucursal",
-          "x-ms-dataverse-attribute": "cr22e_sucursal",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_sucursal"
+          "title": "Subtotal",
+          "x-ms-dataverse-attribute": "cr22e_subtotal",
+          "x-ms-dataverse-type": "MoneyType",
+          "x-ms-schema-name": "cr22e_Subtotal"
         },
-        "cr22e_sucursales": {
+        "cr22e_subtotal_base": {
           "type": "string",
-          "title": "sucursales",
-          "x-ms-dataverse-attribute": "cr22e_sucursales",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_sucursales"
-        },
-        "cr22e_sucursalesname": {
-          "type": "string",
-          "title": "cr22e_sucursalesname",
-          "x-ms-dataverse-attribute": "cr22e_sucursalesname",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_sucursalesName",
-          "x-ms-read-only": true,
-          "maxLength": 850
-        },
-        "cr22e_sucursalname": {
-          "type": "string",
-          "title": "cr22e_sucursalname",
-          "x-ms-dataverse-attribute": "cr22e_sucursalname",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_sucursalName",
-          "x-ms-read-only": true,
-          "maxLength": 850
-        },
-        "cr22e_tipodeadquisicion": {
-          "type": "string",
-          "title": "Tipo de adquisicion",
-          "x-ms-dataverse-attribute": "cr22e_tipodeadquisicion",
-          "x-ms-dataverse-type": "PicklistType",
-          "x-ms-schema-name": "cr22e_Tipodeadquisicion",
-          "enum": [
-            "Compra nueva",
-            "Equipo existente",
-            "Transferencia",
-            "Arrendamiento",
-            "Donacion",
-            "Otro"
-          ],
-          "x-ms-enum-values": [
-            100000001,
-            100000002,
-            100000003,
-            100000004,
-            100000005,
-            100000006
-          ],
-          "Color": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
-          "x-ms-optionsetmetadataid": "511fd367-4e84-f111-ab0f-70a8a5ae8b0c",
-          "x-ms-isGlobal": true,
-          "x-ms-optionsetdisplayname": "tipos de adquisiciones",
-          "x-ms-optionSetType": "Picklist"
-        },
-        "cr22e_tipodeadquisicionname": {
-          "type": "string",
-          "title": "cr22e_tipodeadquisicionname",
-          "x-ms-dataverse-attribute": "cr22e_tipodeadquisicionname",
-          "x-ms-dataverse-type": "VirtualType",
-          "x-ms-schema-name": "cr22e_tipodeadquisicionName",
+          "title": "Subtotal (base)",
+          "x-ms-dataverse-attribute": "cr22e_subtotal_base",
+          "x-ms-dataverse-type": "MoneyType",
+          "x-ms-schema-name": "cr22e_subtotal_Base",
           "x-ms-read-only": true
         },
-        "cr22e_tipoequipo": {
+        "cr22e_uuidfiscal": {
           "type": "string",
-          "title": "TipoEquipo",
-          "x-ms-dataverse-attribute": "cr22e_tipoequipo",
-          "x-ms-dataverse-type": "PicklistType",
-          "x-ms-schema-name": "cr22e_TipoEquipo",
-          "enum": [
-            "Laptop",
-            "PC de Escritorio "
-          ],
-          "x-ms-enum-values": [
-            100000000,
-            100000001
-          ],
-          "Color": [
-            null,
-            null
-          ],
-          "x-ms-optionsetmetadataid": "b810ea4d-236c-f111-ab0d-000d3a5bb8c0",
-          "x-ms-isGlobal": true,
-          "x-ms-optionsetdisplayname": "Tipo de Equipo",
-          "x-ms-optionSetType": "Picklist"
-        },
-        "cr22e_tipoequiponame": {
-          "type": "string",
-          "title": "cr22e_tipoequiponame",
-          "x-ms-dataverse-attribute": "cr22e_tipoequiponame",
-          "x-ms-dataverse-type": "VirtualType",
-          "x-ms-schema-name": "cr22e_tipoequipoName",
-          "x-ms-read-only": true
-        },
-        "cr22e_ubicacionessucursal": {
-          "type": "string",
-          "title": "ubicacionesSucursal",
-          "x-ms-dataverse-attribute": "cr22e_ubicacionessucursal",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_ubicacionesSucursal"
-        },
-        "cr22e_ubicacionessucursalname": {
-          "type": "string",
-          "title": "cr22e_ubicacionessucursalname",
-          "x-ms-dataverse-attribute": "cr22e_ubicacionessucursalname",
+          "title": "UUID fiscal",
+          "x-ms-dataverse-attribute": "cr22e_uuidfiscal",
           "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_ubicacionesSucursalName",
-          "x-ms-read-only": true,
-          "maxLength": 850
-        },
-        "cr22e_ubicacionessucursalv2": {
-          "type": "string",
-          "title": "UbicacionesSucursalV2",
-          "x-ms-dataverse-attribute": "cr22e_ubicacionessucursalv2",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_UbicacionesSucursalV2"
-        },
-        "cr22e_ubicacionessucursalv2name": {
-          "type": "string",
-          "title": "cr22e_ubicacionessucursalv2name",
-          "x-ms-dataverse-attribute": "cr22e_ubicacionessucursalv2name",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_UbicacionesSucursalV2Name",
-          "x-ms-read-only": true,
-          "maxLength": 850
-        },
-        "cr22e_ubicacionexacta": {
-          "type": "string",
-          "title": "UbicacionExacta",
-          "x-ms-dataverse-attribute": "cr22e_ubicacionexacta",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_UbicacionExacta",
+          "x-ms-schema-name": "cr22e_UUIDfiscal",
           "maxLength": 100
         },
         "createdby": {
@@ -681,7 +423,7 @@
             null,
             null
           ],
-          "x-ms-optionsetmetadataid": "b3b1f0f5-3e5c-f111-a825-000d3a5c0918",
+          "x-ms-optionsetmetadataid": "fb2555e9-6d6c-f111-ab0c-000d3a5cce9e",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Estado",
           "x-ms-optionSetType": "State"
@@ -712,7 +454,7 @@
             null,
             null
           ],
-          "x-ms-optionsetmetadataid": "bdb1f0f5-3e5c-f111-a825-000d3a5c0918",
+          "x-ms-optionsetmetadataid": "052655e9-6d6c-f111-ab0c-000d3a5cce9e",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Razón para el estado",
           "x-ms-optionSetType": "Status"
@@ -765,8 +507,7 @@
         }
       },
       "required": [
-        "cr22e_equipostiid",
-        "cr22e_hostname",
+        "cr22e_facturasdecompratiid",
         "cr22e_name",
         "createdbyyominame",
         "createdonbehalfbyyominame",

@@ -19,6 +19,13 @@ export const dataSourcesInfo = {
     "dataSourceType": "Dataverse",
     "apis": {}
   },
+  "transactioncurrencies": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "transactioncurrencyid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
   "cr22e_equipostis": {
     "tableId": "",
     "version": "",
@@ -33,10 +40,24 @@ export const dataSourcesInfo = {
     "dataSourceType": "Dataverse",
     "apis": {}
   },
+  "cr22e_facturasdecompratis": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "cr22e_facturasdecompratiid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
   "cr22e_proveedoreses": {
     "tableId": "",
     "version": "",
     "primaryKey": "cr22e_proveedoresid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "cr22e_razonsocials": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "cr22e_razonsocialid",
     "dataSourceType": "Dataverse",
     "apis": {}
   },

@@ -44,6 +44,18 @@
         "excepcionescalidaddatos": {
           "entitySetName": "cr22e_excepcionescalidaddatoses",
           "logicalName": "cr22e_excepcionescalidaddatos"
+        },
+        "facturasdecomprati": {
+          "entitySetName": "cr22e_facturasdecompratis",
+          "logicalName": "cr22e_facturasdecomprati"
+        },
+        "razonessociales": {
+          "entitySetName": "cr22e_razonsocials",
+          "logicalName": "cr22e_razonsocial"
+        },
+        "divisas": {
+          "entitySetName": "transactioncurrencies",
+          "logicalName": "transactioncurrency"
         }
       },
       "environmentVariableName": ""

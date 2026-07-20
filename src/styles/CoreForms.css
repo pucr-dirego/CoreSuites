@@ -1092,6 +1092,69 @@
   line-height: 1.5;
 }
 
+.coreforms-page input[type="file"] {
+  width: 100%;
+  padding: 0.45rem;
+  border: 1px solid #bfd3c7;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.coreforms-page input[type="file"]:hover {
+  border-color: #7ba88c;
+  background: #fbfefc;
+}
+
+.coreforms-page input[type="file"]:focus {
+  outline: none;
+  border-color: #2f855a;
+  box-shadow: 0 0 0 3px rgba(47, 133, 90, 0.14);
+}
+
+.coreforms-page input[type="file"]::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #2f855a;
+  border-radius: 8px;
+  background: #edf8f1;
+  color: #256746;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.coreforms-page input[type="file"]::file-selector-button:hover {
+  background: #2f855a;
+  color: #ffffff;
+  border-color: #2f855a;
+}
+
+.coreforms-page input[type="file"]::file-selector-button:active {
+  transform: translateY(1px);
+}
+
+.coreforms-page input[type="file"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  background: #f1f5f9;
+}
+
+.coreforms-page input[type="file"]:disabled::file-selector-button {
+  cursor: not-allowed;
+}
+
 @media (max-width: 760px) {
   .coreforms-support-choice {
     grid-template-columns: 1fr;
@@ -1168,3 +1231,157 @@
     animation: none;
   }
 }
+
+/* =========================================================
+   CoreForms · Modales adaptables y desplazables
+   ========================================================= */
+
+.coreforms-modal-backdrop {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: clamp(0.75rem, 2vw, 1.75rem);
+  overscroll-behavior: contain;
+}
+
+/*
+ * El modal de instrucciones nunca debe superar la altura
+ * disponible de la pantalla, incluso cuando existe zoom.
+ */
+.coreforms-modal-instructions {
+  width: min(100%, 650px);
+  max-height: calc(100dvh - 2rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+/*
+ * Mantiene el botón Continuar visible en la parte inferior
+ * mientras el contenido de instrucciones se desplaza.
+ */
+.coreforms-modal-instructions .coreforms-modal-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+  background: inherit;
+  border-top: 1px solid rgba(15, 81, 50, 0.12);
+}
+
+/*
+ * Compatibilidad con navegadores que todavía no interpretan
+ * correctamente la unidad dinámica dvh.
+ */
+@supports not (height: 100dvh) {
+  .coreforms-modal-instructions {
+    max-height: calc(100vh - 2rem);
+  }
+}
+
+/* =========================================================
+   CoreForms · Modal de guardado
+   ========================================================= */
+
+.coreforms-saving-backdrop {
+  z-index: 10000;
+  cursor: wait;
+}
+
+.coreforms-saving-modal {
+  width: min(100%, 430px);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+.coreforms-saving-modal h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.coreforms-saving-modal > p {
+  margin: 0 auto;
+  max-width: 340px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.coreforms-saving-spinner {
+  width: 3.25rem;
+  height: 3.25rem;
+  margin: 0 auto;
+  border: 4px solid rgba(47, 133, 90, 0.18);
+  border-top-color: #2f855a;
+  border-radius: 50%;
+  animation: coreforms-saving-spin 850ms linear infinite;
+}
+
+.coreforms-saving-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #cfe4d7;
+  border-radius: 12px;
+  background: #f2faf5;
+  color: #315b43;
+  text-align: left;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.coreforms-saving-status-dot {
+  flex: 0 0 auto;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-top: 0.3rem;
+  border-radius: 50%;
+  background: #2f855a;
+  box-shadow: 0 0 0 5px rgba(47, 133, 90, 0.13);
+  animation: coreforms-saving-pulse 1.25s ease-in-out infinite;
+}
+
+@keyframes coreforms-saving-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes coreforms-saving-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coreforms-saving-spinner,
+  .coreforms-saving-status-dot {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .coreforms-modal-backdrop {
+    padding: 0.65rem;
+  }
+
+  .coreforms-modal-instructions {
+    max-height: calc(100dvh - 1.3rem);
+  }
+
+  .coreforms-saving-modal {
+    padding: 1.5rem 1.15rem;
+  }
+}
+

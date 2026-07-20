@@ -18,6 +18,15 @@ export const Cr22e_equipostiscr22e_estadodeequipo = {
   100000004: 'Disfuncional'
 } as const;
 export type Cr22e_equipostiscr22e_estadodeequipo = keyof typeof Cr22e_equipostiscr22e_estadodeequipo;
+export const Cr22e_equipostiscr22e_tipodeadquisicion = {
+  100000001: 'Compranueva',
+  100000002: 'Equipoexistente',
+  100000003: 'Transferencia',
+  100000004: 'Arrendamiento',
+  100000005: 'Donacion',
+  100000006: 'Otro'
+} as const;
+export type Cr22e_equipostiscr22e_tipodeadquisicion = keyof typeof Cr22e_equipostiscr22e_tipodeadquisicion;
 export const Cr22e_equipostiscr22e_tipoequipo = {
   100000000: 'Laptop',
   100000001: 'PCdeEscritorio'
@@ -38,22 +47,27 @@ export interface Cr22e_equipostisBase {
   cr22e_activo?: boolean;
   cr22e_claveanydesk?: string;
   cr22e_condicionfisica?: Cr22e_equipostiscr22e_condicionfisica;
+  cr22e_costoindividualdelequipo?: number;
   "cr22e_departamento@odata.bind"?: string;
   "cr22e_Departamentos@odata.bind"?: string;
   cr22e_direccionip?: string;
   cr22e_equipostiid: string;
   cr22e_estadodeequipo?: Cr22e_equipostiscr22e_estadodeequipo;
+  "cr22e_Facturadecompra@odata.bind"?: string;
+  cr22e_fechadeadquisicion?: string;
   cr22e_hostname: string;
   cr22e_idequipo?: string;
   cr22e_marca?: string;
   cr22e_modelo?: string;
   cr22e_name: string;
+  cr22e_numerodepartidadefactura?: string;
   cr22e_numerodeserie?: string;
   cr22e_observaciones?: string;
   cr22e_responsable?: string;
   cr22e_sistemaoperativo?: string;
   "cr22e_sucursal@odata.bind"?: string;
   "cr22e_sucursales@odata.bind"?: string;
+  cr22e_tipodeadquisicion?: Cr22e_equipostiscr22e_tipodeadquisicion;
   cr22e_tipoequipo?: Cr22e_equipostiscr22e_tipoequipo;
   "cr22e_ubicacionesSucursal@odata.bind"?: string;
   "cr22e_UbicacionesSucursalV2@odata.bind"?: string;
@@ -65,17 +79,21 @@ export interface Cr22e_equipostisBase {
   statecode: Cr22e_equipostisstatecode;
   statuscode?: Cr22e_equipostisstatuscode;
   timezoneruleversionnumber?: number;
+  "TransactionCurrencyId@odata.bind"?: string;
   utcconversiontimezonecode?: number;
 }
 
 export interface Cr22e_equipostis extends Cr22e_equipostisBase {
   cr22e_activoname?: string;
   cr22e_condicionfisicaname?: string;
+  cr22e_costoindividualdelequipo_base?: number;
   cr22e_departamentoname?: string;
   cr22e_departamentosname?: string;
   cr22e_estadodeequiponame?: string;
+  cr22e_facturadecompraname?: string;
   cr22e_sucursalesname?: string;
   cr22e_sucursalname?: string;
+  cr22e_tipodeadquisicionname?: string;
   cr22e_tipoequiponame?: string;
   cr22e_ubicacionessucursalname?: string;
   cr22e_ubicacionessucursalv2name?: string;
@@ -84,6 +102,7 @@ export interface Cr22e_equipostis extends Cr22e_equipostisBase {
   createdon?: string;
   createdonbehalfbyname?: string;
   createdonbehalfbyyominame: string;
+  exchangerate?: number;
   modifiedbyname?: string;
   modifiedbyyominame: string;
   modifiedon?: string;
@@ -94,11 +113,14 @@ export interface Cr22e_equipostis extends Cr22e_equipostisBase {
   owningbusinessunitname: string;
   statecodename?: string;
   statuscodename?: string;
+  transactioncurrencyidname?: string;
   versionnumber?: number;
   cr22e_departamento?: object;
   _cr22e_departamento_value?: string;
   cr22e_departamentos?: object;
   _cr22e_departamentos_value?: string;
+  cr22e_facturadecompra?: object;
+  _cr22e_facturadecompra_value?: string;
   cr22e_sucursal?: object;
   _cr22e_sucursal_value?: string;
   cr22e_sucursales?: object;
@@ -121,4 +143,6 @@ export interface Cr22e_equipostis extends Cr22e_equipostisBase {
   _owningteam_value?: string;
   owninguser?: object;
   _owninguser_value?: string;
+  transactioncurrencyid?: object;
+  _transactioncurrencyid_value?: string;
 }
