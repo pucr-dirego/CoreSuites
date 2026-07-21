@@ -37,44 +37,12 @@
           "required": true,
           "x-ms-keyType": "primary"
         },
-        "cr22e_facturaxml": {
-          "type": "string",
-          "title": "Factura XML",
-          "x-ms-dataverse-attribute": "cr22e_facturaxml",
-          "x-ms-dataverse-type": "FileType",
-          "x-ms-schema-name": "cr22e_FacturaXML",
-          "x-ms-read-only": true
-        },
-        "cr22e_facturaxml_name": {
-          "type": "string",
-          "title": "cr22e_facturaxml_name",
-          "x-ms-dataverse-attribute": "cr22e_facturaxml_name",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_FacturaXML_Name",
-          "x-ms-read-only": true,
-          "maxLength": 200
-        },
         "cr22e_fechadefactura": {
           "type": "string",
           "title": "Fecha de factura",
           "x-ms-dataverse-attribute": "cr22e_fechadefactura",
           "x-ms-dataverse-type": "DateTimeType",
           "x-ms-schema-name": "cr22e_Fechadefactura"
-        },
-        "cr22e_impuestos": {
-          "type": "string",
-          "title": "Impuestos",
-          "x-ms-dataverse-attribute": "cr22e_impuestos",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_Impuestos"
-        },
-        "cr22e_impuestos_base": {
-          "type": "string",
-          "title": "Impuestos (base)",
-          "x-ms-dataverse-attribute": "cr22e_impuestos_base",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_impuestos_Base",
-          "x-ms-read-only": true
         },
         "cr22e_montototal": {
           "type": "string",
@@ -117,30 +85,6 @@
           "x-ms-schema-name": "cr22e_Observaciones",
           "maxLength": 100
         },
-        "cr22e_proveedoremisor": {
-          "type": "string",
-          "title": "Proveedor emisor",
-          "x-ms-dataverse-attribute": "cr22e_proveedoremisor",
-          "x-ms-dataverse-type": "LookupType",
-          "x-ms-schema-name": "cr22e_Proveedoremisor"
-        },
-        "cr22e_proveedoremisorname": {
-          "type": "string",
-          "title": "cr22e_proveedoremisorname",
-          "x-ms-dataverse-attribute": "cr22e_proveedoremisorname",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_ProveedoremisorName",
-          "x-ms-read-only": true,
-          "maxLength": 850
-        },
-        "cr22e_razonsocialdelemisor": {
-          "type": "string",
-          "title": "Razon social del emisor",
-          "x-ms-dataverse-attribute": "cr22e_razonsocialdelemisor",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_Razonsocialdelemisor",
-          "maxLength": 100
-        },
         "cr22e_razonsocialreceptora": {
           "type": "string",
           "title": "Razon social receptora",
@@ -156,29 +100,6 @@
           "x-ms-schema-name": "cr22e_RazonsocialreceptoraName",
           "x-ms-read-only": true,
           "maxLength": 850
-        },
-        "cr22e_rfcdelemisor": {
-          "type": "string",
-          "title": "RFC del emisor",
-          "x-ms-dataverse-attribute": "cr22e_rfcdelemisor",
-          "x-ms-dataverse-type": "StringType",
-          "x-ms-schema-name": "cr22e_RFCdelemisor",
-          "maxLength": 100
-        },
-        "cr22e_subtotal": {
-          "type": "string",
-          "title": "Subtotal",
-          "x-ms-dataverse-attribute": "cr22e_subtotal",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_Subtotal"
-        },
-        "cr22e_subtotal_base": {
-          "type": "string",
-          "title": "Subtotal (base)",
-          "x-ms-dataverse-attribute": "cr22e_subtotal_base",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_subtotal_Base",
-          "x-ms-read-only": true
         },
         "cr22e_uuidfiscal": {
           "type": "string",

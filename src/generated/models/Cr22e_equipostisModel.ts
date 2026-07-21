@@ -29,7 +29,8 @@ export const Cr22e_equipostiscr22e_tipodeadquisicion = {
 export type Cr22e_equipostiscr22e_tipodeadquisicion = keyof typeof Cr22e_equipostiscr22e_tipodeadquisicion;
 export const Cr22e_equipostiscr22e_tipoequipo = {
   100000000: 'Laptop',
-  100000001: 'PCdeEscritorio'
+  100000001: 'PCdeEscritorio',
+  100000002: 'Tablet'
 } as const;
 export type Cr22e_equipostiscr22e_tipoequipo = keyof typeof Cr22e_equipostiscr22e_tipoequipo;
 export const Cr22e_equipostisstatecode = {
@@ -47,14 +48,12 @@ export interface Cr22e_equipostisBase {
   cr22e_activo?: boolean;
   cr22e_claveanydesk?: string;
   cr22e_condicionfisica?: Cr22e_equipostiscr22e_condicionfisica;
-  cr22e_costoindividualdelequipo?: number;
   "cr22e_departamento@odata.bind"?: string;
   "cr22e_Departamentos@odata.bind"?: string;
   cr22e_direccionip?: string;
   cr22e_equipostiid: string;
   cr22e_estadodeequipo?: Cr22e_equipostiscr22e_estadodeequipo;
   "cr22e_Facturadecompra@odata.bind"?: string;
-  cr22e_fechadeadquisicion?: string;
   cr22e_hostname: string;
   cr22e_idequipo?: string;
   cr22e_marca?: string;
@@ -86,7 +85,6 @@ export interface Cr22e_equipostisBase {
 export interface Cr22e_equipostis extends Cr22e_equipostisBase {
   cr22e_activoname?: string;
   cr22e_condicionfisicaname?: string;
-  cr22e_costoindividualdelequipo_base?: number;
   cr22e_departamentoname?: string;
   cr22e_departamentosname?: string;
   cr22e_estadodeequiponame?: string;

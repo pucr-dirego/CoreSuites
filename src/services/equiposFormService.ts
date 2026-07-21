@@ -5,7 +5,6 @@ import {
 } from "../generated";
 
 import { Cr22e_facturasdecompratisService } from "../generated/services/Cr22e_facturasdecompratisService";
-import { Cr22e_proveedoresesService } from "../generated/services/Cr22e_proveedoresesService";
 import { Cr22e_razonsocialsService } from "../generated/services/Cr22e_razonsocialsService";
 import { TransactioncurrenciesService } from "../generated/services/TransactioncurrenciesService";
 
@@ -13,8 +12,6 @@ import type {
   AltaEquipoForm,
   DepartamentoOption,
   FacturaCompraOption,
-  MonedaOption,
-  ProveedorEmisorOption,
   RazonSocialOption,
   SucursalOption,
   TipoAdquisicion,
@@ -22,7 +19,6 @@ import type {
 
 import type { Cr22e_departamentoses } from "../generated/models/Cr22e_departamentosesModel";
 import type { Cr22e_facturasdecompratis } from "../generated/models/Cr22e_facturasdecompratisModel";
-import type { Cr22e_proveedoreses } from "../generated/models/Cr22e_proveedoresesModel";
 import type { Cr22e_razonsocials } from "../generated/models/Cr22e_razonsocialsModel";
 import type { Cr22e_sucursaleses } from "../generated/models/Cr22e_sucursalesesModel";
 import type { Transactioncurrencies } from "../generated/models/TransactioncurrenciesModel";
@@ -109,6 +105,16 @@ function optionalText(value: string) {
   return cleaned || undefined;
 }
 
+function createTabletTechnicalHostname() {
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const randomSuffix = Math.random()
+    .toString(36)
+    .slice(2, 7)
+    .toUpperCase();
+
+  return `TABLET-${timestamp}-${randomSuffix}`;
+}
+
 function parseOptionalMoney(
   value: string,
   fieldLabel: string
@@ -139,6 +145,7 @@ function mapTipoEquipo(
   > = {
     Laptop: 100000000,
     "PC de Escritorio": 100000001,
+    Tablet: 100000002,
   };
 
   return map[value];
@@ -196,9 +203,8 @@ function mapTipoAdquisicion(
   return value ? map[value] : undefined;
 }
 
-function validateInvoiceFile(
+function validateInvoicePdf(
   file: File | null,
-  expectedExtension: ".pdf" | ".xml",
   maxBytes: number
 ) {
   if (!file) {
@@ -207,9 +213,9 @@ function validateInvoiceFile(
 
   const fileName = file.name.toLocaleLowerCase("es-MX");
 
-  if (!fileName.endsWith(expectedExtension)) {
+  if (!fileName.endsWith(".pdf")) {
     throw new Error(
-      `El archivo ${file.name} debe tener extensión ${expectedExtension}.`
+      `El archivo ${file.name} debe tener extensión .pdf.`
     );
   }
 
@@ -222,23 +228,30 @@ function validateInvoiceFile(
   }
 }
 
-
 function hasNewInvoiceData(form: AltaEquipoForm) {
   return Boolean(
     form.numeroFactura.trim() ||
-      form.uuidFiscal.trim() ||
       form.fechaFactura ||
       form.razonSocialReceptoraId ||
-      form.proveedorEmisorId ||
-      form.razonSocialEmisor.trim() ||
-      form.rfcEmisor.trim() ||
-      form.subtotalFactura.trim() ||
-      form.impuestosFactura.trim() ||
       form.montoTotalFactura.trim() ||
       form.observacionesFactura.trim() ||
-      form.facturaPdf ||
-      form.facturaXml
+      form.facturaPdf
   );
+}
+
+async function getMonedaMxnId(): Promise<string | undefined> {
+  const response = await TransactioncurrenciesService.getAll();
+
+  const rows = unwrapData<Transactioncurrencies[]>(
+    response,
+    "No se pudo consultar la moneda predeterminada."
+  );
+
+  return rows.find(
+    (row) =>
+      row.statecode === 0 &&
+      row.isocurrencycode?.toUpperCase() === "MXN"
+  )?.transactioncurrencyid;
 }
 
 export async function getSucursalesEquipo(): Promise<
@@ -315,52 +328,6 @@ export async function getRazonesSocialesEquipo(): Promise<
   );
 }
 
-export async function getMonedasEquipo(): Promise<
-  MonedaOption[]
-> {
-  const response = await TransactioncurrenciesService.getAll();
-
-  const rows = unwrapData<Transactioncurrencies[]>(
-    response,
-    "No se pudieron cargar las monedas."
-  );
-
-  return rows
-    .filter((row) => row.statecode === 0)
-    .map((row) => ({
-      id: row.transactioncurrencyid,
-      codigo: row.isocurrencycode,
-      nombre: row.currencyname,
-      simbolo: row.currencysymbol,
-    }))
-    .filter((row) => Boolean(row.id && row.codigo))
-    .sort((a, b) => a.codigo.localeCompare(b.codigo));
-}
-
-export async function getProveedoresEmisoresEquipo(): Promise<
-  ProveedorEmisorOption[]
-> {
-  const response = await Cr22e_proveedoresesService.getAll();
-
-  const rows = unwrapData<Cr22e_proveedoreses[]>(
-    response,
-    "No se pudieron cargar los proveedores emisores."
-  );
-
-  return sortByNombre(
-    rows
-      .filter((row) => row.statecode === 0)
-      .filter((row) => row.cr22e_activo !== false)
-      .map((row) => ({
-        id: row.cr22e_proveedoresid,
-        nombre: row.cr22e_name,
-        razonSocial: optionalText(row.cr22e_razonsocial || ""),
-        rfc: optionalText(row.cr22e_rfc || ""),
-      }))
-      .filter((row) => Boolean(row.id && row.nombre))
-  );
-}
-
 export async function getFacturasEquipo(): Promise<
   FacturaCompraOption[]
 > {
@@ -379,7 +346,6 @@ export async function getFacturasEquipo(): Promise<
       numeroFactura: optionalText(
         row.cr22e_numerodefactura || ""
       ),
-      uuidFiscal: optionalText(row.cr22e_uuidfiscal || ""),
       fechaFactura: optionalText(
         row.cr22e_fechadefactura || ""
       ),
@@ -388,24 +354,8 @@ export async function getFacturasEquipo(): Promise<
       razonSocialReceptoraNombre: optionalText(
         row.cr22e_razonsocialreceptoraname || ""
       ),
-      proveedorEmisorId:
-        row._cr22e_proveedoremisor_value,
-      proveedorEmisorNombre: optionalText(
-        row.cr22e_proveedoremisorname || ""
-      ),
-      razonSocialEmisor: optionalText(
-        row.cr22e_razonsocialdelemisor || ""
-      ),
-      rfcEmisor: optionalText(row.cr22e_rfcdelemisor || ""),
-      subtotal: row.cr22e_subtotal,
-      impuestos: row.cr22e_impuestos,
       montoTotal: row.cr22e_montototal,
-      monedaId: row._transactioncurrencyid_value,
-      monedaNombre: optionalText(
-        row.transactioncurrencyidname || ""
-      ),
       tienePdf: Boolean(row.cr22e_facturapdf_name),
-      tieneXml: Boolean(row.cr22e_facturaxml_name),
     }))
     .filter((row) => Boolean(row.id && row.referencia))
     .sort((a, b) => {
@@ -433,36 +383,25 @@ async function crearFacturaNueva(
   form: AltaEquipoForm,
   nombreEquipo: string
 ): Promise<string> {
-  const subtotal = parseOptionalMoney(
-    form.subtotalFactura,
-    "El subtotal"
-  );
-
-  const impuestos = parseOptionalMoney(
-    form.impuestosFactura,
-    "Los impuestos"
-  );
-
   const montoTotal = parseOptionalMoney(
     form.montoTotalFactura,
     "El monto total"
   );
 
-  validateInvoiceFile(
+  validateInvoicePdf(
     form.facturaPdf,
-    ".pdf",
     15 * 1024 * 1024
   );
 
-  validateInvoiceFile(
-    form.facturaXml,
-    ".xml",
-    5 * 1024 * 1024
-  );
+  /*
+   * Monto total sigue siendo una columna de tipo moneda en Dataverse.
+   * La moneda ya no se solicita al usuario, pero se asigna automáticamente
+   * a MXN para mantener válido el registro de factura.
+   */
+  const monedaMxnId = await getMonedaMxnId();
 
   const referenciaFactura =
     clean(form.numeroFactura) ||
-    clean(form.razonSocialEmisor) ||
     `Factura pendiente — ${nombreEquipo}`;
 
   const record = {
@@ -472,32 +411,8 @@ async function crearFacturaNueva(
       ? { cr22e_numerodefactura: optionalText(form.numeroFactura) }
       : {}),
 
-    ...(optionalText(form.uuidFiscal)
-      ? { cr22e_uuidfiscal: optionalText(form.uuidFiscal) }
-      : {}),
-
     ...(form.fechaFactura
       ? { cr22e_fechadefactura: form.fechaFactura }
-      : {}),
-
-    ...(optionalText(form.razonSocialEmisor)
-      ? {
-          cr22e_razonsocialdelemisor: optionalText(
-            form.razonSocialEmisor
-          ),
-        }
-      : {}),
-
-    ...(optionalText(form.rfcEmisor)
-      ? { cr22e_rfcdelemisor: optionalText(form.rfcEmisor) }
-      : {}),
-
-    ...(subtotal !== undefined
-      ? { cr22e_subtotal: subtotal }
-      : {}),
-
-    ...(impuestos !== undefined
-      ? { cr22e_impuestos: impuestos }
       : {}),
 
     ...(montoTotal !== undefined
@@ -521,20 +436,11 @@ async function crearFacturaNueva(
         }
       : {}),
 
-    ...(form.monedaId
+    ...(monedaMxnId
       ? {
           "transactioncurrencyid@odata.bind":
             `/transactioncurrencies(${cleanGuid(
-              form.monedaId
-            )})`,
-        }
-      : {}),
-
-    ...(form.proveedorEmisorId
-      ? {
-          "cr22e_Proveedoremisor@odata.bind":
-            `/cr22e_proveedoreses(${cleanGuid(
-              form.proveedorEmisorId
+              monedaMxnId
             )})`,
         }
       : {}),
@@ -571,38 +477,37 @@ async function crearFacturaNueva(
     );
   }
 
-  if (form.facturaXml) {
-    const uploadResponse =
-      await Cr22e_facturasdecompratisService.upload(
-        facturaId,
-        "cr22e_facturaxml",
-        form.facturaXml
-      );
-
-    ensureOperationSucceeded(
-      uploadResponse,
-      "La factura fue creada, pero no se pudo cargar el XML."
-    );
-  }
-
   return facturaId;
 }
 
 export async function crearEquipo(form: AltaEquipoForm) {
-  const hostname = clean(form.hostname);
+  const esTablet = form.tipoEquipo === "Tablet";
+  const marca = clean(form.marca);
+  const modelo = clean(form.modelo);
+  const hostnameCapturado = clean(form.hostname);
 
-  const nombreVisible =
-    hostname ||
-    clean(form.numeroSerie) ||
-    clean(form.modelo) ||
-    "Equipo TI sin hostname";
+  /*
+   * Dataverse mantiene Hostname como campo obligatorio.
+   * Para Tablet no se solicita al usuario: se genera un identificador
+   * técnico interno y único para evitar falsos duplicados.
+   */
+  const hostnameGuardado = esTablet
+    ? createTabletTechnicalHostname()
+    : hostnameCapturado;
+
+  const nombreVisible = esTablet
+    ? [marca, modelo].filter(Boolean).join(" ") ||
+      "Tablet sin identificar"
+    : hostnameCapturado ||
+      clean(form.numeroSerie) ||
+      modelo ||
+      "Equipo TI sin hostname";
 
   const tipoAdquisicion: TipoAdquisicion = form.esAdquisicionNueva
     ? "Compra nueva"
     : form.tipoAdquisicion || "Equipo existente";
 
   let facturaId: string | undefined;
-  let monedaId = form.esAdquisicionNueva ? form.monedaId : "";
 
   if (
     form.esAdquisicionNueva &&
@@ -612,8 +517,6 @@ export async function crearEquipo(form: AltaEquipoForm) {
     const factura = await getFacturaRecord(form.facturaId);
 
     facturaId = factura.cr22e_facturasdecompratiid;
-    monedaId =
-      factura._transactioncurrencyid_value || monedaId;
   }
 
   if (
@@ -624,30 +527,26 @@ export async function crearEquipo(form: AltaEquipoForm) {
     facturaId = await crearFacturaNueva(form, nombreVisible);
   }
 
-  const costoIndividual = form.esAdquisicionNueva
-    ? parseOptionalMoney(
-        form.costoIndividualEquipo,
-        "El costo individual del equipo"
-      )
-    : undefined;
-
-  if (costoIndividual !== undefined && !monedaId) {
-    throw new Error(
-      "Selecciona una moneda para el costo individual del equipo."
-    );
-  }
-
   const record = {
     cr22e_name: nombreVisible,
-    cr22e_hostname: nombreVisible,
+    cr22e_hostname: hostnameGuardado || nombreVisible,
 
     cr22e_tipoequipo: mapTipoEquipo(form.tipoEquipo),
-    cr22e_marca: clean(form.marca),
-    cr22e_modelo: clean(form.modelo),
-    cr22e_numerodeserie: clean(form.numeroSerie),
-    cr22e_direccionip: clean(form.direccionIP),
-    cr22e_sistemaoperativo: clean(form.sistemaOperativo),
-    cr22e_claveanydesk: clean(form.claveAnyDesk),
+    cr22e_marca: marca,
+    cr22e_modelo: modelo,
+
+    /*
+     * Los campos técnicos no forman parte de la captura simplificada
+     * de Tablet, incluso si el formulario recibiera valores residuales.
+     */
+    ...(esTablet
+      ? {}
+      : {
+          cr22e_numerodeserie: clean(form.numeroSerie),
+          cr22e_direccionip: clean(form.direccionIP),
+          cr22e_sistemaoperativo: clean(form.sistemaOperativo),
+          cr22e_claveanydesk: clean(form.claveAnyDesk),
+        }),
 
     cr22e_responsable: clean(form.responsable),
     cr22e_ubicacionexacta: clean(form.ubicacionExacta),
@@ -663,10 +562,6 @@ export async function crearEquipo(form: AltaEquipoForm) {
     cr22e_tipodeadquisicion: mapTipoAdquisicion(
       tipoAdquisicion
     ),
-    cr22e_fechadeadquisicion: optionalText(
-      form.fechaAdquisicion
-    ),
-    cr22e_costoindividualdelequipo: costoIndividual,
     cr22e_numerodepartidadefactura:
       form.esAdquisicionNueva
         ? optionalText(form.numeroPartidaFactura)
@@ -696,13 +591,6 @@ export async function crearEquipo(form: AltaEquipoForm) {
             `/cr22e_facturasdecompratis(${cleanGuid(
               facturaId
             )})`,
-        }
-      : {}),
-
-    ...(monedaId
-      ? {
-          "transactioncurrencyid@odata.bind":
-            `/transactioncurrencies(${cleanGuid(monedaId)})`,
         }
       : {}),
   };

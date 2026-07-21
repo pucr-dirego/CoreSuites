@@ -16,16 +16,11 @@ export type Cr22e_facturasdecompratisstatuscode = keyof typeof Cr22e_facturasdec
 export interface Cr22e_facturasdecompratisBase {
   cr22e_facturasdecompratiid: string;
   cr22e_fechadefactura?: string;
-  cr22e_impuestos?: number;
   cr22e_montototal?: number;
   cr22e_name: string;
   cr22e_numerodefactura?: string;
   cr22e_observaciones?: string;
-  "cr22e_Proveedoremisor@odata.bind"?: string;
-  cr22e_razonsocialdelemisor?: string;
   "cr22e_Razonsocialreceptora@odata.bind"?: string;
-  cr22e_rfcdelemisor?: string;
-  cr22e_subtotal?: number;
   cr22e_uuidfiscal?: string;
   importsequencenumber?: number;
   overriddencreatedon?: string;
@@ -41,13 +36,8 @@ export interface Cr22e_facturasdecompratisBase {
 export interface Cr22e_facturasdecompratis extends Cr22e_facturasdecompratisBase {
   cr22e_facturapdf?: string;
   cr22e_facturapdf_name?: string;
-  cr22e_facturaxml?: string;
-  cr22e_facturaxml_name?: string;
-  cr22e_impuestos_base?: number;
   cr22e_montototal_base?: number;
-  cr22e_proveedoremisorname?: string;
   cr22e_razonsocialreceptoraname?: string;
-  cr22e_subtotal_base?: number;
   createdbyname?: string;
   createdbyyominame: string;
   createdon?: string;
@@ -66,8 +56,6 @@ export interface Cr22e_facturasdecompratis extends Cr22e_facturasdecompratisBase
   statuscodename?: string;
   transactioncurrencyidname?: string;
   versionnumber?: number;
-  cr22e_proveedoremisor?: object;
-  _cr22e_proveedoremisor_value?: string;
   cr22e_razonsocialreceptora?: object;
   _cr22e_razonsocialreceptora_value?: string;
   createdby?: object;
@@ -87,4 +75,4 @@ export interface Cr22e_facturasdecompratis extends Cr22e_facturasdecompratisBase
   transactioncurrencyid?: object;
   _transactioncurrencyid_value?: string;
 }
-export type Cr22e_facturasdecompratisUploadColumnName = 'cr22e_facturapdf' | 'cr22e_facturaxml';
+export type Cr22e_facturasdecompratisUploadColumnName = 'cr22e_facturapdf';

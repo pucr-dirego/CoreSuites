@@ -89,21 +89,6 @@
           "x-ms-schema-name": "cr22e_condicionfisicaName",
           "x-ms-read-only": true
         },
-        "cr22e_costoindividualdelequipo": {
-          "type": "string",
-          "title": "Costo individual del equipo",
-          "x-ms-dataverse-attribute": "cr22e_costoindividualdelequipo",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_Costoindividualdelequipo"
-        },
-        "cr22e_costoindividualdelequipo_base": {
-          "type": "string",
-          "title": "Costo individual del equipo (base)",
-          "x-ms-dataverse-attribute": "cr22e_costoindividualdelequipo_base",
-          "x-ms-dataverse-type": "MoneyType",
-          "x-ms-schema-name": "cr22e_costoindividualdelequipo_Base",
-          "x-ms-read-only": true
-        },
         "cr22e_departamento": {
           "type": "string",
           "title": "departamento",
@@ -209,13 +194,6 @@
           "x-ms-schema-name": "cr22e_FacturadecompraName",
           "x-ms-read-only": true,
           "maxLength": 850
-        },
-        "cr22e_fechadeadquisicion": {
-          "type": "string",
-          "title": "Fecha de adquisicion",
-          "x-ms-dataverse-attribute": "cr22e_fechadeadquisicion",
-          "x-ms-dataverse-type": "DateTimeType",
-          "x-ms-schema-name": "cr22e_Fechadeadquisicion"
         },
         "cr22e_hostname": {
           "type": "string",
@@ -383,13 +361,16 @@
           "x-ms-schema-name": "cr22e_TipoEquipo",
           "enum": [
             "Laptop",
-            "PC de Escritorio "
+            "PC de Escritorio ",
+            "Tablet"
           ],
           "x-ms-enum-values": [
             100000000,
-            100000001
+            100000001,
+            100000002
           ],
           "Color": [
+            null,
             null,
             null
           ],
