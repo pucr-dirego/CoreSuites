@@ -8,15 +8,12 @@ import {
   estadoFuncionamientoOptions,
   initialAltaEquipoForm,
   MAX_FACTURA_PDF_BYTES,
-  MAX_FACTURA_XML_BYTES,
   modoFacturaOptions,
   tipoIncorporacionOptions,
   tipoEquipoOptions,
   type AltaEquipoForm,
   type DepartamentoOption,
   type FacturaCompraOption,
-  type MonedaOption,
-  type ProveedorEmisorOption,
   type RazonSocialOption,
   type SucursalOption,
 } from "../../../interfaces/altaEquipo";
@@ -25,8 +22,6 @@ import {
   crearEquipo,
   getDepartamentosEquipo,
   getFacturasEquipo,
-  getMonedasEquipo,
-  getProveedoresEmisoresEquipo,
   getRazonesSocialesEquipo,
   getSucursalesEquipo,
 } from "../../../services/equiposFormService";
@@ -99,7 +94,7 @@ function isValidMoney(value: string) {
   return Number.isFinite(number) && number >= 0;
 }
 
-function hasExpectedExtension(file: File, extension: ".pdf" | ".xml") {
+function hasExpectedExtension(file: File, extension: ".pdf") {
   return file.name.toLocaleLowerCase("es-MX").endsWith(extension);
 }
 
@@ -144,10 +139,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
   const [razonesSociales, setRazonesSociales] = useState<RazonSocialOption[]>(
     []
   );
-  const [monedas, setMonedas] = useState<MonedaOption[]>([]);
-  const [proveedoresEmisores, setProveedoresEmisores] = useState<
-    ProveedorEmisorOption[]
-  >([]);
   const [facturas, setFacturas] = useState<FacturaCompraOption[]>([]);
 
   const [loadingCatalogos, setLoadingCatalogos] = useState(true);
@@ -165,10 +156,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
 
   const razonSocialSeleccionada = razonesSociales.find(
     (razonSocial) => razonSocial.id === form.razonSocialReceptoraId
-  );
-
-  const monedaSeleccionada = monedas.find(
-    (moneda) => moneda.id === form.monedaId
   );
 
   const facturaSeleccionada = facturas.find(
@@ -223,39 +210,18 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
         sucursalesData,
         departamentosData,
         razonesSocialesData,
-        monedasData,
-        proveedoresData,
         facturasData,
       ] = await Promise.all([
         getSucursalesEquipo(),
         getDepartamentosEquipo(),
         getRazonesSocialesEquipo(),
-        getMonedasEquipo(),
-        getProveedoresEmisoresEquipo(),
         getFacturasEquipo(),
       ]);
 
       setSucursales(sucursalesData);
       setDepartamentos(departamentosData);
       setRazonesSociales(razonesSocialesData);
-      setMonedas(monedasData);
-      setProveedoresEmisores(proveedoresData);
       setFacturas(facturasData);
-
-      const monedaMxn = monedasData.find(
-        (moneda) => moneda.codigo.toUpperCase() === "MXN"
-      );
-
-      if (monedaMxn) {
-        setForm((current) =>
-          current.esAdquisicionNueva
-            ? {
-                ...current,
-                monedaId: current.monedaId || monedaMxn.id,
-              }
-            : current
-        );
-      }
     } catch (error) {
       console.error("Error cargando catálogos:", error);
 
@@ -287,17 +253,12 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
   }
 
   function handleEsAdquisicionNuevaChange(checked: boolean) {
-    const monedaMxn = monedas.find(
-      (moneda) => moneda.codigo.toUpperCase() === "MXN"
-    );
-
     setForm((current) => {
       if (checked) {
         return {
           ...current,
           esAdquisicionNueva: true,
           tipoAdquisicion: "Compra nueva",
-          monedaId: current.monedaId || monedaMxn?.id || "",
         };
       }
 
@@ -309,70 +270,30 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
           current.tipoAdquisicion !== "Compra nueva"
             ? current.tipoAdquisicion
             : "Equipo existente",
-        costoIndividualEquipo: "",
         numeroPartidaFactura: "",
-        monedaId: "",
         modoFactura: "Sin factura por el momento",
         facturaId: "",
         numeroFactura: "",
-        uuidFiscal: "",
         fechaFactura: "",
         razonSocialReceptoraId: "",
-        proveedorEmisorId: "",
-        razonSocialEmisor: "",
-        rfcEmisor: "",
-        subtotalFactura: "",
-        impuestosFactura: "",
         montoTotalFactura: "",
         observacionesFactura: "",
         facturaPdf: null,
-        facturaXml: null,
       };
     });
 
     setErrors((current) => ({
       ...current,
       tipoAdquisicion: "",
-      costoIndividualEquipo: "",
       numeroPartidaFactura: "",
-      monedaId: "",
       modoFactura: "",
       facturaId: "",
       numeroFactura: "",
-      uuidFiscal: "",
       fechaFactura: "",
       razonSocialReceptoraId: "",
-      proveedorEmisorId: "",
-      razonSocialEmisor: "",
-      rfcEmisor: "",
-      subtotalFactura: "",
-      impuestosFactura: "",
       montoTotalFactura: "",
       observacionesFactura: "",
       facturaPdf: "",
-      facturaXml: "",
-    }));
-  }
-
-  function handleProveedorEmisorChange(proveedorId: string) {
-    const proveedor = proveedoresEmisores.find(
-      (item) => item.id === proveedorId
-    );
-
-    setForm((current) => ({
-      ...current,
-      proveedorEmisorId: proveedorId,
-      razonSocialEmisor: proveedor
-        ? proveedor.razonSocial || proveedor.nombre
-        : current.razonSocialEmisor,
-      rfcEmisor: proveedor?.rfc || current.rfcEmisor,
-    }));
-
-    setErrors((current) => ({
-      ...current,
-      proveedorEmisorId: "",
-      razonSocialEmisor: "",
-      rfcEmisor: "",
     }));
   }
 
@@ -388,7 +309,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
     setErrors((current) => ({
       ...current,
       facturaId: "",
-      monedaId: "",
     }));
   }
 
@@ -434,46 +354,10 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
         "Selecciona cómo se adquirió o incorporó el equipo.";
     }
 
-    if (
-      form.costoIndividualEquipo &&
-      !isValidMoney(form.costoIndividualEquipo)
-    ) {
-      nextErrors.costoIndividualEquipo =
-        "Captura un costo válido mayor o igual a cero.";
-    }
-
-    const monedaCostoId = facturaSeleccionada?.monedaId || form.monedaId;
-
-    if (form.costoIndividualEquipo.trim() && !monedaCostoId) {
-      nextErrors.monedaId =
-        "Selecciona una moneda para el costo individual.";
-    }
-
     if (registraFacturaNueva) {
       if (form.montoTotalFactura && !isValidMoney(form.montoTotalFactura)) {
         nextErrors.montoTotalFactura =
           "Captura un monto total válido mayor o igual a cero.";
-      }
-
-      if (form.subtotalFactura && !isValidMoney(form.subtotalFactura)) {
-        nextErrors.subtotalFactura =
-          "Captura un subtotal válido mayor o igual a cero.";
-      }
-
-      if (form.impuestosFactura && !isValidMoney(form.impuestosFactura)) {
-        nextErrors.impuestosFactura =
-          "Captura un importe de impuestos válido.";
-      }
-
-      const tieneImportesFactura = Boolean(
-        form.subtotalFactura.trim() ||
-          form.impuestosFactura.trim() ||
-          form.montoTotalFactura.trim()
-      );
-
-      if (tieneImportesFactura && !form.monedaId) {
-        nextErrors.monedaId =
-          "Selecciona una moneda cuando captures importes de factura.";
       }
 
       if (form.facturaPdf) {
@@ -486,15 +370,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
         }
       }
 
-      if (form.facturaXml) {
-        if (!hasExpectedExtension(form.facturaXml, ".xml")) {
-          nextErrors.facturaXml = "El archivo fiscal debe ser XML.";
-        } else if (form.facturaXml.size > MAX_FACTURA_XML_BYTES) {
-          nextErrors.facturaXml = `El XML no puede superar ${formatFileSize(
-            MAX_FACTURA_XML_BYTES
-          )}.`;
-        }
-      }
     }
 
     setErrors(nextErrors);
@@ -653,7 +528,7 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
 
         {loadingCatalogos && (
           <div className="coreforms-message coreforms-message-info">
-            Cargando catálogos de inventario, facturas y monedas...
+            Cargando catálogos de inventario y facturación...
           </div>
         )}
 
@@ -1039,77 +914,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
 
           {esCompraNueva && (
             <>
-          <CoreFormField label="Fecha de adquisición">
-            <input
-              type="date"
-              value={form.fechaAdquisicion}
-              onChange={(event) =>
-                updateField("fechaAdquisicion", event.target.value)
-              }
-              disabled={guardando}
-            />
-
-            <span className="coreforms-field-help">
-              Fecha en que el activo fue comprado, recibido o incorporado.
-            </span>
-          </CoreFormField>
-
-          <CoreFormField label="Costo individual del equipo">
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={form.costoIndividualEquipo}
-              onChange={(event) =>
-                updateField("costoIndividualEquipo", event.target.value)
-              }
-              placeholder="0.00"
-              disabled={guardando}
-              className={errors.costoIndividualEquipo ? "is-invalid" : ""}
-            />
-
-            <span className="coreforms-field-help">
-              Importe asignado únicamente a este equipo, no el total completo
-              de la factura.
-            </span>
-
-            {errors.costoIndividualEquipo && (
-              <span className="coreforms-field-error">
-                {errors.costoIndividualEquipo}
-              </span>
-            )}
-          </CoreFormField>
-
-          <CoreFormField label="Moneda">
-            <select
-              value={form.monedaId}
-              onChange={(event) => updateField("monedaId", event.target.value)}
-              disabled={
-                loadingCatalogos ||
-                guardando ||
-                Boolean(seleccionaFacturaExistente && facturaSeleccionada)
-              }
-              className={errors.monedaId ? "is-invalid" : ""}
-            >
-              <option value="">Seleccionar moneda</option>
-
-              {monedas.map((moneda) => (
-                <option key={moneda.id} value={moneda.id}>
-                  {moneda.codigo} · {moneda.nombre}
-                </option>
-              ))}
-            </select>
-
-            <span className="coreforms-field-help">
-              {seleccionaFacturaExistente && facturaSeleccionada
-                ? "La moneda se toma automáticamente de la factura seleccionada."
-                : "Se utiliza para el costo individual y para una factura nueva."}
-            </span>
-
-            {errors.monedaId && (
-              <span className="coreforms-field-error">{errors.monedaId}</span>
-            )}
-          </CoreFormField>
 
               <CoreFormField label="Manejo de la factura" fullWidth>
                 <select
@@ -1178,29 +982,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
                     )}
                   </CoreFormField>
 
-                  {facturaSeleccionada && (
-                    <div className="coreforms-location-summary coreforms-field-full">
-                      <span>Factura seleccionada</span>
-                      <strong>{facturaSeleccionada.referencia}</strong>
-                      <p>
-                        Receptora: {facturaSeleccionada.razonSocialReceptoraNombre || "Sin dato"}
-                        {" · "}
-                        Emisor: {facturaSeleccionada.razonSocialEmisor || facturaSeleccionada.proveedorEmisorNombre || "Sin dato"}
-                      </p>
-                      <p>
-                        Fecha: {facturaSeleccionada.fechaFactura || "Sin fecha"}
-                        {" · "}
-                        Total: {formatAmount(facturaSeleccionada.montoTotal)}
-                        {" · "}
-                        Moneda: {facturaSeleccionada.monedaNombre || "Sin moneda"}
-                      </p>
-                      <p>
-                        PDF: {facturaSeleccionada.tienePdf ? "Disponible" : "No"}
-                        {" · "}
-                        XML: {facturaSeleccionada.tieneXml ? "Disponible" : "No"}
-                      </p>
-                    </div>
-                  )}
                 </>
               )}
 
@@ -1242,28 +1023,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
                     )}
                   </CoreFormField>
 
-                  <CoreFormField label="UUID fiscal">
-                    <input
-                      value={form.uuidFiscal}
-                      onChange={(event) =>
-                        updateField("uuidFiscal", event.target.value)
-                      }
-                      placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                      disabled={guardando}
-                      className={errors.uuidFiscal ? "is-invalid" : ""}
-                    />
-
-                    <span className="coreforms-field-help">
-                      Es obligatorio cuando adjuntes el XML fiscal.
-                    </span>
-
-                    {errors.uuidFiscal && (
-                      <span className="coreforms-field-error">
-                        {errors.uuidFiscal}
-                      </span>
-                    )}
-                  </CoreFormField>
-
                   <CoreFormField label="Razón social receptora">
                     <select
                       value={form.razonSocialReceptoraId}
@@ -1295,110 +1054,7 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
                     )}
                   </CoreFormField>
 
-                  <CoreFormField label="Proveedor del catálogo">
-                    <select
-                      value={form.proveedorEmisorId}
-                      onChange={(event) =>
-                        handleProveedorEmisorChange(event.target.value)
-                      }
-                      disabled={loadingCatalogos || guardando}
-                    >
-                      <option value="">
-                        No está en catálogo / Capturar manualmente
-                      </option>
-
-                      {proveedoresEmisores.map((proveedor) => (
-                        <option key={proveedor.id} value={proveedor.id}>
-                          {proveedor.nombre}
-                        </option>
-                      ))}
-                    </select>
-
-                    <span className="coreforms-field-help">
-                      Es opcional. Al seleccionar un proveedor se completarán
-                      sus datos fiscales disponibles.
-                    </span>
-                  </CoreFormField>
-
-                  <CoreFormField label="Razón social del emisor">
-                    <input
-                      value={form.razonSocialEmisor}
-                      onChange={(event) =>
-                        updateField("razonSocialEmisor", event.target.value)
-                      }
-                      placeholder="Razón social que aparece en la factura"
-                      disabled={guardando}
-                      className={errors.razonSocialEmisor ? "is-invalid" : ""}
-                    />
-
-                    {errors.razonSocialEmisor && (
-                      <span className="coreforms-field-error">
-                        {errors.razonSocialEmisor}
-                      </span>
-                    )}
-                  </CoreFormField>
-
-                  <CoreFormField label="RFC del emisor">
-                    <input
-                      value={form.rfcEmisor}
-                      onChange={(event) =>
-                        updateField("rfcEmisor", event.target.value)
-                      }
-                      placeholder="RFC del proveedor emisor"
-                      disabled={guardando}
-                      className={errors.rfcEmisor ? "is-invalid" : ""}
-                    />
-
-                    {errors.rfcEmisor && (
-                      <span className="coreforms-field-error">
-                        {errors.rfcEmisor}
-                      </span>
-                    )}
-                  </CoreFormField>
-
-                  <CoreFormField label="Subtotal">
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={form.subtotalFactura}
-                      onChange={(event) =>
-                        updateField("subtotalFactura", event.target.value)
-                      }
-                      placeholder="0.00"
-                      disabled={guardando}
-                      className={errors.subtotalFactura ? "is-invalid" : ""}
-                    />
-
-                    {errors.subtotalFactura && (
-                      <span className="coreforms-field-error">
-                        {errors.subtotalFactura}
-                      </span>
-                    )}
-                  </CoreFormField>
-
-                  <CoreFormField label="Impuestos">
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={form.impuestosFactura}
-                      onChange={(event) =>
-                        updateField("impuestosFactura", event.target.value)
-                      }
-                      placeholder="0.00"
-                      disabled={guardando}
-                      className={errors.impuestosFactura ? "is-invalid" : ""}
-                    />
-
-                    {errors.impuestosFactura && (
-                      <span className="coreforms-field-error">
-                        {errors.impuestosFactura}
-                      </span>
-                    )}
-                  </CoreFormField>
-
-                  <CoreFormField label="Monto total">
+                  <CoreFormField label="Monto total de la factura">
                     <input
                       type="number"
                       min="0"
@@ -1411,6 +1067,11 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
                       disabled={guardando}
                       className={errors.montoTotalFactura ? "is-invalid" : ""}
                     />
+
+                    <span className="coreforms-field-help">
+                      Captura el importe final de la factura. Este monto ya debe
+                      incluir impuestos.
+                    </span>
 
                     {errors.montoTotalFactura && (
                       <span className="coreforms-field-error">
@@ -1459,77 +1120,10 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
                     )}
                   </CoreFormField>
 
-                  <CoreFormField label="Factura XML">
-                    <input
-                      key={form.facturaXml?.name || "factura-xml-empty"}
-                      type="file"
-                      accept=".xml,text/xml,application/xml"
-                      onChange={(event) =>
-                        updateField("facturaXml", event.target.files?.[0] || null)
-                      }
-                      disabled={guardando}
-                      className={errors.facturaXml ? "is-invalid" : ""}
-                    />
 
-                    <span className="coreforms-field-help">
-                      Archivo opcional. Máximo {formatFileSize(MAX_FACTURA_XML_BYTES)}.
-                    </span>
 
-                    {form.facturaXml && (
-                      <div className="coreforms-location-summary">
-                        <span>XML SELECCIONADO</span>
-                        <strong>{form.facturaXml.name}</strong>
-                        <p>Tamaño: {formatFileSize(form.facturaXml.size)}</p>
 
-                        <button
-                          type="button"
-                          className="coreforms-secondary-button"
-                          onClick={() => updateField("facturaXml", null)}
-                          disabled={guardando}
-                        >
-                          Quitar XML
-                        </button>
-                      </div>
-                    )}
-
-                    {errors.facturaXml && (
-                      <span className="coreforms-field-error">
-                        {errors.facturaXml}
-                      </span>
-                    )}
-                  </CoreFormField>
-
-                  <CoreFormField label="Observaciones de la factura" fullWidth>
-                    <textarea
-                      value={form.observacionesFactura}
-                      onChange={(event) =>
-                        updateField("observacionesFactura", event.target.value)
-                      }
-                      placeholder="Notas fiscales, aclaraciones o información adicional"
-                      disabled={guardando}
-                    />
-                  </CoreFormField>
-
-                  <div className="coreforms-location-summary coreforms-field-full">
-                    <span>Resumen de factura nueva</span>
-                    <strong>
-                      {form.numeroFactura.trim() || "Sin número de factura"}
-                      {" · "}
-                      {monedaSeleccionada?.codigo || "Sin moneda"}
-                    </strong>
-                    <p>
-                      Receptora: {razonSocialSeleccionada?.nombre || "Sin razón social seleccionada"}
-                    </p>
-                    <p>
-                      Emisor: {form.razonSocialEmisor.trim() || "Sin razón social del emisor"}
-                      {" · "}
-                      Total: {form.montoTotalFactura.trim() || "0.00"}
-                    </p>
-                  </div>
-                </>
-              )}
-
-              {form.modoFactura !== "Sin factura por el momento" && (
+                  {form.modoFactura !== "Sin factura por el momento" && (
                 <CoreFormField label="Número de partida de factura" fullWidth>
                   <input
                     value={form.numeroPartidaFactura}
@@ -1545,6 +1139,63 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
                     equipo. Es opcional.
                   </span>
                 </CoreFormField>
+              )}
+              
+
+                  <CoreFormField label="Observaciones de la factura" fullWidth>
+                    <textarea
+                      value={form.observacionesFactura}
+                      onChange={(event) =>
+                        updateField("observacionesFactura", event.target.value)
+                      }
+                      placeholder="Notas fiscales, aclaraciones o información adicional"
+                      disabled={guardando}
+                    />
+                  </CoreFormField>
+
+                </>
+              )}
+
+              
+
+              {seleccionaFacturaExistente && facturaSeleccionada && (
+                <div className="coreforms-location-summary coreforms-field-full">
+                  <span>Factura seleccionada</span>
+                  <strong>{facturaSeleccionada.referencia}</strong>
+                  <p>
+                    Receptora:{" "}
+                    {facturaSeleccionada.razonSocialReceptoraNombre ||
+                      "Sin dato"}
+                  </p>
+                  <p>
+                    Fecha: {facturaSeleccionada.fechaFactura || "Sin fecha"}
+                    {" · "}
+                    Total con impuestos:{" "}
+                    {formatAmount(facturaSeleccionada.montoTotal)}
+                  </p>
+                  <p>
+                    PDF:{" "}
+                    {facturaSeleccionada.tienePdf ? "Disponible" : "No"}
+                  </p>
+                </div>
+              )}
+
+              {registraFacturaNueva && (
+                <div className="coreforms-location-summary coreforms-field-full">
+                  <span>Resumen de factura nueva</span>
+                  <strong>
+                    {form.numeroFactura.trim() || "Sin número de factura"}
+                  </strong>
+                  <p>
+                    Receptora:{" "}
+                    {razonSocialSeleccionada?.nombre ||
+                      "Sin razón social seleccionada"}
+                  </p>
+                  <p>
+                    Total con impuestos:{" "}
+                    {form.montoTotalFactura.trim() || "0.00"}
+                  </p>
+                </div>
               )}
             </>
           )}
@@ -1616,13 +1267,12 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
               </li>
 
               <li>
-                El costo individual corresponde únicamente a este equipo; no
-                necesariamente debe coincidir con el monto total de la factura.
+                El monto total de la factura debe capturarse con impuestos
+                incluidos.
               </li>
 
               <li>
-                Si adjuntas XML, captura también el UUID fiscal. El PDF admite
-                hasta 15 MB y el XML hasta 5 MB.
+                La factura PDF es opcional y admite un archivo de hasta 15 MB.
               </li>
 
               <li>
