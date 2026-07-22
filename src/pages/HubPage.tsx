@@ -2,6 +2,7 @@ import React from "react";
 import HubModuleCard, {
   type HubModuleVariant,
 } from "../components/HubModuleCard";
+import CoreUserPanel from "../components/CoreUserPanel";
 import logoCore from "../assets/Core-logo.png";
 import "../styles/hub-tailwind.css";
 
@@ -141,11 +142,9 @@ const HubPage: React.FC<HubPageProps> = ({
           </div>
 
           <div className="tw-flex tw-items-center tw-gap-2">
-            <span className="tw-hidden tw-rounded-full tw-border tw-border-core-green/20 tw-bg-core-green/10 tw-px-3 tw-py-1.5 tw-text-[0.72rem] tw-font-bold tw-text-core-green-muted sm:tw-inline-flex">
-              Acceso interno
-            </span>
+            <CoreUserPanel variant="inline" />
 
-            <span className="tw-rounded-full tw-border tw-border-white/10 tw-bg-white/[0.045] tw-px-3 tw-py-1.5 tw-text-[0.72rem] tw-font-bold tw-text-white/65">
+            <span className="tw-hidden tw-rounded-full tw-border tw-border-white/10 tw-bg-white/[0.045] tw-px-3 tw-py-1.5 tw-text-[0.72rem] tw-font-bold tw-text-white/65 sm:tw-inline-flex">
               {availableModuleCount} módulo activo
             </span>
           </div>

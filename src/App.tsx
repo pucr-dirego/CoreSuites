@@ -5,6 +5,7 @@ import CoreInventoryModule from "./CoreInventoryModule";
 import CoreSuppliersModule from "./CoreSuppliersModule";
 import CoreFormsModule from "./CoreFormsModule";
 import ModuleEntryLoader from "./components/ModuleEntryLoader";
+import CoreUserPanel from "./components/CoreUserPanel";
 
 import "./App.css";
 
@@ -119,6 +120,10 @@ function App() {
         title={loader.title}
         message={loader.message}
       />
+
+      {activeModule !== "hub" && (
+        <CoreUserPanel variant="floating" />
+      )}
 
       {activeModule === "coreinventory" &&
         (MODULE_AVAILABILITY.coreinventory ? (
