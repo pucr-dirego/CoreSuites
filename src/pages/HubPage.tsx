@@ -3,6 +3,7 @@ import HubModuleCard, {
   type HubModuleVariant,
 } from "../components/HubModuleCard";
 import CoreUserPanel from "../components/CoreUserPanel";
+import { useCoreAccess } from "../hooks/useCoreAccess";
 import logoCore from "../assets/Core-logo.png";
 import "../styles/hub-tailwind.css";
 
@@ -19,7 +20,6 @@ type HubModule = {
   status: string;
   description: string;
   buttonText: string;
-  isAvailable: boolean;
   onClick: () => void;
 };
 
@@ -28,45 +28,71 @@ const HubPage: React.FC<HubPageProps> = ({
   onEnterSuppliers,
   onEnterForms,
 }) => {
-  const modules: HubModule[] = [
-    {
+  const { capabilities, isLoading: isAccessLoading } = useCoreAccess();
+
+  const modules: HubModule[] = [];
+
+  /**
+   * Mientras se validan los privilegios, Core aplica el principio de menor
+   * privilegio y no muestra módulos administrativos.
+   *
+   * Una vez resuelta la consulta:
+   * - Personal de TI ve CoreInventory y CoreSuppliers.
+   * - Usuario general no recibe siquiera las tarjetas de esos módulos.
+   */
+  if (!isAccessLoading && capabilities.canManageInventory) {
+    modules.push({
       variant: "inventory",
       title: "CoreInventory",
       eyebrow: "Inventario tecnológico",
-      status: "En construcción",
+      status: "Disponible",
       description:
-        "Estamos preparando la próxima experiencia para consulta, control y seguimiento del inventario TI.",
-      buttonText: "Ver avance",
-      isAvailable: false,
+        "Consulta, control y seguimiento del inventario tecnológico de las sucursales.",
+      buttonText: "Acceder",
       onClick: onEnterInventory,
-    },
-    {
+    });
+  }
+
+  if (!isAccessLoading && capabilities.canManageSuppliers) {
+    modules.push({
       variant: "suppliers",
       title: "CoreSuppliers",
       eyebrow: "Red de proveedores",
-      status: "En construcción",
-      description:
-        "Próximamente: directorio operativo de proveedores, servicios, contactos y sucursales.",
-      buttonText: "Ver avance",
-      isAvailable: false,
-      onClick: onEnterSuppliers,
-    },
-    {
-      variant: "forms",
-      title: "CoreForms",
-      eyebrow: "Captura operativa",
       status: "Disponible",
       description:
-        "Formularios internos para registrar información clave directamente en Core.",
+        "Directorio operativo de proveedores, servicios, contactos y cobertura por sucursal.",
       buttonText: "Acceder",
-      isAvailable: true,
-      onClick: onEnterForms,
-    },
-  ];
+      onClick: onEnterSuppliers,
+    });
+  }
 
-  const availableModuleCount = modules.filter(
-    (module) => module.isAvailable
-  ).length;
+  /**
+   * CoreForms permanece disponible para ambos perfiles.
+   */
+  modules.push({
+    variant: "forms",
+    title: "CoreForms",
+    eyebrow: "Captura operativa",
+    status: "Disponible",
+    description:
+      "Formularios internos para registrar información clave directamente en Core.",
+    buttonText: "Acceder",
+    onClick: onEnterForms,
+  });
+
+  const availableModuleCount = modules.length;
+
+  const moduleGridClassName =
+    availableModuleCount === 1
+      ? "hub-module-grid tw-mx-auto tw-grid tw-w-full tw-max-w-md tw-grid-cols-1 tw-gap-4"
+      : availableModuleCount === 2
+        ? "hub-module-grid tw-mx-auto tw-grid tw-w-full tw-max-w-4xl tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-2 xl:tw-gap-5"
+        : "hub-module-grid tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-3 xl:tw-gap-5";
+
+  const moduleCountLabel =
+    availableModuleCount === 1
+      ? "1 módulo activo"
+      : `${availableModuleCount} módulos activos`;
 
   return (
     <main className="tw-relative tw-isolate tw-min-h-screen tw-overflow-hidden tw-bg-core-bg tw-text-core-text">
@@ -145,7 +171,7 @@ const HubPage: React.FC<HubPageProps> = ({
             <CoreUserPanel variant="inline" />
 
             <span className="tw-hidden tw-rounded-full tw-border tw-border-white/10 tw-bg-white/[0.045] tw-px-3 tw-py-1.5 tw-text-[0.72rem] tw-font-bold tw-text-white/65 sm:tw-inline-flex">
-              {availableModuleCount} módulo activo
+              {moduleCountLabel}
             </span>
           </div>
         </header>
@@ -174,16 +200,22 @@ const HubPage: React.FC<HubPageProps> = ({
             </p>
 
             <div className="tw-mt-5 tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-gap-2">
-              <span className="hub-context-pill">Inventario TI</span>
-              <span className="hub-context-pill">Proveedores</span>
+              {!isAccessLoading && capabilities.canManageInventory && (
+                <span className="hub-context-pill">Inventario TI</span>
+              )}
+
+              {!isAccessLoading && capabilities.canManageSuppliers && (
+                <span className="hub-context-pill">Proveedores</span>
+              )}
+
               <span className="hub-context-pill">Formularios</span>
               <span className="hub-context-pill">31 sucursales</span>
             </div>
           </section>
 
           <section
-            className="hub-module-grid tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-3 xl:tw-gap-5"
-            aria-label="Módulos de Core"
+            className={moduleGridClassName}
+            aria-label="Módulos disponibles de Core"
           >
             {modules.map((module, index) => (
               <HubModuleCard

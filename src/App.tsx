@@ -6,6 +6,7 @@ import CoreSuppliersModule from "./CoreSuppliersModule";
 import CoreFormsModule from "./CoreFormsModule";
 import ModuleEntryLoader from "./components/ModuleEntryLoader";
 import CoreUserPanel from "./components/CoreUserPanel";
+import CoreAccessGuard from "./components/security/CoreAccessGuard";
 
 import "./App.css";
 
@@ -22,16 +23,18 @@ type LoaderState = {
 const MODULE_ENTRY_DELAY_MS = 1800;
 
 /**
- * Control temporal de disponibilidad.
+ * Control de publicación técnica de módulos.
  *
- * Los módulos permanecen completos dentro del proyecto, pero CoreInventory y
- * CoreSuppliers no se renderizan mientras estén marcados como false.
+ * Esta configuración únicamente indica si el módulo ya puede renderizarse.
+ * La autorización del usuario se valida por separado con CoreAccessGuard.
  *
- * Cuando llegue el momento de publicarlos, bastará con cambiar su valor a true.
+ * - CoreForms está publicado para usuarios generales y Personal de TI.
+ * - CoreInventory y CoreSuppliers están publicados únicamente para Personal de
+ *   TI mediante las capacidades canManageInventory y canManageSuppliers.
  */
 const MODULE_AVAILABILITY: Record<OperationalModule, boolean> = {
-  coreinventory: false,
-  coresuppliers: false,
+  coreinventory: true,
+  coresuppliers: true,
   coreforms: true,
 };
 
@@ -68,11 +71,8 @@ function App() {
     limpiarLoaderPendiente();
 
     /**
-     * Si el módulo todavía no está publicado, se conserva el valor del módulo
-     * seleccionado, pero App.tsx sustituye su contenido por ComingSoonPage.
-     *
-     * Esta validación central evita que CoreInventory o CoreSuppliers se
-     * rendericen aunque otra parte del proyecto intente activarlos.
+     * Si un módulo se deshabilita técnicamente en el futuro, App.tsx conserva
+     * su pantalla ComingSoon sin eliminar su implementación del proyecto.
      */
     if (!MODULE_AVAILABILITY[module]) {
       setLoader({
@@ -125,29 +125,41 @@ function App() {
         <CoreUserPanel variant="floating" />
       )}
 
-      {activeModule === "coreinventory" &&
-        (MODULE_AVAILABILITY.coreinventory ? (
-          <CoreInventoryModule onBackToHub={volverAlHub} />
-        ) : (
-          <ComingSoonPage
-            moduleName="CoreInventory"
-            eyebrow="Inventario tecnológico"
-            description="Estamos preparando una experiencia renovada para consultar, controlar y dar seguimiento al inventario tecnológico de cada sucursal."
-            onBackToHub={volverAlHub}
-          />
-        ))}
+      {activeModule === "coreinventory" && (
+        <CoreAccessGuard
+          capability="canManageInventory"
+          onBack={volverAlHub}
+        >
+          {MODULE_AVAILABILITY.coreinventory ? (
+            <CoreInventoryModule onBackToHub={volverAlHub} />
+          ) : (
+            <ComingSoonPage
+              moduleName="CoreInventory"
+              eyebrow="Inventario tecnológico"
+              description="Estamos preparando una experiencia renovada para consultar, controlar y dar seguimiento al inventario tecnológico de cada sucursal."
+              onBackToHub={volverAlHub}
+            />
+          )}
+        </CoreAccessGuard>
+      )}
 
-      {activeModule === "coresuppliers" &&
-        (MODULE_AVAILABILITY.coresuppliers ? (
-          <CoreSuppliersModule onBackToHub={volverAlHub} />
-        ) : (
-          <ComingSoonPage
-            moduleName="CoreSuppliers"
-            eyebrow="Red de proveedores"
-            description="Estamos construyendo un espacio central para consultar proveedores, servicios, contactos y cobertura operativa por sucursal."
-            onBackToHub={volverAlHub}
-          />
-        ))}
+      {activeModule === "coresuppliers" && (
+        <CoreAccessGuard
+          capability="canManageSuppliers"
+          onBack={volverAlHub}
+        >
+          {MODULE_AVAILABILITY.coresuppliers ? (
+            <CoreSuppliersModule onBackToHub={volverAlHub} />
+          ) : (
+            <ComingSoonPage
+              moduleName="CoreSuppliers"
+              eyebrow="Red de proveedores"
+              description="Estamos construyendo un espacio central para consultar proveedores, servicios, contactos y cobertura operativa por sucursal."
+              onBackToHub={volverAlHub}
+            />
+          )}
+        </CoreAccessGuard>
+      )}
 
       {activeModule === "coreforms" && MODULE_AVAILABILITY.coreforms && (
         <CoreFormsModule onBackToHub={volverAlHub} />

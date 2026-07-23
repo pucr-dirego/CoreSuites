@@ -1,0 +1,68 @@
+.core-access-denied-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at 50% 5%, rgba(53, 212, 111, 0.1), transparent 34%),
+    #07110c;
+  color: #f6fff8;
+}
+
+.core-access-denied-card {
+  width: min(31rem, 100%);
+  box-sizing: border-box;
+  border: 1px solid rgba(126, 220, 157, 0.18);
+  border-radius: 1.15rem;
+  background: rgba(11, 28, 19, 0.96);
+  padding: 1.7rem;
+  text-align: center;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.3);
+}
+
+.core-access-denied-card__eyebrow {
+  color: rgba(180, 239, 199, 0.72);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.core-access-denied-card__icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem auto 0;
+  place-items: center;
+  border: 1px solid rgba(255, 193, 92, 0.28);
+  border-radius: 50%;
+  background: rgba(255, 193, 92, 0.1);
+  color: #ffd38b;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.core-access-denied-card h1 {
+  margin: 0.9rem 0 0;
+  font-size: clamp(1.65rem, 4vw, 2.2rem);
+}
+
+.core-access-denied-card p {
+  margin: 0.65rem auto 0;
+  max-width: 25rem;
+  color: rgba(235, 255, 241, 0.67);
+  line-height: 1.6;
+}
+
+.core-access-denied-card button {
+  margin-top: 1.15rem;
+  border: 1px solid rgba(90, 211, 129, 0.28);
+  border-radius: 0.7rem;
+  background: rgba(53, 212, 111, 0.12);
+  padding: 0.65rem 0.9rem;
+  color: #d8ffe4;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}

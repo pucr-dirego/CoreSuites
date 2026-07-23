@@ -98,6 +98,11 @@
   background: #e9b949;
 }
 
+.core-user-panel__status--validating {
+  background: #e9b949;
+  box-shadow: 0 0 7px rgba(233, 185, 73, 0.42);
+}
+
 .core-user-panel--loading {
   opacity: 0.82;
 }

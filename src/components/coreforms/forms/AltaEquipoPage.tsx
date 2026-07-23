@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import CoreFormField from "../shared/CoreFormField";
 import CoreFormSection from "../shared/CoreFormSection";
+import { useCoreAccess } from "../../../hooks/useCoreAccess";
 
 import {
   condicionFisicaOptions,
@@ -37,8 +38,7 @@ type AltaEquipoPageProps = {
   onBack?: () => void;
 };
 
-type PerfilCaptura = "" | "general" | "ti";
-type PerfilSeleccionado = Exclude<PerfilCaptura, "">;
+type PerfilSeleccionado = "general" | "ti";
 
 const MIN_INSTRUCTION_READ_SECONDS = 12;
 
@@ -132,11 +132,16 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
   const [mostrarConfirmacionLimpiar, setMostrarConfirmacionLimpiar] =
     useState(false);
 
-  const [perfilCaptura, setPerfilCaptura] = useState<PerfilCaptura>("");
-  const [mostrarSelectorPerfil, setMostrarSelectorPerfil] = useState(true);
+  const {
+    profile: accessProfile,
+    capabilities,
+    isLoading: loadingAccess,
+    error: accessError,
+  } = useCoreAccess();
 
   const instructionStartTimeRef = useRef(Date.now());
   const cargandoCatalogosFacturacionRef = useRef(false);
+  const perfilInicializadoRef = useRef<PerfilSeleccionado | null>(null);
 
   const [instruccionesLeidas, setInstruccionesLeidas] = useState(false);
   const [mostrarModalInstrucciones, setMostrarModalInstrucciones] =
@@ -186,9 +191,15 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
     form.ubicacionExacta.trim(),
   );
 
-  const esPerfilTi = perfilCaptura === "ti";
+  const esPerfilTi =
+    !loadingAccess &&
+    accessProfile === "it-admin" &&
+    capabilities.canUseITForms;
+  const perfilCaptura: PerfilSeleccionado = esPerfilTi ? "ti" : "general";
   const cargandoCatalogos =
-    loadingCatalogosBase || (esPerfilTi && loadingCatalogosFacturacion);
+    loadingAccess ||
+    loadingCatalogosBase ||
+    (esPerfilTi && loadingCatalogosFacturacion);
 
   const esCompraNueva = form.esAdquisicionNueva;
   const seleccionaFacturaExistente =
@@ -227,6 +238,35 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
   useEffect(() => {
     void cargarCatalogosBase();
   }, []);
+
+  useEffect(() => {
+    if (loadingAccess || perfilInicializadoRef.current === perfilCaptura) {
+      return;
+    }
+
+    perfilInicializadoRef.current = perfilCaptura;
+
+    const storageKey = getInstructionStorageKey(perfilCaptura);
+    const yaLeidas = getSessionInstructionRead(storageKey);
+
+    setMostrarModalExito(false);
+    setMensaje(null);
+    setInstruccionesLeidas(yaLeidas);
+    setInstruccionesWarning("");
+
+    if (esPerfilTi) {
+      void cargarCatalogosFacturacion();
+    } else {
+      limpiarInformacionFacturacion();
+    }
+
+    if (!yaLeidas) {
+      instructionStartTimeRef.current = Date.now();
+      setMostrarModalInstrucciones(true);
+    } else {
+      setMostrarModalInstrucciones(false);
+    }
+  }, [esPerfilTi, loadingAccess, perfilCaptura]);
 
   async function cargarCatalogosBase() {
     try {
@@ -365,37 +405,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
       observacionesFactura: "",
       facturaPdf: "",
     }));
-  }
-
-  function seleccionarPerfil(perfil: PerfilSeleccionado) {
-    const storageKey = getInstructionStorageKey(perfil);
-    const yaLeidas = getSessionInstructionRead(storageKey);
-
-    setPerfilCaptura(perfil);
-    setMostrarSelectorPerfil(false);
-    setMostrarModalExito(false);
-    setMensaje(null);
-    setInstruccionesLeidas(yaLeidas);
-    setInstruccionesWarning("");
-
-    if (perfil === "general") {
-      limpiarInformacionFacturacion();
-    } else {
-      void cargarCatalogosFacturacion();
-    }
-
-    if (!yaLeidas) {
-      instructionStartTimeRef.current = Date.now();
-      setMostrarModalInstrucciones(true);
-    } else {
-      setMostrarModalInstrucciones(false);
-    }
-  }
-
-  function abrirSelectorPerfil() {
-    setMostrarModalInstrucciones(false);
-    setInstruccionesWarning("");
-    setMostrarSelectorPerfil(true);
   }
 
   function handleEsAdquisicionNuevaChange(checked: boolean) {
@@ -576,7 +585,7 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
           };
 
       const normalizedForm: AltaEquipoForm =
-        perfilCaptura === "general"
+        !esPerfilTi
           ? {
               ...normalizedTechnicalForm,
               esAdquisicionNueva: false,
@@ -617,11 +626,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
   }
 
   function abrirInstrucciones() {
-    if (!perfilCaptura) {
-      setMostrarSelectorPerfil(true);
-      return;
-    }
-
     const storageKey = getInstructionStorageKey(perfilCaptura);
     const yaLeidas = getSessionInstructionRead(storageKey);
 
@@ -646,12 +650,6 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
         }, pero ese tiempo no alcanza para revisar las instrucciones operativas. Debes leerlas antes de continuar con el registro.`,
       );
 
-      return;
-    }
-
-    if (!perfilCaptura) {
-      setMostrarModalInstrucciones(false);
-      setMostrarSelectorPerfil(true);
       return;
     }
 
@@ -700,28 +698,30 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
           </div>
         </header>
 
-        {perfilCaptura && (
-          <div className="coreforms-profile-indicator">
-            <div>
-              <span>Perfil de captura</span>
-              <strong>
-                {esPerfilTi ? "Personal de TI" : "Usuario general"}
-              </strong>
-              <p>
-                {esPerfilTi
+        <div className="coreforms-profile-indicator">
+          <div>
+            <span>Perfil detectado automáticamente</span>
+            <strong>
+              {loadingAccess
+                ? "Validando permisos..."
+                : esPerfilTi
+                  ? "Personal de TI"
+                  : "Usuario general"}
+            </strong>
+            <p>
+              {loadingAccess
+                ? "Core está consultando los privilegios efectivos de tu sesión."
+                : esPerfilTi
                   ? "La sección de adquisición y facturación está disponible."
-                  : "La información de adquisición y facturación está oculta para esta captura."}
-              </p>
-            </div>
+                  : "La información de adquisición y facturación permanece oculta para este usuario."}
+            </p>
+          </div>
+        </div>
 
-            <button
-              type="button"
-              className="coreforms-secondary-button"
-              onClick={abrirSelectorPerfil}
-              disabled={guardando}
-            >
-              Cambiar perfil
-            </button>
+        {accessError && (
+          <div className="coreforms-message coreforms-message-info">
+            No fue posible validar todos los privilegios. Por seguridad, Core
+            aplicó el perfil de usuario general.
           </div>
         )}
 
@@ -1478,86 +1478,12 @@ export default function AltaEquipoPage({ onBack }: AltaEquipoPageProps) {
             type="button"
             className="coreforms-primary-button"
             onClick={handleSubmit}
-            disabled={!perfilCaptura || cargandoCatalogos || guardando}
+            disabled={cargandoCatalogos || guardando}
           >
             {guardando ? "Guardando equipo..." : "Guardar equipo"}
           </button>
         </div>
       </section>
-
-      {mostrarSelectorPerfil && (
-        <div
-          className="coreforms-modal-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="coreforms-profile-title"
-        >
-          <div className="coreforms-modal coreforms-profile-modal">
-            <p className="coreforms-eyebrow">Perfil de captura</p>
-
-            <h2 id="coreforms-profile-title">
-              ¿Qué tipo de registro realizarás?
-            </h2>
-
-            <p>
-              Selecciona la opción que corresponde a la información que tienes
-              disponible. Esta elección solo adapta los campos del formulario.
-            </p>
-
-            <div className="coreforms-profile-grid">
-              <button
-                type="button"
-                className="coreforms-profile-option"
-                onClick={() => seleccionarPerfil("general")}
-              >
-                <span className="coreforms-profile-option-title">
-                  Usuario general
-                </span>
-
-                <span className="coreforms-profile-option-description">
-                  Captura identificación, datos técnicos, estado, responsable y
-                  ubicación del equipo.
-                </span>
-
-                <span className="coreforms-profile-option-note">
-                  No requiere información de compra o facturación.
-                </span>
-              </button>
-
-              <button
-                type="button"
-                className="coreforms-profile-option"
-                onClick={() => seleccionarPerfil("ti")}
-              >
-                <span className="coreforms-profile-option-title">
-                  Personal de TI
-                </span>
-
-                <span className="coreforms-profile-option-description">
-                  Captura el equipo y, cuando corresponda, sus datos de
-                  adquisición y factura.
-                </span>
-
-                <span className="coreforms-profile-option-note">
-                  Permite asociar o registrar facturas.
-                </span>
-              </button>
-            </div>
-
-            {perfilCaptura && (
-              <div className="coreforms-modal-actions">
-                <button
-                  type="button"
-                  className="coreforms-secondary-button"
-                  onClick={() => setMostrarSelectorPerfil(false)}
-                >
-                  Conservar perfil actual
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {mostrarModalInstrucciones && (
         <div

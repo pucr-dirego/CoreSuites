@@ -19,13 +19,6 @@ export const dataSourcesInfo = {
     "dataSourceType": "Dataverse",
     "apis": {}
   },
-  "transactioncurrencies": {
-    "tableId": "",
-    "version": "",
-    "primaryKey": "transactioncurrencyid",
-    "dataSourceType": "Dataverse",
-    "apis": {}
-  },
   "cr22e_equipostis": {
     "tableId": "",
     "version": "",
@@ -81,5 +74,62 @@ export const dataSourcesInfo = {
     "primaryKey": "cr22e_ubicacionessucursalid",
     "dataSourceType": "Dataverse",
     "apis": {}
+  },
+  "retrieveaadusersetofprivilegesbynames": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "",
+    "dataSourceType": "Dataverse",
+    "apis": {
+      "RetrieveAadUserSetOfPrivilegesByNames": {
+        "path": "/api/data/v9.2/RetrieveAadUserSetOfPrivilegesByNames",
+        "method": "GET",
+        "parameters": [
+          {
+            "name": "DirectoryObjectId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "guid"
+          },
+          {
+            "name": "PrivilegeNames",
+            "in": "query",
+            "required": true,
+            "type": "array"
+          }
+        ],
+        "responseInfo": {
+          "200": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "transactioncurrencies": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "transactioncurrencyid",
+    "dataSourceType": "Dataverse",
+    "apis": {}
+  },
+  "whoami": {
+    "tableId": "",
+    "version": "",
+    "primaryKey": "",
+    "dataSourceType": "Dataverse",
+    "apis": {
+      "WhoAmI": {
+        "path": "/api/data/v9.2/WhoAmI",
+        "method": "GET",
+        "parameters": [],
+        "responseInfo": {
+          "200": {
+            "type": "object"
+          }
+        }
+      }
+    }
   }
 };

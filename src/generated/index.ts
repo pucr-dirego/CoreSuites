@@ -15,7 +15,9 @@ export * as Cr22e_razonsocialsModel from './models/Cr22e_razonsocialsModel';
 export * as Cr22e_serviciosproveedorsucursalsModel from './models/Cr22e_serviciosproveedorsucursalsModel';
 export * as Cr22e_sucursalesesModel from './models/Cr22e_sucursalesesModel';
 export * as Cr22e_ubicacionessucursalsModel from './models/Cr22e_ubicacionessucursalsModel';
+export * as RetrieveAadUserSetOfPrivilegesByNamesModel from './models/RetrieveAadUserSetOfPrivilegesByNamesModel';
 export * as TransactioncurrenciesModel from './models/TransactioncurrenciesModel';
+export * as WhoAmIModel from './models/WhoAmIModel';
 
 // Services
 export * from './services/Cr22e_contactosproveedorsService';
@@ -28,4 +30,6 @@ export * from './services/Cr22e_razonsocialsService';
 export * from './services/Cr22e_serviciosproveedorsucursalsService';
 export * from './services/Cr22e_sucursalesesService';
 export * from './services/Cr22e_ubicacionessucursalsService';
+export * from './services/RetrieveAadUserSetOfPrivilegesByNamesService';
 export * from './services/TransactioncurrenciesService';
+export * from './services/WhoAmIService';
